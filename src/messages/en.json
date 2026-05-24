@@ -1,0 +1,49 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search...",
+    "actions": "Actions",
+    "loading": "Loading..."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "revenue": "Total Revenue",
+    "sales": "Total Sales",
+    "orders": "Total Orders",
+    "inventory": "Inventory Status",
+    "analytics": "Analytics",
+    "activity": "Recent Activity"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email Address",
+    "password": "Password",
+    "forgotPassword": "Forgot Password?",
+    "signIn": "Sign In"
+  },
+  "pos": {
+    "title": "Point of Sale",
+    "searchProduct": "Search products or scan barcode",
+    "cart": "Cart",
+    "summary": "Summary",
+    "subtotal": "Subtotal",
+    "tax": "Tax",
+    "discount": "Discount",
+    "total": "Total",
+    "checkout": "Checkout",
+    "pay": "Pay Now"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "pos": "POS",
+    "inventory": "Inventory",
+    "products": "Products",
+    "customers": "Customers",
+    "reports": "Reports",
+    "settings": "Settings"
+  }
+}
