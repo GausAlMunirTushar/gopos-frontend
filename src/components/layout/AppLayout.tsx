@@ -24,8 +24,8 @@ const MENU_SECTIONS = [
   {
     title: 'Inventory',
     items: [
-      { name: 'Products', href: '/products', icon: Package },
-      { name: 'Create Product', href: '/products/create', icon: Plus },
+      { name: 'Products', href: '/inventory/products', icon: Package },
+      { name: 'Create Product', href: '/inventory/products/create', icon: Plus },
       { name: 'Expired Products', href: '/inventory/expired', icon: AlertCircle },
       { name: 'Low Stocks', href: '/inventory/low-stock', icon: TrendingDown },
       { name: 'Category', href: '/inventory/category', icon: Layers },
@@ -204,7 +204,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               <ChevronDown className="w-4 h-4 text-gray-400" />
             </button>
 
-            <NextLink href="/products/create">
+            <NextLink href="/inventory/products/create">
               <button className="hidden sm:flex items-center gap-2 px-4 py-2 bg-[#FF9F43] hover:bg-orange-500 text-white rounded-lg text-sm font-medium transition-colors">
                 <Plus className="w-4 h-4" /> Add New
               </button>
