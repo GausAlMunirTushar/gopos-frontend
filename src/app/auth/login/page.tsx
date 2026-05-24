@@ -20,9 +20,9 @@ export default function LoginPage() {
             Email <span className="text-red-500">*</span>
           </label>
           <div className="relative">
-            <Input 
-              type="email" 
-              placeholder="" 
+            <Input
+              type="email"
+              placeholder=""
               className="pr-10 bg-white border-gray-200"
             />
             <Mail className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
@@ -34,9 +34,9 @@ export default function LoginPage() {
             Password <span className="text-red-500">*</span>
           </label>
           <div className="relative">
-            <Input 
-              type="password" 
-              placeholder="" 
+            <Input
+              type="password"
+              placeholder=""
               className="pr-10 bg-white border-gray-200"
             />
             <EyeOff className="absolute right-3 top-2.5 h-5 w-5 text-gray-400 cursor-pointer" />
