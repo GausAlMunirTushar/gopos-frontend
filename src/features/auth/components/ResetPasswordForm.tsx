@@ -1,10 +1,12 @@
+'use client';
+
 import { useTranslations } from 'next-intl';
 import NextLink from 'next/link';
 import { EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-export default function ResetPasswordPage() {
+export function ResetPasswordForm() {
   const t = useTranslations('auth');
 
   return (
@@ -50,7 +52,7 @@ export default function ResetPasswordPage() {
 
       <div className="mt-6 text-center text-sm text-gray-500">
         Return to{' '}
-        <NextLink href="/auth/login" className="text-gray-900 font-medium hover:underline">
+        <NextLink href="/login" className="text-gray-900 font-medium hover:underline">
           Login
         </NextLink>
       </div>

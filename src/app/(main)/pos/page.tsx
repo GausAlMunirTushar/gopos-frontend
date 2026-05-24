@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Search, Plus, Minus, Trash2, CreditCard, Banknote, User } from 'lucide-react';
+import { Search, Plus, Minus, Trash2, CreditCard, Banknote, User, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 

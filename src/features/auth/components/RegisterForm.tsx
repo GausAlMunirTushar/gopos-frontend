@@ -1,28 +1,44 @@
+'use client';
+
 import { useTranslations } from 'next-intl';
 import NextLink from 'next/link';
-import { Mail, EyeOff, Facebook, Apple } from 'lucide-react';
+import { Mail, EyeOff, Facebook, Apple, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-export default function LoginPage() {
+export function RegisterForm() {
   const t = useTranslations('auth');
 
   return (
     <>
-      <h1 className="text-3xl font-bold text-gray-900 mb-2">Sign In</h1>
+      <h1 className="text-3xl font-bold text-gray-900 mb-2">Register</h1>
       <p className="text-gray-500 text-sm mb-8">
-        Access the Dreamspos panel using your email and passcode.
+        Create New Dreamspos Account
       </p>
 
       <form className="space-y-5">
         <div className="space-y-1.5">
           <label className="text-sm font-medium text-gray-700">
-            Email <span className="text-red-500">*</span>
+            Name <span className="text-red-500">*</span>
           </label>
           <div className="relative">
-            <Input
-              type="email"
-              placeholder=""
+            <Input 
+              type="text" 
+              placeholder="" 
+              className="pr-10 bg-white border-gray-200"
+            />
+            <User className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
+          </div>
+        </div>
+
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium text-gray-700">
+            Email Address <span className="text-red-500">*</span>
+          </label>
+          <div className="relative">
+            <Input 
+              type="email" 
+              placeholder="" 
               className="pr-10 bg-white border-gray-200"
             />
             <Mail className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
@@ -34,34 +50,47 @@ export default function LoginPage() {
             Password <span className="text-red-500">*</span>
           </label>
           <div className="relative">
-            <Input
-              type="password"
-              placeholder=""
+            <Input 
+              type="password" 
+              placeholder="" 
               className="pr-10 bg-white border-gray-200"
             />
             <EyeOff className="absolute right-3 top-2.5 h-5 w-5 text-gray-400 cursor-pointer" />
           </div>
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium text-gray-700">
+            Confirm Password <span className="text-red-500">*</span>
+          </label>
+          <div className="relative">
+            <Input 
+              type="password" 
+              placeholder="" 
+              className="pr-10 bg-white border-gray-200"
+            />
+            <EyeOff className="absolute right-3 top-2.5 h-5 w-5 text-gray-400 cursor-pointer" />
+          </div>
+        </div>
+
+        <div className="flex items-center">
           <label className="flex items-center gap-2 cursor-pointer">
             <input type="checkbox" className="rounded border-gray-300 text-orange-500 focus:ring-orange-500 w-4 h-4 accent-orange-500" />
-            <span className="text-sm text-gray-500">Remember Me</span>
+            <span className="text-sm text-gray-500">
+              I agree to the <NextLink href="#" className="text-orange-500 hover:underline">Terms & Privacy</NextLink>
+            </span>
           </label>
-          <NextLink href="/auth/forgot-password" className="text-sm text-orange-500 font-medium hover:underline">
-            Forgot Password?
-          </NextLink>
         </div>
 
         <Button className="w-full bg-orange-400 hover:bg-orange-500 text-white py-6 rounded-xl text-md font-medium">
-          Sign In
+          Sign Up
         </Button>
       </form>
 
       <div className="mt-6 text-sm text-gray-500">
-        New on our platform?{' '}
-        <NextLink href="/auth/register" className="text-gray-900 font-medium hover:underline">
-          Create an account
+        Already have an account?{' '}
+        <NextLink href="/login" className="text-gray-900 font-medium hover:underline">
+          Sign In Instead
         </NextLink>
       </div>
 
