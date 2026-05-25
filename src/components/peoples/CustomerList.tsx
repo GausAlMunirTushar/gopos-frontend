@@ -56,7 +56,7 @@ export default function CustomerList() {
       </div>
 
       {/* Main Table Card */}
-      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm">
+      <div className="bg-white border border-gray-200 rounded-2xl">
         
         {/* Filters */}
         <div className="p-4 border-b border-gray-100 flex flex-col md:flex-row justify-between gap-4">

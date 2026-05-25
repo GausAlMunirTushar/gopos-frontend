@@ -83,7 +83,7 @@ export default function ReportsPage() {
                 <YAxis axisLine={false} tickLine={false} tick={{fill: '#6B7280'}} dx={-10} />
                 <Tooltip 
                   cursor={{fill: '#F3F4F6'}}
-                  contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                  contentStyle={{ borderRadius: '8px', border: 'none', }}
                 />
                 <Legend iconType="circle" wrapperStyle={{ paddingTop: '20px' }} />
                 <Bar dataKey="revenue" name="Revenue" fill="#092C4C" radius={[4, 4, 0, 0]} />

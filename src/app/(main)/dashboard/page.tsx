@@ -1,10 +1,12 @@
 'use client';
+/* eslint-disable @next/next/no-img-element */
 
 import React, { useState } from 'react';
 import { 
-  FileText, Package, Wallet, CheckCircle, Search, Calendar, ChevronDown, 
-  MoreVertical, RefreshCw, ShoppingCart, Users, UserCircle, Box, AlertCircle, 
-  X, ArrowUpRight, ArrowDownRight, RefreshCcw, MoreHorizontal
+  FileText, Package, Calendar, ChevronDown, 
+  ShoppingCart, Users, UserCircle, Box, AlertCircle, 
+  X, ArrowUpRight, ArrowDownRight, RefreshCcw, CornerDownLeft,
+  ShieldCheck, TrendingUp, PieChart as PieChartIcon
 } from 'lucide-react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -64,7 +66,7 @@ export default function Dashboard() {
           <h1 className="text-2xl font-bold text-gray-900">Welcome, Admin</h1>
           <p className="text-gray-500 text-sm">You have <span className="text-[#FF9F43] font-semibold">200+</span> Orders, Today</p>
         </div>
-        <div className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg shadow-sm text-sm font-medium text-gray-700">
+        <div className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700">
           <Calendar className="w-4 h-4 text-gray-500" />
           <span>01 Jan 2024 - 07 Jan 2024</span>
         </div>
@@ -85,7 +87,7 @@ export default function Dashboard() {
 
       {/* Primary Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-gradient-to-br from-[#FFAD61] to-[#FF9F43] rounded-2xl p-5 text-white flex gap-4">
+        <div className="bg-linear-to-br from-[#FFAD61] to-[#FF9F43] rounded-2xl p-5 text-white flex gap-4">
           <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center shrink-0">
             <FileText className="w-6 h-6 text-white" />
           </div>
@@ -100,7 +102,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-[#061d33] to-[#092C4C] rounded-2xl p-5 text-white flex gap-4">
+        <div className="bg-linear-to-br from-[#061d33] to-[#092C4C] rounded-2xl p-5 text-white flex gap-4">
           <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center shrink-0">
             <CornerDownLeft className="w-6 h-6 text-white" />
           </div>
@@ -115,7 +117,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-[#2DD4BF] to-[#14B8A6] rounded-2xl p-5 text-white flex gap-4">
+        <div className="bg-linear-to-br from-[#2DD4BF] to-[#14B8A6] rounded-2xl p-5 text-white flex gap-4">
           <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center shrink-0">
             <Package className="w-6 h-6 text-white" />
           </div>
@@ -130,7 +132,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-[#3B82F6] to-[#2563EB] rounded-2xl p-5 text-white flex gap-4">
+        <div className="bg-linear-to-br from-[#3B82F6] to-[#2563EB] rounded-2xl p-5 text-white flex gap-4">
           <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center shrink-0">
             <ShieldCheck className="w-6 h-6 text-white" />
           </div>
@@ -157,7 +159,7 @@ export default function Dashboard() {
           const Icon = item.icon;
           const isPositive = item.trend.startsWith('+');
           return (
-            <div key={idx} className="bg-white border border-gray-200 rounded-2xl p-5 flex flex-col justify-between shadow-sm">
+            <div key={idx} className="bg-white border border-gray-200 rounded-2xl p-5 flex flex-col justify-between">
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h3 className="text-xl font-bold text-gray-900 mb-1">{item.value}</h3>
@@ -183,7 +185,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Sales & Purchase Chart */}
-        <div className="lg:col-span-2 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <div className="lg:col-span-2 bg-white border border-gray-200 rounded-2xl p-6">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
               <ShoppingCart className="w-5 h-5 text-[#FF9F43]" />
@@ -221,7 +223,7 @@ export default function Dashboard() {
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
                 <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#6B7280', fontSize: 12 }} dy={10} />
                 <YAxis axisLine={false} tickLine={false} tick={{ fill: '#6B7280', fontSize: 12 }} tickFormatter={(val) => `${val}K`} />
-                <Tooltip cursor={{ fill: 'transparent' }} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
+                <Tooltip cursor={{ fill: 'transparent' }} contentStyle={{ borderRadius: '12px', border: 'none', }} />
                 <Bar dataKey="purchase" stackId="a" fill="#FFE8D6" radius={[0, 0, 4, 4]} barSize={32} />
                 <Bar dataKey="sales" stackId="a" fill="#FF9F43" radius={[4, 4, 0, 0]} />
               </BarChart>
@@ -230,7 +232,7 @@ export default function Dashboard() {
         </div>
 
         {/* Overall Information */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm flex flex-col">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6 flex flex-col">
           <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2 mb-6">
             <AlertCircle className="w-5 h-5 text-blue-500" />
             Overall Information
@@ -262,7 +264,7 @@ export default function Dashboard() {
               </button>
             </div>
             
-            <div className="flex-1 flex items-center justify-center relative min-h-[160px]">
+            <div className="flex-1 flex items-center justify-center relative min-h-40">
               <div className="w-32 h-32 absolute left-0">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -310,7 +312,7 @@ export default function Dashboard() {
       {/* Row 4: Lists */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Top Selling Products */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 flex items-center gap-2">
               <Package className="w-5 h-5 text-pink-500" /> Top Selling Products
@@ -345,7 +347,7 @@ export default function Dashboard() {
         </div>
 
         {/* Low Stock Products */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 flex items-center gap-2">
               <AlertCircle className="w-5 h-5 text-red-500" /> Low Stock Products
@@ -378,7 +380,7 @@ export default function Dashboard() {
         </div>
 
         {/* Recent Sales */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 flex items-center gap-2">
               <ShoppingCart className="w-5 h-5 text-blue-500" /> Recent Sales
@@ -421,7 +423,7 @@ export default function Dashboard() {
       {/* Row 5: Statics and Transactions */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Sales Statics */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 flex items-center gap-2">
               <AlertCircle className="w-5 h-5 text-red-500" /> Sales Statics
@@ -456,7 +458,7 @@ export default function Dashboard() {
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
                 <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#6B7280', fontSize: 12 }} dy={10} />
                 <YAxis axisLine={false} tickLine={false} tick={{ fill: '#6B7280', fontSize: 12 }} tickFormatter={(val) => `${val}K`} />
-                <Tooltip cursor={{ fill: 'transparent' }} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
+                <Tooltip cursor={{ fill: 'transparent' }} contentStyle={{ borderRadius: '12px', border: 'none', }} />
                 <Bar dataKey="revenue" fill="#14B8A6" radius={[4, 4, 0, 0]} barSize={12} />
                 <Bar dataKey="expense" fill="#F97316" radius={[0, 0, 4, 4]} barSize={12} />
               </BarChart>
@@ -465,7 +467,7 @@ export default function Dashboard() {
         </div>
 
         {/* Recent Transactions */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm flex flex-col">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6 flex flex-col">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 flex items-center gap-2">
               <FileText className="w-5 h-5 text-red-500" /> Recent Transactions
@@ -531,7 +533,7 @@ export default function Dashboard() {
       {/* Row 6: Categories and Stats */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Top Customers */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 flex items-center gap-2">
               <Users className="w-5 h-5 text-orange-500" /> Top Customers
@@ -552,7 +554,7 @@ export default function Dashboard() {
                   <div>
                     <h4 className="text-sm font-bold text-gray-900 mb-0.5">{item.name}</h4>
                     <p className="text-[11px] text-gray-500 font-medium flex items-center gap-1">
-                      <span className="w-3 h-3 rounded-full bg-gray-200 inline-block overflow-hidden"><img src="https://flagcdn.com/w20/us.png" className="w-full h-full object-cover"/></span>
+                      <span className="w-3 h-3 rounded-full bg-gray-200 inline-block overflow-hidden"><img src="https://flagcdn.com/w20/us.png" alt="flag" className="w-full h-full object-cover"/></span>
                       {item.loc} • {item.orders} Orders
                     </p>
                   </div>
@@ -566,10 +568,10 @@ export default function Dashboard() {
         </div>
 
         {/* Top Categories */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm flex flex-col">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6 flex flex-col">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 flex items-center gap-2">
-              <PieChart className="w-5 h-5 text-pink-500" /> Top Categories
+              <PieChartIcon className="w-5 h-5 text-pink-500" /> Top Categories
             </h3>
             <button className="flex items-center gap-1 text-xs font-medium text-gray-500 bg-gray-50 px-2 py-1 rounded border border-gray-200">
               <Calendar className="w-3 h-3" /> Weekly <ChevronDown className="w-3 h-3" />
@@ -627,7 +629,7 @@ export default function Dashboard() {
         </div>
 
         {/* Order Statistics Heatmap Placeholder */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm flex flex-col">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6 flex flex-col">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 flex items-center gap-2">
               <Box className="w-5 h-5 text-blue-500" /> Order Statistics
@@ -638,7 +640,7 @@ export default function Dashboard() {
           </div>
           <div className="flex-1 flex flex-col justify-end">
             <div className="flex">
-              <div className="flex flex-col justify-between text-[10px] text-gray-400 font-medium pr-2 pb-4 h-[200px]">
+              <div className="flex flex-col justify-between text-[10px] text-gray-400 font-medium pr-2 pb-4 h-50">
                 <span>12 mp</span>
                 <span>12 pm</span>
                 <span>02 pm</span>
@@ -650,9 +652,9 @@ export default function Dashboard() {
                 <span>2 am</span>
               </div>
               <div className="flex-1">
-                <div className="grid grid-cols-7 gap-1 h-[200px]">
+                <div className="grid grid-cols-7 gap-1 h-50">
                   {Array.from({ length: 7 * 9 }).map((_, i) => {
-                    const intensity = Math.random();
+                    const intensity = ((i * 13 + 7) % 10) / 10;
                     let bg = 'bg-[#FFE8D6]';
                     if (intensity > 0.8) bg = 'bg-[#092C4C]';
                     else if (intensity > 0.5) bg = 'bg-[#FF9F43]';

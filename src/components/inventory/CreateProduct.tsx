@@ -26,14 +26,14 @@ export default function CreateProductPage() {
         </div>
         
         <div className="flex items-center gap-2">
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white shadow-sm">
+          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
              <RefreshCcw className="w-5 h-5" />
           </button>
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white shadow-sm">
+          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
              <ChevronUp className="w-5 h-5" />
           </button>
           <NextLink href="/products">
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#092C4C] hover:bg-[#061d33] text-white rounded-lg font-medium transition-colors shadow-sm">
+            <button className="flex items-center gap-2 px-4 py-2 bg-[#092C4C] hover:bg-[#061d33] text-white rounded-lg font-medium transition-colors">
               <ChevronLeft className="w-4 h-4" /> Back to Products
             </button>
           </NextLink>
@@ -43,7 +43,7 @@ export default function CreateProductPage() {
       <div className="space-y-6 pb-20">
         
         {/* Product Information Panel */}
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
           <div className="flex justify-between items-center p-4 border-b border-gray-100 bg-white">
              <h3 className="font-bold text-gray-900 flex items-center gap-2">
                <Info className="w-5 h-5 text-[#FF9F43]" /> Product Information
@@ -200,7 +200,7 @@ export default function CreateProductPage() {
         </div>
 
         {/* Pricing & Stocks Panel */}
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
           <div className="flex justify-between items-center p-4 border-b border-gray-100 bg-white">
              <h3 className="font-bold text-gray-900 flex items-center gap-2">
                <Target className="w-5 h-5 text-[#FF9F43]" /> Pricing & Stocks
@@ -262,7 +262,7 @@ export default function CreateProductPage() {
         </div>
 
         {/* Images Panel */}
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
           <div className="flex justify-between items-center p-4 border-b border-gray-100 bg-white">
              <h3 className="font-bold text-gray-900 flex items-center gap-2">
                <ImageIcon className="w-5 h-5 text-[#FF9F43]" /> Images
@@ -278,7 +278,7 @@ export default function CreateProductPage() {
         </div>
 
         {/* Custom Fields Panel */}
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
           <div className="flex justify-between items-center p-4 border-b border-gray-100 bg-white">
              <h3 className="font-bold text-gray-900 flex items-center gap-2">
                <List className="w-5 h-5 text-[#FF9F43]" /> Custom Fields
@@ -331,11 +331,11 @@ export default function CreateProductPage() {
       </div>
 
       {/* Fixed Bottom Action Bar */}
-      <div className="fixed bottom-0 left-0 right-0 md:left-64 bg-white border-t border-gray-200 p-4 z-10 flex justify-end gap-3 shadow-[0_-4px_6px_-1px_rgb(0,0,0,0.05)]">
+      <div className="fixed bottom-0 left-0 right-0 md:left-64 bg-white border-t border-gray-200 p-4 z-10 flex justify-end gap-3">
          <button className="px-6 py-2.5 bg-[#092C4C] hover:bg-[#061d33] text-white rounded-lg font-medium transition-colors">
            Cancel
          </button>
-         <button className="px-6 py-2.5 bg-[#FF9F43] hover:bg-[#ff9021] text-white rounded-lg font-medium transition-colors shadow-sm">
+         <button className="px-6 py-2.5 bg-[#FF9F43] hover:bg-[#ff9021] text-white rounded-lg font-medium transition-colors">
            Add Product
          </button>
       </div>

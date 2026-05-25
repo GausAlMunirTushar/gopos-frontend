@@ -40,7 +40,7 @@ export default function PurchaseReport() {
       </div>
 
       {/* Filters Form */}
-      <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col md:flex-row gap-6">
+      <div className="bg-white p-6 rounded-2xl border border-gray-200 flex flex-col md:flex-row gap-6">
         <div className="flex-1 space-y-2">
           <label className="text-sm font-medium text-gray-700">Choose Date</label>
           <div className="relative">
@@ -68,7 +68,7 @@ export default function PurchaseReport() {
       </div>
 
       {/* Main Table Card */}
-      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm">
+      <div className="bg-white border border-gray-200 rounded-2xl">
         
         {/* Table Header */}
         <div className="p-4 border-b border-gray-100 flex justify-between items-center">
@@ -105,16 +105,8 @@ export default function PurchaseReport() {
                   <td className="p-4 text-gray-500">{row.amount}</td>
                   <td className="p-4 text-gray-500">{row.paid}</td>
                   <td className="p-4">
-                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border ${
-                      row.status === 'Paid' ? 'bg-green-50 text-green-600 border-green-200' :
-                      row.status === 'Unpaid' ? 'bg-red-50 text-red-600 border-red-200' :
-                      'bg-orange-50 text-orange-600 border-orange-200'
-                    }`}>
-                      <span className={`w-1.5 h-1.5 rounded-full ${
-                        row.status === 'Paid' ? 'bg-green-600' :
-                        row.status === 'Unpaid' ? 'bg-red-600' :
-                        'bg-orange-600'
-                      }`}></span>
+                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border ${ row.status === 'Paid' ? 'bg-green-50 text-green-600 border-green-200' : row.status === 'Unpaid' ? 'bg-red-50 text-red-600 border-red-200' : 'bg-orange-50 text-orange-600 border-orange-200' }`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${ row.status === 'Paid' ? 'bg-green-600' : row.status === 'Unpaid' ? 'bg-red-600' : 'bg-orange-600' }`}></span>
                       {row.status}
                     </span>
                   </td>

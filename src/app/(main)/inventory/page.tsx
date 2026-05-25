@@ -95,7 +95,7 @@ export default function InventoryPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="bg-white rounded-xl border border-gray-100 p-6">
         <DataTable columns={columns} data={data} />
       </div>
     </div>

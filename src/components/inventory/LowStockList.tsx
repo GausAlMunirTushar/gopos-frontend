@@ -57,7 +57,7 @@ export default function LowStocksPage() {
       </div>
 
       {/* Main Table Card */}
-      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm">
+      <div className="bg-white border border-gray-200 rounded-2xl">
         
         <div className="flex flex-col md:flex-row justify-between items-center border-b border-gray-100 p-4 gap-4">
             <div className="flex gap-4">
@@ -66,8 +66,8 @@ export default function LowStocksPage() {
             </div>
             <div className="flex items-center gap-3">
                 <span className="text-sm font-medium text-gray-900">Notify</span>
-                <button className="w-11 h-6 bg-green-500 rounded-full relative shadow-inner">
-                    <span className="w-5 h-5 bg-white rounded-full absolute right-0.5 top-0.5 shadow-sm"></span>
+                <button className="w-11 h-6 bg-green-500 rounded-full relative">
+                    <span className="w-5 h-5 bg-white rounded-full absolute right-0.5 top-0.5"></span>
                 </button>
             </div>
         </div>

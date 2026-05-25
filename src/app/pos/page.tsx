@@ -5,7 +5,7 @@ import NextLink from 'next/link';
 import { 
   ShoppingBag, Search, ShoppingCart, X, Calculator, Maximize, Camera, Printer, RotateCcw,
   BarChart2, Settings, ListOrdered, RefreshCcw, DollarSign, ChevronLeft, ChevronRight,
-  Headphones, MonitorSmartphone, Watch, Laptop, Coffee, ChevronDown, CreditCard
+  Headphones, MonitorSmartphone, Watch, Laptop, Coffee, ChevronDown, CreditCard, QrCode
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -50,7 +50,7 @@ export default function POSPage() {
     <div className="h-screen flex flex-col bg-[#F8F9FA] overflow-hidden font-sans text-gray-800">
       
       {/* Top Navigation Bar */}
-      <header className="h-[72px] bg-white border-b border-gray-100 flex items-center justify-between px-6 shrink-0">
+      <header className="h-18 bg-white border-b border-gray-100 flex items-center justify-between px-6 shrink-0">
         
         {/* Left: Logo & Time */}
         <div className="flex items-center gap-8">
@@ -164,7 +164,7 @@ export default function POSPage() {
             <div className="flex-1 overflow-y-auto custom-scrollbar pr-2">
               <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {products.map((p, i) => (
-                  <div key={i} className="bg-white rounded-xl p-3 border border-gray-100 hover:border-orange-500 hover:shadow-md transition-all cursor-pointer group flex flex-col">
+                  <div key={i} className="bg-white rounded-xl p-3 border border-gray-100 hover:border-orange-500 transition-all cursor-pointer group flex flex-col">
                     <div className="w-full h-32 bg-gray-50 rounded-lg mb-3 flex items-center justify-center p-2 overflow-hidden">
                       <img src={p.img} alt={p.name} className="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform" />
                     </div>
@@ -185,7 +185,7 @@ export default function POSPage() {
         </div>
 
         {/* Right Pane (Cart) */}
-        <div className="flex-[0.35] bg-white flex flex-col min-w-[350px]">
+        <div className="flex-[0.35] bg-white flex flex-col min-w-87.5">
           
           {/* Cart Header */}
           <div className="p-4 border-b border-gray-100 shrink-0">
@@ -263,7 +263,7 @@ export default function POSPage() {
                   <select className="pl-3 pr-6 text-sm appearance-none bg-transparent outline-none h-full border-r border-gray-100">
                     <option>%</option>
                   </select>
-                  <ChevronDown className="w-3 h-3 text-gray-400 absolute left-[30px] pointer-events-none" />
+                  <ChevronDown className="w-3 h-3 text-gray-400 absolute left-7.5 pointer-events-none" />
                   <input type="text" defaultValue="0" className="w-full pl-3 text-sm outline-none" />
                 </div>
               </div>
@@ -311,5 +311,3 @@ export default function POSPage() {
     </div>
   );
 }
-// Add QrCode icon import manually above
-import { QrCode } from 'lucide-react';

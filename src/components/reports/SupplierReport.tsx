@@ -41,7 +41,7 @@ export default function SupplierReport() {
       </div>
 
       {/* Filters Form */}
-      <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col md:flex-row gap-6">
+      <div className="bg-white p-6 rounded-2xl border border-gray-200 flex flex-col md:flex-row gap-6">
         <div className="flex-1 space-y-2">
           <label className="text-sm font-medium text-gray-700">Choose Date</label>
           <div className="relative">
@@ -63,7 +63,7 @@ export default function SupplierReport() {
       </div>
 
       {/* Main Table Card */}
-      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm">
+      <div className="bg-white border border-gray-200 rounded-2xl">
         
         {/* Table Header */}
         <div className="p-4 border-b border-gray-100 flex justify-between items-center">

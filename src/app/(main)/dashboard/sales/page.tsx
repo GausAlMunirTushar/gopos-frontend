@@ -39,11 +39,11 @@ export default function SalesDashboard() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg shadow-sm text-sm font-medium text-gray-700">
+          <div className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700">
             <Calendar className="w-4 h-4 text-gray-500" />
             <span>01 Jan 2024 - 07 Jan 2024</span>
           </div>
-          <button className="p-2 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50">
+          <button className="p-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
             <RefreshCcw className="w-4 h-4 text-gray-500" />
           </button>
         </div>
@@ -52,7 +52,7 @@ export default function SalesDashboard() {
       {/* Row 1: Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm flex justify-between items-center relative overflow-hidden">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6 flex justify-between items-center relative overflow-hidden">
           <div className="z-10">
             <p className="text-[#FF9F43] font-medium mb-4">Weekly Earning</p>
             <h3 className="text-3xl font-bold text-[#092C4C] mb-2">$95000.45</h3>
@@ -62,11 +62,11 @@ export default function SalesDashboard() {
             </p>
           </div>
           <div className="relative z-10">
-             <img src="https://cdn3d.iconscout.com/3d/premium/thumb/money-bag-4993510-4161746.png" alt="Money" className="w-24 h-24 object-contain opacity-90 drop-shadow-xl" />
+             <img src="https://cdn3d.iconscout.com/3d/premium/thumb/money-bag-4993510-4161746.png" alt="Money" className="w-24 h-24 object-contain opacity-90 drop-" />
           </div>
         </div>
 
-        <div className="bg-[#FF9F43] rounded-2xl p-6 shadow-sm flex flex-col justify-between text-white relative overflow-hidden">
+        <div className="bg-[#FF9F43] rounded-2xl p-6 flex flex-col justify-between text-white relative overflow-hidden">
           <div className="w-full flex justify-between items-start mb-6">
              <div className="w-12 h-12 border-2 border-white/30 rounded-xl flex items-center justify-center">
                 <DollarSign className="w-6 h-6 text-white" />
@@ -80,7 +80,7 @@ export default function SalesDashboard() {
           <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
         </div>
 
-        <div className="bg-[#092C4C] rounded-2xl p-6 shadow-sm flex flex-col justify-between text-white relative overflow-hidden">
+        <div className="bg-[#092C4C] rounded-2xl p-6 flex flex-col justify-between text-white relative overflow-hidden">
           <div className="w-full flex justify-between items-start mb-6">
              <div className="w-12 h-12 border-2 border-white/30 rounded-xl flex items-center justify-center">
                 <ShoppingBag className="w-6 h-6 text-white" />
@@ -100,7 +100,7 @@ export default function SalesDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Best Seller */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 text-lg">Best Seller</h3>
             <button className="text-xs font-medium text-gray-700 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors">
@@ -135,7 +135,7 @@ export default function SalesDashboard() {
         </div>
 
         {/* Recent Transactions Table */}
-        <div className="lg:col-span-2 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm flex flex-col">
+        <div className="lg:col-span-2 bg-white border border-gray-200 rounded-2xl p-6 flex flex-col">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 text-lg">Recent Transactions</h3>
             <button className="text-xs font-medium text-gray-700 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors">
@@ -196,10 +196,10 @@ export default function SalesDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Sales Analytics Area Chart */}
-        <div className="lg:col-span-2 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <div className="lg:col-span-2 bg-white border border-gray-200 rounded-2xl p-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 text-lg">Sales Analytics</h3>
-            <button className="flex items-center gap-1 text-xs font-medium text-gray-700 bg-white border border-gray-200 px-3 py-1.5 rounded-lg shadow-sm">
+            <button className="flex items-center gap-1 text-xs font-medium text-gray-700 bg-white border border-gray-200 px-3 py-1.5 rounded-lg">
               <Calendar className="w-4 h-4 text-gray-400" /> 2023
             </button>
           </div>
@@ -216,7 +216,7 @@ export default function SalesDashboard() {
                 <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#6B7280', fontSize: 12 }} dy={10} />
                 <YAxis axisLine={false} tickLine={false} tick={{ fill: '#6B7280', fontSize: 12 }} tickFormatter={(val) => `${val}K`} />
                 <Tooltip 
-                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                  contentStyle={{ borderRadius: '12px', border: 'none', }}
                   itemStyle={{ color: '#092C4C', fontWeight: 'bold' }}
                 />
                 <Area type="monotone" dataKey="value" stroke="#FF9F43" strokeWidth={4} fillOpacity={1} fill="url(#colorSales)" />
@@ -226,10 +226,10 @@ export default function SalesDashboard() {
         </div>
 
         {/* Sales by Countries Map Placeholder */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm flex flex-col">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6 flex flex-col">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 text-lg">Sales by Countries</h3>
-            <button className="flex items-center gap-1 text-xs font-medium text-gray-700 bg-white border border-gray-200 px-3 py-1.5 rounded-lg shadow-sm">
+            <button className="flex items-center gap-1 text-xs font-medium text-gray-700 bg-white border border-gray-200 px-3 py-1.5 rounded-lg">
               This Week <ChevronDown className="w-4 h-4 text-gray-400" />
             </button>
           </div>
@@ -238,7 +238,7 @@ export default function SalesDashboard() {
             
             {/* Mock Tooltip / Highlight over Africa */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <div className="bg-white rounded-lg shadow-xl overflow-hidden text-center border border-gray-100">
+              <div className="bg-white rounded-lg overflow-hidden text-center border border-gray-100">
                  <div className="bg-[#FF9F43] text-white font-bold text-sm py-1.5 px-6">Africa</div>
                  <div className="py-2 px-6 font-medium text-gray-700 text-sm">3455 Sales</div>
               </div>

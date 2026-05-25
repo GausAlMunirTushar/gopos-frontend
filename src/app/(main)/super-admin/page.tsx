@@ -52,14 +52,14 @@ export default function SuperAdminDashboard() {
           <h1 className="text-2xl font-bold text-gray-900">Welcome, Admin</h1>
           <p className="text-gray-500 text-sm">You have <span className="text-[#FF9F43] font-semibold">200+</span> Orders, Today</p>
         </div>
-        <div className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg shadow-sm text-sm font-medium text-gray-700">
+        <div className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700">
           <Calendar className="w-4 h-4 text-gray-500" />
           <span>01 Jan 2024 - 07 Jan 2024</span>
         </div>
       </div>
 
       {/* Welcome Banner */}
-      <div className="bg-gradient-to-r from-[#FF9F43] via-[#FFAD61] to-[#FF8C1A] rounded-2xl p-8 shadow-sm flex flex-col md:flex-row md:items-center justify-between text-white relative overflow-hidden">
+      <div className="bg-gradient-to-r from-[#FF9F43] via-[#FFAD61] to-[#FF8C1A] rounded-2xl p-8 flex flex-col md:flex-row md:items-center justify-between text-white relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full">
            {/* Abstract bubbles */}
            <div className="absolute -top-10 -left-10 w-40 h-40 bg-white/10 rounded-full blur-xl"></div>
@@ -76,7 +76,7 @@ export default function SuperAdminDashboard() {
           <button className="px-6 py-2.5 bg-[#092C4C] hover:bg-[#061d33] text-white rounded-lg font-medium transition-colors">
             Companies
           </button>
-          <button className="px-6 py-2.5 bg-white text-gray-900 hover:bg-gray-50 rounded-lg font-medium transition-colors shadow-sm">
+          <button className="px-6 py-2.5 bg-white text-gray-900 hover:bg-gray-50 rounded-lg font-medium transition-colors">
             All Packages
           </button>
         </div>
@@ -93,7 +93,7 @@ export default function SuperAdminDashboard() {
           const Icon = item.icon;
           const isPositive = item.trend.startsWith('+');
           return (
-            <div key={idx} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+            <div key={idx} className="bg-white border border-gray-200 rounded-2xl p-6 flex flex-col justify-between">
               <div className="flex justify-between items-start mb-6">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${item.iconBg}`}>
                   <Icon className="w-5 h-5 text-white" />
@@ -124,7 +124,7 @@ export default function SuperAdminDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Companies Chart */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 text-lg">Companies</h3>
             <button className="flex items-center gap-1 text-xs font-medium text-gray-500 bg-gray-50 px-2 py-1 rounded border border-gray-200">
@@ -135,7 +135,7 @@ export default function SuperAdminDashboard() {
              <ResponsiveContainer width="100%" height="100%">
                <BarChart data={companiesData} margin={{ top: 20, right: 0, left: 0, bottom: 0 }}>
                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#6B7280', fontSize: 12 }} dy={10} />
-                 <Tooltip cursor={{ fill: 'transparent' }} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
+                 <Tooltip cursor={{ fill: 'transparent' }} contentStyle={{ borderRadius: '12px', border: 'none', }} />
                  <Bar dataKey="value" fill="#092C4C" radius={[4, 4, 4, 4]} barSize={16}>
                     {
                       companiesData.map((entry, index) => (
@@ -155,7 +155,7 @@ export default function SuperAdminDashboard() {
         </div>
 
         {/* Revenue Chart */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 text-lg">Revenue</h3>
             <button className="flex items-center gap-1 text-xs font-medium text-gray-500 bg-gray-50 px-2 py-1 rounded border border-gray-200">
@@ -172,7 +172,7 @@ export default function SuperAdminDashboard() {
              <ResponsiveContainer width="100%" height="100%">
                <BarChart data={revenueData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#6B7280', fontSize: 10 }} dy={10} />
-                 <Tooltip cursor={{ fill: 'transparent' }} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
+                 <Tooltip cursor={{ fill: 'transparent' }} contentStyle={{ borderRadius: '12px', border: 'none', }} />
                  <Bar dataKey="value" fill="#FF9F43" radius={[4, 4, 4, 4]} barSize={12} background={{ fill: '#F3F4F6', radius: 4 }} />
                </BarChart>
              </ResponsiveContainer>
@@ -180,7 +180,7 @@ export default function SuperAdminDashboard() {
         </div>
 
         {/* Top Plans */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm flex flex-col">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6 flex flex-col">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 text-lg">Top Plans</h3>
             <button className="flex items-center gap-1 text-xs font-medium text-gray-500 bg-gray-50 px-2 py-1 rounded border border-gray-200">
@@ -229,7 +229,7 @@ export default function SuperAdminDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Recent Transactions */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 text-lg">Recent Transactions</h3>
             <a href="#" className="text-xs font-medium text-gray-900 hover:underline">View All</a>
@@ -262,7 +262,7 @@ export default function SuperAdminDashboard() {
         </div>
 
         {/* Recently Registered */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 text-lg">Recently Registered</h3>
             <a href="#" className="text-xs font-medium text-gray-900 hover:underline">View All</a>
@@ -292,7 +292,7 @@ export default function SuperAdminDashboard() {
         </div>
 
         {/* Recent Plan Expired */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <div className="bg-white border border-gray-200 rounded-2xl p-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-gray-900 text-lg">Recent Plan Expired</h3>
             <a href="#" className="text-xs font-medium text-gray-900 hover:underline">View All</a>

@@ -142,10 +142,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <div className="h-screen w-full bg-[#F8F9FA] flex text-gray-800 font-sans overflow-hidden">
       
       {/* Sidebar */}
-      <aside className={`h-full bg-white border-r border-gray-200 z-50 transition-all duration-300 flex flex-col shrink-0 ${sidebarOpen ? 'w-[260px]' : 'w-[80px]'}`}>
+      <aside className={`h-full bg-white border-r border-gray-200 z-50 transition-all duration-300 flex flex-col shrink-0 ${sidebarOpen ? 'w-65' : 'w-20'}`}>
         
         {/* Logo Area */}
-        <div className="h-[72px] flex items-center px-6 border-b border-gray-100 shrink-0">
+        <div className="h-18 flex items-center px-6 border-b border-gray-100 shrink-0">
           <div className="flex items-center gap-2">
             <div className="relative flex items-center justify-center">
               <ShoppingBag className="w-8 h-8 text-[#092C4C]" strokeWidth={2.5} />
@@ -179,11 +179,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                       if (!sidebarOpen) setSidebarOpen(true);
                       toggleMenu(section.title);
                     }}
-                    className={`w-full group flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-200 ${
-                      isActiveParent 
-                        ? 'bg-[#FF9F43]/10 text-[#FF9F43] font-semibold' 
-                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                    }`}
+                    className={`w-full group flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-200 ${ isActiveParent ? 'bg-[#FF9F43]/10 text-[#FF9F43] font-semibold' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }`}
                   >
                     <div className="flex items-center gap-3">
                       <Icon className={`w-5 h-5 ${isActiveParent ? 'text-[#FF9F43]' : 'text-gray-400 group-hover:text-gray-600'}`} strokeWidth={2} />
@@ -196,11 +192,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 ) : (
                   <NextLink 
                     href={section.href!}
-                    className={`w-full group flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-200 ${
-                      isActiveParent 
-                        ? 'bg-[#FF9F43]/10 text-[#FF9F43] font-semibold' 
-                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                    }`}
+                    className={`w-full group flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-200 ${ isActiveParent ? 'bg-[#FF9F43]/10 text-[#FF9F43] font-semibold' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }`}
                   >
                     <div className="flex items-center gap-3">
                       <Icon className={`w-5 h-5 ${isActiveParent ? 'text-[#FF9F43]' : 'text-gray-400 group-hover:text-gray-600'}`} strokeWidth={2} />
@@ -218,11 +210,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                         <NextLink 
                           key={item.name} 
                           href={item.href}
-                          className={`flex items-center px-3 py-2 rounded-lg transition-all duration-200 text-[13px] ${
-                            isActive 
-                              ? 'text-[#FF9F43] font-medium bg-orange-50/50' 
-                              : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
-                          }`}
+                          className={`flex items-center px-3 py-2 rounded-lg transition-all duration-200 text-[13px] ${ isActive ? 'text-[#FF9F43] font-medium bg-orange-50/50' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50' }`}
                         >
                           {item.name}
                         </NextLink>
@@ -240,7 +228,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <div className="flex-1 flex flex-col h-full overflow-hidden w-full relative">
         
         {/* Header */}
-        <header className="h-[72px] bg-white border-b border-gray-100 flex items-center justify-between px-6 z-40 shrink-0">
+        <header className="h-18 bg-white border-b border-gray-100 flex items-center justify-between px-6 z-40 shrink-0">
           
           <div className="flex items-center gap-6">
             <button 
