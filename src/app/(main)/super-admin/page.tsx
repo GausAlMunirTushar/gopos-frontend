@@ -173,7 +173,7 @@ export default function SuperAdminDashboard() {
                <BarChart data={revenueData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#6B7280', fontSize: 10 }} dy={10} />
                  <Tooltip cursor={{ fill: 'transparent' }} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
-                 <Bar dataKey="value" fill="#FF9F43" radius={[4, 4, 4, 4]} barSize={12} background={{ fill: '#F3F4F6', radius: [4,4,4,4] }} />
+                 <Bar dataKey="value" fill="#FF9F43" radius={[4, 4, 4, 4]} barSize={12} background={{ fill: '#F3F4F6', radius: 4 }} />
                </BarChart>
              </ResponsiveContainer>
           </div>

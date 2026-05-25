@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import NextLink from 'next/link';
-import { Mail, EyeOff, Facebook, Apple, User } from 'lucide-react';
+import { Mail, EyeOff, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -102,7 +102,9 @@ export function RegisterForm() {
 
       <div className="mt-6 grid grid-cols-3 gap-4">
         <Button variant="outline" className="h-12 bg-blue-600 hover:bg-blue-700 text-white border-0 rounded-xl">
-          <Facebook className="h-5 w-5" />
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
+            <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+          </svg>
         </Button>
         <Button variant="outline" className="h-12 border-gray-200 hover:bg-gray-50 rounded-xl">
           <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
@@ -113,7 +115,9 @@ export function RegisterForm() {
           </svg>
         </Button>
         <Button variant="outline" className="h-12 bg-slate-900 hover:bg-slate-800 text-white border-0 rounded-xl">
-          <Apple className="h-5 w-5" />
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
+            <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.126 3.805 3.052 1.527-.063 2.124-.984 3.96-.984 1.838 0 2.382.984 3.96.984 1.634.027 2.669-1.488 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.484-4.528 2.596-4.597-1.425-2.09-3.639-2.33-4.415-2.368-2.012-.224-4.143 1.069-4.617 1.069zm1.282-5.467c-.838 1.014-1.408 2.417-1.254 3.799 1.186.046 2.65-1.014 3.447-1.99 1.171-1.391 1.777-2.825 1.602-4.185-1.082.044-2.585.94-3.795 2.376z"/>
+          </svg>
         </Button>
       </div>
     </>

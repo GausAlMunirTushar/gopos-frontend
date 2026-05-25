@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { 
-  Calendar, AlertCircle, X, ArrowUpRight, ArrowDownRight, 
-  FileText, CornerDownLeft, Package, ShieldCheck,
-  TrendingUp, TrendingDown, RefreshCcw, MoreHorizontal
+  FileText, Package, Wallet, CheckCircle, Search, Calendar, ChevronDown, 
+  MoreVertical, RefreshCw, ShoppingCart, Users, UserCircle, Box, AlertCircle, 
+  X, ArrowUpRight, ArrowDownRight, RefreshCcw, MoreHorizontal
 } from 'lucide-react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,

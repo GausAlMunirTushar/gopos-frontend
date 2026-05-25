@@ -5,7 +5,7 @@ import NextLink from 'next/link';
 import { 
   ShoppingBag, Search, ShoppingCart, X, Calculator, Maximize, Camera, Printer, RotateCcw,
   BarChart2, Settings, ListOrdered, RefreshCcw, DollarSign, ChevronLeft, ChevronRight,
-  Headphones, MonitorSmartphone, Watch, Laptop, Coffee
+  Headphones, MonitorSmartphone, Watch, Laptop, Coffee, ChevronDown, CreditCard
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
