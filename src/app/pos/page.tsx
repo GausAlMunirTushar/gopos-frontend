@@ -37,6 +37,7 @@ const products = [
 
 export default function POSPage() {
   const [currentTime, setCurrentTime] = useState('');
+  const [activeTab, setActiveTab] = useState<'products' | 'cart'>('products');
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -90,19 +91,19 @@ export default function POSPage() {
           <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-orange-500 text-white hover:bg-orange-600 transition-colors">
             <Calculator className="w-5 h-5" />
           </button>
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors">
+          <button className="hidden sm:flex w-10 h-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors">
             <Maximize className="w-5 h-5" />
           </button>
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors">
+          <button className="hidden sm:flex w-10 h-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors">
             <Camera className="w-5 h-5" />
           </button>
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors">
+          <button className="hidden sm:flex w-10 h-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors">
             <Printer className="w-5 h-5" />
           </button>
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors">
+          <button className="hidden md:flex w-10 h-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors">
             <RotateCcw className="w-5 h-5" />
           </button>
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors">
+          <button className="hidden md:flex w-10 h-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors">
             <Settings className="w-5 h-5" />
           </button>
           <button className="flex items-center gap-2 ml-2">
@@ -111,14 +112,30 @@ export default function POSPage() {
         </div>
       </header>
 
+      {/* Mobile View Tabs Toggle */}
+      <div className="lg:hidden flex bg-white border-b border-gray-100 shrink-0">
+        <button 
+          onClick={() => setActiveTab('products')}
+          className={`flex-1 py-3 text-center text-sm font-bold border-b-2 transition-colors ${activeTab === 'products' ? 'border-orange-500 text-orange-500 bg-orange-50/10' : 'border-transparent text-gray-500'}`}
+        >
+          Products Catalog
+        </button>
+        <button 
+          onClick={() => setActiveTab('cart')}
+          className={`flex-1 py-3 text-center text-sm font-bold border-b-2 transition-colors ${activeTab === 'cart' ? 'border-orange-500 text-orange-500 bg-orange-50/10' : 'border-transparent text-gray-500'}`}
+        >
+          Order List (Cart)
+        </button>
+      </div>
+
       {/* Main Content Split */}
-      <div className="flex-1 flex min-h-0">
+      <div className="flex-1 flex flex-col lg:flex-row min-h-0">
         
         {/* Left Pane (Products) */}
-        <div className="flex-[0.65] flex flex-col p-4 overflow-hidden border-r border-gray-200">
+        <div className={`flex-1 lg:flex-[0.65] flex flex-col p-4 overflow-hidden lg:border-r border-gray-200 ${activeTab === 'products' ? 'flex' : 'hidden lg:flex'}`}>
           
           {/* Top Actions */}
-          <div className="flex gap-2 mb-4 shrink-0">
+          <div className="flex flex-wrap gap-2 mb-4 shrink-0">
             <button className="flex items-center gap-2 px-4 py-2 bg-teal-500 hover:bg-teal-600 text-white rounded-lg text-sm font-medium">
               <ListOrdered className="w-4 h-4" /> View Orders
             </button>
@@ -152,9 +169,9 @@ export default function POSPage() {
 
           {/* Products Section */}
           <div className="flex-1 flex flex-col overflow-hidden">
-            <div className="flex justify-between items-center mb-4 shrink-0">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 shrink-0">
               <h3 className="font-bold text-gray-900 text-lg">Products</h3>
-              <div className="relative w-72">
+              <div className="relative w-full sm:w-72">
                 <Input type="text" placeholder="Search Product" className="pl-10 bg-white border-gray-200" />
                 <Search className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
               </div>
@@ -185,7 +202,7 @@ export default function POSPage() {
         </div>
 
         {/* Right Pane (Cart) */}
-        <div className="flex-[0.35] bg-white flex flex-col min-w-87.5">
+        <div className={`flex-1 lg:flex-[0.35] bg-white flex flex-col lg:min-w-87.5 ${activeTab === 'cart' ? 'flex' : 'hidden lg:flex'}`}>
           
           {/* Cart Header */}
           <div className="p-4 border-b border-gray-100 shrink-0">

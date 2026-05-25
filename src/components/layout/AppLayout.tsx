@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
@@ -131,8 +131,20 @@ const MENU_ITEMS = [
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    if (window.innerWidth >= 768) {
+      setSidebarOpen(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setSidebarOpen(false);
+    }
+  }, [pathname]);
 
   const toggleMenu = (title: string) => {
     setOpenMenus(prev => ({ ...prev, [title]: !prev[title] }));
@@ -141,8 +153,20 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="h-screen w-full bg-[#F8F9FA] flex text-gray-800 font-sans overflow-hidden">
       
+      {/* Mobile Sidebar Backdrop Overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/40 z-40 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className={`h-full bg-white border-r border-gray-200 z-50 transition-all duration-300 flex flex-col shrink-0 ${sidebarOpen ? 'w-65' : 'w-20'}`}>
+      <aside className={`fixed inset-y-0 left-0 md:relative md:translate-x-0 z-50 bg-white border-r border-gray-200 transition-all duration-300 flex flex-col shrink-0 ${
+        sidebarOpen 
+          ? 'w-65 translate-x-0' 
+          : '-translate-x-full md:translate-x-0 md:w-20'
+      }`}>
         
         {/* Logo Area */}
         <div className="h-18 flex items-center px-6 border-b border-gray-100 shrink-0">
@@ -275,10 +299,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
             {/* Icons */}
             <div className="flex items-center gap-1">
-              <button className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
+              <button className="hidden md:flex w-9 h-9 items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
                 <Globe className="w-5 h-5" />
               </button>
-              <button className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
+              <button className="hidden md:flex w-9 h-9 items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
                 <Maximize className="w-5 h-5" />
               </button>
               <button className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors relative">
@@ -288,7 +312,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               <button className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
                 <Bell className="w-5 h-5" />
               </button>
-              <button className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
+              <button className="hidden sm:flex w-9 h-9 items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
                 <Settings className="w-5 h-5" />
               </button>
             </div>
