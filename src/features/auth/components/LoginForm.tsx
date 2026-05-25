@@ -13,7 +13,7 @@ export function LoginForm() {
     <>
       <h1 className="text-3xl font-bold text-gray-900 mb-2">Sign In</h1>
       <p className="text-gray-500 text-sm mb-8">
-        Access the Dreamspos panel using your email and passcode.
+        Access the goPOS panel using your email and passcode.
       </p>
 
       <form className="space-y-5">

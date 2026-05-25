@@ -60,7 +60,7 @@ export default function POSPage() {
               <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-[#FF9F43] rounded-full border-2 border-white"></div>
             </div>
             <h1 className="text-2xl font-bold text-[#092C4C] tracking-tight">
-              Dreams<span className="text-[#FF9F43] text-xs font-bold align-top uppercase leading-none mt-1 inline-block">pos</span>
+              go<span className="text-[#FF9F43] text-xs font-bold align-top uppercase leading-none mt-1 inline-block">pos</span>
             </h1>
           </div>
 

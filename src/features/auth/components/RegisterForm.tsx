@@ -13,7 +13,7 @@ export function RegisterForm() {
     <>
       <h1 className="text-3xl font-bold text-gray-900 mb-2">Register</h1>
       <p className="text-gray-500 text-sm mb-8">
-        Create New Dreamspos Account
+        Create New goPOS Account
       </p>
 
       <form className="space-y-5">

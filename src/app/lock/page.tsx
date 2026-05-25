@@ -18,7 +18,7 @@ export default function LockScreenPage() {
           <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-[#FF9F43] rounded-full"></div>
         </div>
         <h1 className="text-3xl font-bold text-[#092C4C] tracking-tight">
-          Dreams<span className="text-[#FF9F43] text-sm align-top">POS</span>
+          go<span className="text-[#FF9F43] text-sm align-top">POS</span>
         </h1>
       </div>
 
@@ -37,7 +37,7 @@ export default function LockScreenPage() {
           </button>
         </div>
         <p className="text-xs text-gray-400">
-          Copyrights © 2025 - DreamsPOS
+          Copyrights © 2025 - goPOS
         </p>
       </div>
     </div>

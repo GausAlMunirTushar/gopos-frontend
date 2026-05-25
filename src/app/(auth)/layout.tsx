@@ -12,7 +12,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
               <span className="text-white font-bold">D</span>
             </div>
             <span className="text-2xl font-bold text-blue-900">
-              Dreams<span className="text-orange-500">POS</span>
+              go<span className="text-orange-500">POS</span>
             </span>
           </div>
         </div>
@@ -24,7 +24,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 
         {/* Footer */}
         <div className="py-4 text-center text-sm text-gray-500">
-          Copyrights © 2025 - DreamsPOS
+          Copyrights © 2025 - goPOS
         </div>
       </div>
 
