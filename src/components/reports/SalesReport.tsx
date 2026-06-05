@@ -6,6 +6,8 @@ import {
   Search, FileText, RefreshCcw, ChevronUp, ChevronRight, ChevronDown,
   FileSpreadsheet, Calendar, TrendingUp, Users, Package
 } from 'lucide-react';
+import { PageHeader } from '@/components/shared/PageHeader';
+import { StatsCard } from '@/components/shared/StatsCard';
 
 const salesData = [
   { sku: 'PT001', name: 'Lenovo IdeaPad 3', brand: 'Lenovo', category: 'Computers', soldQty: '05', soldAmount: '$3000', instock: '100', img: 'laptop' },
@@ -21,68 +23,63 @@ export default function SalesReport() {
   return (
     <div className="space-y-6">
       
-      {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">Sales Report</h1>
-          <div className="text-sm text-gray-500 flex items-center gap-2">
-            <span>Dashboard</span>
-            <ChevronRight className="w-3 h-3" />
-            <span className="text-gray-900 font-medium">Sales Report</span>
-          </div>
-        </div>
-        
-        <div className="flex items-center gap-2">
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
-             <RefreshCcw className="w-5 h-5" />
-          </button>
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
-             <ChevronUp className="w-5 h-5" />
-          </button>
-        </div>
-      </div>
+      <PageHeader 
+        title="Sales Report" 
+        breadcrumbs={[
+          { label: 'Dashboard', href: '/dashboard' },
+          { label: 'Reports', href: '/reports' },
+          { label: 'Sales Report' }
+        ]}
+        actions={
+          <>
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white transition-colors">
+               <RefreshCcw className="w-5 h-5" />
+            </button>
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white transition-colors">
+               <ChevronUp className="w-5 h-5" />
+            </button>
+          </>
+        }
+      />
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-2xl border border-gray-200 flex flex-col gap-2">
-          <div className="flex items-center gap-2 text-teal-600 font-medium mb-2">
-            <TrendingUp className="w-5 h-5" /> New Sales
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900">$40,565,000</h2>
-          <div className="text-sm text-gray-500 mt-2 flex items-center gap-2">
-             <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-green-100 text-green-700 text-xs font-medium">25.5 ↗</span> From Last Month
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-2xl border border-gray-200 flex flex-col gap-2">
-          <div className="flex items-center gap-2 text-indigo-600 font-medium mb-2">
-            <Package className="w-5 h-5" /> Total Orders
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900">8690</h2>
-          <div className="text-sm text-gray-500 mt-2 flex items-center gap-2">
-             <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-green-100 text-green-700 text-xs font-medium">12.2 ↗</span> From Last Month
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-2xl border border-gray-200 flex flex-col gap-2">
-          <div className="flex items-center gap-2 text-pink-600 font-medium mb-2">
-            <Users className="w-5 h-5" /> Total Customers
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900">4558</h2>
-          <div className="text-sm text-gray-500 mt-2 flex items-center gap-2">
-             <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-green-100 text-green-700 text-xs font-medium">16.3 ↗</span> From Last Month
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-2xl border border-gray-200 flex flex-col gap-2">
-          <div className="flex items-center gap-2 text-orange-500 font-medium mb-2">
-            <Package className="w-5 h-5" /> Units Sold
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900">865</h2>
-          <div className="text-sm text-gray-500 mt-2 flex items-center gap-2">
-             <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-red-100 text-red-700 text-xs font-medium">12.2 ↘</span> From Last Month
-          </div>
-        </div>
+        <StatsCard 
+          label="New Sales" 
+          value="$40,565,000" 
+          trend="25.5%" 
+          trendType="up"
+          icon={TrendingUp}
+          iconColor="text-teal-600"
+          iconBg="bg-teal-50"
+        />
+        <StatsCard 
+          label="Total Orders" 
+          value="8,690" 
+          trend="12.2%" 
+          trendType="up"
+          icon={Package}
+          iconColor="text-indigo-600"
+          iconBg="bg-indigo-50"
+        />
+        <StatsCard 
+          label="Total Customers" 
+          value="4,558" 
+          trend="16.3%" 
+          trendType="up"
+          icon={Users}
+          iconColor="text-pink-600"
+          iconBg="bg-pink-50"
+        />
+        <StatsCard 
+          label="Units Sold" 
+          value="865" 
+          trend="12.2%" 
+          trendType="down"
+          icon={Package}
+          iconColor="text-orange-500"
+          iconBg="bg-orange-50"
+        />
       </div>
 
       {/* Filters Form */}
