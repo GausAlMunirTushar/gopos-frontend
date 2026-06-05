@@ -1,13 +1,22 @@
 'use client';
 
 import React from 'react';
-import NextLink from 'next/link';
 import { 
-  Search, FileText, RefreshCcw, ChevronUp, ChevronRight, ChevronDown,
-  FileSpreadsheet, Calendar, Truck
+  FileText, RefreshCcw, ChevronUp, ChevronRight,
+  FileSpreadsheet, Calendar
 } from 'lucide-react';
+import { DataTable } from '@/components/ui/data-table';
+import { ColumnDef } from '@tanstack/react-table';
 
-const supplierData = [
+interface SupplierReportData {
+  name: string;
+  phone: string;
+  totalPurchases: string;
+  paidAmount: string;
+  due: string;
+}
+
+const supplierData: SupplierReportData[] = [
   { name: 'Apex Computers', phone: '+15964712634', totalPurchases: '20', paidAmount: '$15000', due: '$0' },
   { name: 'Beats Headphones', phone: '+16372895190', totalPurchases: '8', paidAmount: '$4500', due: '$1200' },
   { name: 'Dazzle Shoes', phone: '+17589201739', totalPurchases: '15', paidAmount: '$8200', due: '$0' },
@@ -16,6 +25,29 @@ const supplierData = [
 ];
 
 export default function SupplierReport() {
+  const columns: ColumnDef<SupplierReportData>[] = [
+    {
+      accessorKey: 'name',
+      header: 'Supplier Name',
+      cell: ({ row }) => <span className="font-medium text-gray-900">{row.getValue('name')}</span>,
+    },
+    { accessorKey: 'phone', header: 'Phone' },
+    { accessorKey: 'totalPurchases', header: 'Total Purchases' },
+    { accessorKey: 'paidAmount', header: 'Paid Amount' },
+    {
+      accessorKey: 'due',
+      header: 'Due Amount',
+      cell: ({ row }) => {
+        const due = row.getValue('due') as string;
+        return (
+          <span className={`font-medium ${due === '$0' ? 'text-green-600' : 'text-red-500'}`}>
+            {due}
+          </span>
+        );
+      },
+    },
+  ];
+
   return (
     <div className="space-y-6">
       
@@ -62,47 +94,23 @@ export default function SupplierReport() {
         </div>
       </div>
 
-      {/* Main Table Card */}
-      <div className="bg-white border border-gray-200 rounded-2xl">
-        
-        {/* Table Header */}
-        <div className="p-4 border-b border-gray-100 flex justify-between items-center">
-          <h3 className="font-bold text-gray-900 text-lg">Supplier Report</h3>
-          <div className="flex items-center gap-2">
-            <button className="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-red-500 hover:bg-gray-50 bg-white">
-              <FileText className="w-4 h-4" />
-            </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-green-600 hover:bg-gray-50 bg-white">
-              <FileSpreadsheet className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left whitespace-nowrap">
-            <thead className="text-gray-700 bg-gray-50/50 border-b border-gray-100">
-              <tr>
-                <th className="p-4 font-bold">Supplier Name</th>
-                <th className="p-4 font-bold">Phone</th>
-                <th className="p-4 font-bold">Total Purchases ↑↓</th>
-                <th className="p-4 font-bold">Paid Amount ↑↓</th>
-                <th className="p-4 font-bold">Due Amount ↑↓</th>
-              </tr>
-            </thead>
-            <tbody>
-              {supplierData.map((row, i) => (
-                <tr key={i} className="border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors">
-                  <td className="p-4 font-medium text-gray-900">{row.name}</td>
-                  <td className="p-4 text-gray-500">{row.phone}</td>
-                  <td className="p-4 text-gray-500">{row.totalPurchases}</td>
-                  <td className="p-4 text-gray-500">{row.paidAmount}</td>
-                  <td className={`p-4 font-medium ${row.due === '$0' ? 'text-green-600' : 'text-red-500'}`}>{row.due}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <div className="bg-white border border-gray-200 rounded-2xl p-4">
+        <DataTable 
+          columns={columns} 
+          data={supplierData} 
+          searchKey="name"
+          searchPlaceholder="Search supplier..."
+          actions={
+            <>
+              <button className="w-10 h-10 flex items-center justify-center rounded border border-gray-200 text-red-500 hover:bg-gray-50 bg-white">
+                <FileText className="w-4 h-4" />
+              </button>
+              <button className="w-10 h-10 flex items-center justify-center rounded border border-gray-200 text-green-600 hover:bg-gray-50 bg-white">
+                <FileSpreadsheet className="w-4 h-4" />
+              </button>
+            </>
+          }
+        />
       </div>
 
     </div>

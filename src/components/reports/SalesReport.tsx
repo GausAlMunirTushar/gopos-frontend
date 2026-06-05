@@ -1,7 +1,5 @@
 'use client';
 
-import React from 'react';
-import NextLink from 'next/link';
 import { 
   Search, FileText, RefreshCcw, ChevronUp, ChevronRight, ChevronDown,
   FileSpreadsheet, Calendar, TrendingUp, Users, Package

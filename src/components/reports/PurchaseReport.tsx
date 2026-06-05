@@ -1,13 +1,23 @@
 'use client';
 
 import React from 'react';
-import NextLink from 'next/link';
 import { 
-  Search, FileText, RefreshCcw, ChevronUp, ChevronRight, ChevronDown,
-  FileSpreadsheet, Calendar, ShoppingCart
+  FileText, RefreshCcw, ChevronUp, ChevronRight,
+  FileSpreadsheet, Calendar
 } from 'lucide-react';
+import { DataTable } from '@/components/ui/data-table';
+import { ColumnDef } from '@tanstack/react-table';
 
-const purchaseData = [
+interface PurchaseReportData {
+  no: string;
+  supplier: string;
+  date: string;
+  amount: string;
+  paid: string;
+  status: string;
+}
+
+const purchaseData: PurchaseReportData[] = [
   { no: 'PUR-101', supplier: 'Apex Computers', date: '22 Dec 2024', amount: '$5000', paid: '$5000', status: 'Paid' },
   { no: 'PUR-102', supplier: 'Beats Headphones', date: '19 Dec 2024', amount: '$2500', paid: '$1500', status: 'Partial' },
   { no: 'PUR-103', supplier: 'Dazzle Shoes', date: '15 Dec 2024', amount: '$3200', paid: '$0', status: 'Unpaid' },
@@ -15,6 +25,37 @@ const purchaseData = [
 ];
 
 export default function PurchaseReport() {
+  const columns: ColumnDef<PurchaseReportData>[] = [
+    {
+      accessorKey: 'no',
+      header: 'Purchase ID',
+      cell: ({ row }) => <span className="font-medium text-orange-500">{row.getValue('no')}</span>,
+    },
+    {
+      accessorKey: 'supplier',
+      header: 'Supplier',
+      cell: ({ row }) => <span className="font-medium text-gray-900">{row.getValue('supplier')}</span>,
+    },
+    { accessorKey: 'date', header: 'Date' },
+    { accessorKey: 'amount', header: 'Total Amount' },
+    { accessorKey: 'paid', header: 'Paid' },
+    {
+      accessorKey: 'status',
+      header: 'Status',
+      cell: ({ row }) => {
+        const status = row.getValue('status') as string;
+        const colorClass = status === 'Paid' ? 'bg-green-50 text-green-600 border-green-200' : status === 'Unpaid' ? 'bg-red-50 text-red-600 border-red-200' : 'bg-orange-50 text-orange-600 border-orange-200';
+        const dotClass = status === 'Paid' ? 'bg-green-600' : status === 'Unpaid' ? 'bg-red-600' : 'bg-orange-600';
+        return (
+          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border ${colorClass}`}>
+            <span className={`w-1.5 h-1.5 rounded-full ${dotClass}`}></span>
+            {status}
+          </span>
+        );
+      },
+    },
+  ];
+
   return (
     <div className="space-y-6">
       
@@ -67,54 +108,23 @@ export default function PurchaseReport() {
         </div>
       </div>
 
-      {/* Main Table Card */}
-      <div className="bg-white border border-gray-200 rounded-2xl">
-        
-        {/* Table Header */}
-        <div className="p-4 border-b border-gray-100 flex justify-between items-center">
-          <h3 className="font-bold text-gray-900 text-lg">Purchase Report</h3>
-          <div className="flex items-center gap-2">
-            <button className="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-red-500 hover:bg-gray-50 bg-white">
-              <FileText className="w-4 h-4" />
-            </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-green-600 hover:bg-gray-50 bg-white">
-              <FileSpreadsheet className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left whitespace-nowrap">
-            <thead className="text-gray-700 bg-gray-50/50 border-b border-gray-100">
-              <tr>
-                <th className="p-4 font-bold">Purchase ID ↑↓</th>
-                <th className="p-4 font-bold">Supplier</th>
-                <th className="p-4 font-bold">Date ↑↓</th>
-                <th className="p-4 font-bold">Total Amount ↑↓</th>
-                <th className="p-4 font-bold">Paid ↑↓</th>
-                <th className="p-4 font-bold">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {purchaseData.map((row, i) => (
-                <tr key={i} className="border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors">
-                  <td className="p-4 font-medium text-orange-500">{row.no}</td>
-                  <td className="p-4 text-gray-900 font-medium">{row.supplier}</td>
-                  <td className="p-4 text-gray-500">{row.date}</td>
-                  <td className="p-4 text-gray-500">{row.amount}</td>
-                  <td className="p-4 text-gray-500">{row.paid}</td>
-                  <td className="p-4">
-                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border ${ row.status === 'Paid' ? 'bg-green-50 text-green-600 border-green-200' : row.status === 'Unpaid' ? 'bg-red-50 text-red-600 border-red-200' : 'bg-orange-50 text-orange-600 border-orange-200' }`}>
-                      <span className={`w-1.5 h-1.5 rounded-full ${ row.status === 'Paid' ? 'bg-green-600' : row.status === 'Unpaid' ? 'bg-red-600' : 'bg-orange-600' }`}></span>
-                      {row.status}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <div className="bg-white border border-gray-200 rounded-2xl p-4">
+        <DataTable 
+          columns={columns} 
+          data={purchaseData} 
+          searchKey="no"
+          searchPlaceholder="Search purchase ID..."
+          actions={
+            <>
+              <button className="w-10 h-10 flex items-center justify-center rounded border border-gray-200 text-red-500 hover:bg-gray-50 bg-white">
+                <FileText className="w-4 h-4" />
+              </button>
+              <button className="w-10 h-10 flex items-center justify-center rounded border border-gray-200 text-green-600 hover:bg-gray-50 bg-white">
+                <FileSpreadsheet className="w-4 h-4" />
+              </button>
+            </>
+          }
+        />
       </div>
 
     </div>

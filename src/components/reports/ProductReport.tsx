@@ -1,13 +1,24 @@
 'use client';
 
 import React from 'react';
-import NextLink from 'next/link';
 import { 
-  Search, FileText, RefreshCcw, ChevronUp, ChevronRight, ChevronDown,
-  FileSpreadsheet, Calendar, PackageSearch
+  FileText, RefreshCcw, ChevronUp, ChevronRight,
+  FileSpreadsheet, Calendar
 } from 'lucide-react';
+import { DataTable } from '@/components/ui/data-table';
+import { ColumnDef } from '@tanstack/react-table';
 
-const productData = [
+interface ProductReportData {
+  sku: string;
+  name: string;
+  category: string;
+  price: string;
+  qtySold: string;
+  revenue: string;
+  img: string;
+}
+
+const productData: ProductReportData[] = [
   { sku: 'PT001', name: 'Lenovo IdeaPad 3', category: 'Computers', price: '$300', qtySold: '50', revenue: '$15000', img: 'laptop' },
   { sku: 'PT002', name: 'Beats Pro', category: 'Electronics', price: '$160', qtySold: '120', revenue: '$19200', img: 'headphones' },
   { sku: 'PT003', name: 'Nike Jordan', category: 'Shoe', price: '$110', qtySold: '30', revenue: '$3300', img: 'shoes' },
@@ -16,6 +27,28 @@ const productData = [
 ];
 
 export default function ProductReport() {
+  const columns: ColumnDef<ProductReportData>[] = [
+    {
+      accessorKey: 'name',
+      header: 'Product Name',
+      cell: ({ row }) => (
+        <div className="flex items-center gap-3">
+          <img src={`https://source.unsplash.com/100x100/?${row.original.img}&sig=${row.index}`} alt={row.original.name} className="w-8 h-8 rounded-md object-cover bg-gray-100" />
+          <span className="font-medium text-gray-900">{row.original.name}</span>
+        </div>
+      ),
+    },
+    { accessorKey: 'sku', header: 'SKU' },
+    { accessorKey: 'category', header: 'Category' },
+    { accessorKey: 'price', header: 'Price' },
+    { accessorKey: 'qtySold', header: 'Qty Sold' },
+    {
+      accessorKey: 'revenue',
+      header: 'Revenue',
+      cell: ({ row }) => <span className="font-medium text-gray-900">{row.getValue('revenue')}</span>,
+    },
+  ];
+
   return (
     <div className="space-y-6">
       
@@ -68,54 +101,23 @@ export default function ProductReport() {
         </div>
       </div>
 
-      {/* Main Table Card */}
-      <div className="bg-white border border-gray-200 rounded-2xl">
-        
-        {/* Table Header */}
-        <div className="p-4 border-b border-gray-100 flex justify-between items-center">
-          <h3 className="font-bold text-gray-900 text-lg">Product Report</h3>
-          <div className="flex items-center gap-2">
-            <button className="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-red-500 hover:bg-gray-50 bg-white">
-              <FileText className="w-4 h-4" />
-            </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-green-600 hover:bg-gray-50 bg-white">
-              <FileSpreadsheet className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left whitespace-nowrap">
-            <thead className="text-gray-700 bg-gray-50/50 border-b border-gray-100">
-              <tr>
-                <th className="p-4 font-bold">Product Name</th>
-                <th className="p-4 font-bold">SKU ↑↓</th>
-                <th className="p-4 font-bold">Category</th>
-                <th className="p-4 font-bold">Price ↑↓</th>
-                <th className="p-4 font-bold">Qty Sold ↑↓</th>
-                <th className="p-4 font-bold">Revenue ↑↓</th>
-              </tr>
-            </thead>
-            <tbody>
-              {productData.map((row, i) => (
-                <tr key={i} className="border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors">
-                  <td className="p-4">
-                    <div className="flex items-center gap-3">
-                      <img src={`https://source.unsplash.com/100x100/?${row.img}&sig=${i}`} alt={row.name} className="w-8 h-8 rounded-md object-cover bg-gray-100" />
-                      <span className="font-medium text-gray-900">{row.name}</span>
-                    </div>
-                  </td>
-                  <td className="p-4 text-gray-500">{row.sku}</td>
-                  <td className="p-4 text-gray-500">{row.category}</td>
-                  <td className="p-4 text-gray-500">{row.price}</td>
-                  <td className="p-4 text-gray-500">{row.qtySold}</td>
-                  <td className="p-4 text-gray-500 font-medium">{row.revenue}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <div className="bg-white border border-gray-200 rounded-2xl p-4">
+        <DataTable 
+          columns={columns} 
+          data={productData} 
+          searchKey="name"
+          searchPlaceholder="Search product..."
+          actions={
+            <>
+              <button className="w-10 h-10 flex items-center justify-center rounded border border-gray-200 text-red-500 hover:bg-gray-50 bg-white">
+                <FileText className="w-4 h-4" />
+              </button>
+              <button className="w-10 h-10 flex items-center justify-center rounded border border-gray-200 text-green-600 hover:bg-gray-50 bg-white">
+                <FileSpreadsheet className="w-4 h-4" />
+              </button>
+            </>
+          }
+        />
       </div>
 
     </div>

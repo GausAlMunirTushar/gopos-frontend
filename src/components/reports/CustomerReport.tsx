@@ -1,13 +1,22 @@
 'use client';
 
 import React from 'react';
-import NextLink from 'next/link';
 import { 
-  Search, FileText, RefreshCcw, ChevronUp, ChevronRight, ChevronDown,
-  FileSpreadsheet, Calendar, User
+  FileText, RefreshCcw, ChevronUp, ChevronRight,
+  FileSpreadsheet, Calendar
 } from 'lucide-react';
+import { DataTable } from '@/components/ui/data-table';
+import { ColumnDef } from '@tanstack/react-table';
 
-const customerData = [
+interface CustomerReportData {
+  name: string;
+  phone: string;
+  totalOrders: string;
+  totalAmount: string;
+  due: string;
+}
+
+const customerData: CustomerReportData[] = [
   { name: 'Carl Evans', phone: '+12163547758', totalOrders: '12', totalAmount: '$1500', due: '$0' },
   { name: 'Minerva Rameriz', phone: '+11367529510', totalOrders: '5', totalAmount: '$450', due: '$120' },
   { name: 'Robert Lamon', phone: '+15362789414', totalOrders: '18', totalAmount: '$3200', due: '$0' },
@@ -16,6 +25,34 @@ const customerData = [
 ];
 
 export default function CustomerReport() {
+  const columns: ColumnDef<CustomerReportData>[] = [
+    {
+      accessorKey: 'name',
+      header: 'Customer Name',
+      cell: ({ row }) => (
+        <div className="flex items-center gap-3">
+          <img src={`https://i.pravatar.cc/100?img=${row.index + 1}`} alt={row.original.name} className="w-8 h-8 rounded-full object-cover" />
+          <span className="font-medium text-gray-900">{row.original.name}</span>
+        </div>
+      ),
+    },
+    { accessorKey: 'phone', header: 'Phone' },
+    { accessorKey: 'totalOrders', header: 'Total Orders' },
+    { accessorKey: 'totalAmount', header: 'Total Amount' },
+    {
+      accessorKey: 'due',
+      header: 'Due Amount',
+      cell: ({ row }) => {
+        const due = row.getValue('due') as string;
+        return (
+          <span className={`font-medium ${due === '$0' ? 'text-green-600' : 'text-red-500'}`}>
+            {due}
+          </span>
+        );
+      },
+    },
+  ];
+
   return (
     <div className="space-y-6">
       
@@ -62,52 +99,23 @@ export default function CustomerReport() {
         </div>
       </div>
 
-      {/* Main Table Card */}
-      <div className="bg-white border border-gray-200 rounded-2xl">
-        
-        {/* Table Header */}
-        <div className="p-4 border-b border-gray-100 flex justify-between items-center">
-          <h3 className="font-bold text-gray-900 text-lg">Customer Report</h3>
-          <div className="flex items-center gap-2">
-            <button className="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-red-500 hover:bg-gray-50 bg-white">
-              <FileText className="w-4 h-4" />
-            </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-green-600 hover:bg-gray-50 bg-white">
-              <FileSpreadsheet className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left whitespace-nowrap">
-            <thead className="text-gray-700 bg-gray-50/50 border-b border-gray-100">
-              <tr>
-                <th className="p-4 font-bold">Customer Name</th>
-                <th className="p-4 font-bold">Phone</th>
-                <th className="p-4 font-bold">Total Orders ↑↓</th>
-                <th className="p-4 font-bold">Total Amount ↑↓</th>
-                <th className="p-4 font-bold">Due Amount ↑↓</th>
-              </tr>
-            </thead>
-            <tbody>
-              {customerData.map((row, i) => (
-                <tr key={i} className="border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors">
-                  <td className="p-4">
-                    <div className="flex items-center gap-3">
-                      <img src={`https://i.pravatar.cc/100?img=${i+1}`} alt={row.name} className="w-8 h-8 rounded-full object-cover" />
-                      <span className="font-medium text-gray-900">{row.name}</span>
-                    </div>
-                  </td>
-                  <td className="p-4 text-gray-500">{row.phone}</td>
-                  <td className="p-4 text-gray-500">{row.totalOrders}</td>
-                  <td className="p-4 text-gray-500">{row.totalAmount}</td>
-                  <td className={`p-4 font-medium ${row.due === '$0' ? 'text-green-600' : 'text-red-500'}`}>{row.due}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <div className="bg-white border border-gray-200 rounded-2xl p-4">
+        <DataTable 
+          columns={columns} 
+          data={customerData} 
+          searchKey="name"
+          searchPlaceholder="Search customer..."
+          actions={
+            <>
+              <button className="w-10 h-10 flex items-center justify-center rounded border border-gray-200 text-red-500 hover:bg-gray-50 bg-white">
+                <FileText className="w-4 h-4" />
+              </button>
+              <button className="w-10 h-10 flex items-center justify-center rounded border border-gray-200 text-green-600 hover:bg-gray-50 bg-white">
+                <FileSpreadsheet className="w-4 h-4" />
+              </button>
+            </>
+          }
+        />
       </div>
 
     </div>
