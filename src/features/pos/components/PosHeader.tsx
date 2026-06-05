@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import NextLink from 'next/link';
 import { 
   ShoppingBag, Calculator, Maximize, Minimize, Camera, Printer, RotateCcw,
-  BarChart2, Settings, ChevronDown
+  BarChart2, Settings, ChevronDown, Clock
 } from 'lucide-react';
 
 export function PosHeader() {
@@ -14,7 +14,15 @@ export function PosHeader() {
   useEffect(() => {
     const timer = setInterval(() => {
       const now = new Date();
-      setCurrentTime(now.toLocaleTimeString('en-US', { hour12: false }));
+      // Set to Asia/Dhaka timezone (+6) and format as digital clock
+      const formatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Asia/Dhaka',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+      });
+      setCurrentTime(formatter.format(now));
     }, 1000);
     
     const handleFullscreenChange = () => {
@@ -56,9 +64,9 @@ export function PosHeader() {
           </h1>
         </div>
 
-        <div className="hidden lg:flex items-center gap-2 bg-teal-500 text-white px-4 py-2 rounded-lg font-medium text-sm">
-          <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-          {currentTime || '00:00:00'}
+        <div className="hidden lg:flex items-center gap-2 bg-teal-500 text-white px-4 py-2 rounded-lg font-medium text-sm tracking-wider">
+          <Clock className="w-4 h-4" />
+          {currentTime || '00:00:00 --'}
         </div>
       </div>
 
