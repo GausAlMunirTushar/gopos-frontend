@@ -12,6 +12,8 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell
 } from 'recharts';
+import { DataTable } from '@/components/ui/data-table';
+import { ColumnDef } from '@tanstack/react-table';
 
 // Mock Data
 const salesPurchaseData = [
@@ -55,8 +57,56 @@ const topCategoriesData = [
   { name: 'Lifestyles', value: 456, color: '#F3F4F6' },
 ];
 
+interface Transaction {
+  date: string;
+  name: string;
+  id: string;
+  status: string;
+  color: string;
+  total: string;
+}
+
+const transactionData: Transaction[] = [
+  { date: '24 May 2025', name: 'Andrea Willer', id: '#114589', status: 'Completed', color: 'bg-teal-500', total: '$4560' },
+  { date: '23 May 2025', name: 'Timothy Sands', id: '#114589', status: 'Completed', color: 'bg-teal-500', total: '$3569' },
+  { date: '22 May 2025', name: 'Bonnie Rodrigues', id: '#114589', status: 'Draft', color: 'bg-pink-500', total: '$2659' },
+  { date: '21 May 2025', name: 'Randy McCree', id: '#114589', status: 'Completed', color: 'bg-teal-500', total: '$2155' },
+];
+
 export default function Dashboard() {
   const [alertVisible, setAlertVisible] = useState(true);
+
+  const transactionColumns: ColumnDef<Transaction>[] = [
+    { accessorKey: 'date', header: 'Date' },
+    {
+      accessorKey: 'name',
+      header: 'Customer',
+      cell: ({ row }) => (
+        <div className="flex items-center gap-3">
+          <img src={`https://i.pravatar.cc/150?u=${row.original.name}`} alt={row.original.name} className="w-8 h-8 rounded-full bg-gray-100" />
+          <div>
+            <p className="font-bold text-gray-900">{row.original.name}</p>
+            <p className="text-xs text-orange-500">{row.original.id}</p>
+          </div>
+        </div>
+      ),
+    },
+    {
+      accessorKey: 'status',
+      header: 'Status',
+      cell: ({ row }) => (
+        <span className={`text-[10px] font-bold text-white px-2 py-0.5 rounded flex items-center gap-1 w-max ${row.original.color}`}>
+          <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
+          {row.getValue('status')}
+        </span>
+      ),
+    },
+    {
+      accessorKey: 'total',
+      header: 'Total',
+      cell: ({ row }) => <span className="font-bold text-gray-900 text-right block">{row.getValue('total')}</span>,
+    },
+  ];
 
   return (
     <div className="space-y-6">
@@ -487,45 +537,11 @@ export default function Dashboard() {
             ))}
           </div>
 
-          <div className="flex-1 overflow-auto">
-            <table className="w-full text-sm text-left">
-              <thead className="text-xs text-gray-500 font-medium border-b border-gray-100">
-                <tr>
-                  <th className="pb-3 font-medium">Date</th>
-                  <th className="pb-3 font-medium">Customer</th>
-                  <th className="pb-3 font-medium">Status</th>
-                  <th className="pb-3 font-medium text-right">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { date: '24 May 2025', name: 'Andrea Willer', id: '#114589', status: 'Completed', color: 'bg-teal-500', total: '$4560' },
-                  { date: '23 May 2025', name: 'Timothy Sands', id: '#114589', status: 'Completed', color: 'bg-teal-500', total: '$3569' },
-                  { date: '22 May 2025', name: 'Bonnie Rodrigues', id: '#114589', status: 'Draft', color: 'bg-pink-500', total: '$2659' },
-                  { date: '21 May 2025', name: 'Randy McCree', id: '#114589', status: 'Completed', color: 'bg-teal-500', total: '$2155' },
-                ].map((row, i) => (
-                  <tr key={i} className="border-b border-gray-50 last:border-0">
-                    <td className="py-4 text-gray-500">{row.date}</td>
-                    <td className="py-4">
-                      <div className="flex items-center gap-3">
-                        <img src={`https://i.pravatar.cc/150?u=${row.name}`} alt={row.name} className="w-8 h-8 rounded-full bg-gray-100" />
-                        <div>
-                          <p className="font-bold text-gray-900">{row.name}</p>
-                          <p className="text-xs text-orange-500">{row.id}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="py-4">
-                      <span className={`text-[10px] font-bold text-white px-2 py-0.5 rounded flex items-center gap-1 w-max ${row.color}`}>
-                        <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
-                        {row.status}
-                      </span>
-                    </td>
-                    <td className="py-4 font-bold text-gray-900 text-right">{row.total}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="flex-1 overflow-hidden">
+            <DataTable 
+              columns={transactionColumns} 
+              data={transactionData} 
+            />
           </div>
         </div>
       </div>

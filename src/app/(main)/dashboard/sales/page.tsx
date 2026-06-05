@@ -9,6 +9,8 @@ import {
 import { 
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
+import { DataTable } from '@/components/ui/data-table';
+import { ColumnDef } from '@tanstack/react-table';
 
 const salesData = [
   { name: 'Jan', value: 25 },
@@ -22,7 +24,73 @@ const salesData = [
   { name: 'Sep', value: 18 },
 ];
 
+interface SalesTransaction {
+  id: number;
+  name: string;
+  time: string;
+  method: string;
+  tx: string;
+  status: string;
+  statusColor: string;
+  amount: string;
+  img: string;
+}
+
+const transactionData: SalesTransaction[] = [
+  { id: 1, name: 'Lobar Handy', time: '15 Mins', method: 'Paypal', tx: '#416645453773', status: 'Success', statusColor: 'bg-teal-500', amount: '$1099.00', img: 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=100' },
+  { id: 2, name: 'Red Premium Handy', time: '15 Mins', method: 'Apple Pay', tx: '#147784454554', status: 'Cancelled', statusColor: 'bg-red-500', amount: '$600.55', img: 'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?w=100' },
+  { id: 3, name: 'Iphone 14 Pro', time: '15 Mins', method: 'Stripe', tx: '#147784454554', status: 'Pending', statusColor: 'bg-blue-400', amount: '$200.10', img: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=100' },
+  { id: 4, name: 'Black Slim 200', time: '15 Mins', method: 'PayU', tx: '#147784454554', status: 'Success', statusColor: 'bg-teal-500', amount: '$1569.00', img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100' },
+  { id: 5, name: 'Woodcraft Sandal', time: '15 Mins', method: 'Paytm', tx: '#147784454554', status: 'Success', statusColor: 'bg-teal-500', amount: '$1478.00', img: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=100' },
+];
+
 export default function SalesDashboard() {
+  const transactionColumns: ColumnDef<SalesTransaction>[] = [
+    {
+      accessorKey: 'id',
+      header: '#',
+      cell: ({ row }) => <span className="text-gray-500 font-medium">{row.getValue('id')}</span>,
+    },
+    {
+      accessorKey: 'name',
+      header: 'Order Details',
+      cell: ({ row }) => (
+        <div className="flex items-center gap-3">
+          <img src={row.original.img} alt={row.original.name} className="w-10 h-10 rounded-lg object-cover bg-gray-100" />
+          <div>
+            <p className="font-bold text-gray-900 mb-0.5">{row.original.name}</p>
+            <p className="text-xs text-gray-400 flex items-center gap-1"><Clock className="w-3 h-3" /> {row.original.time}</p>
+          </div>
+        </div>
+      ),
+    },
+    {
+      accessorKey: 'method',
+      header: 'Payment',
+      cell: ({ row }) => (
+        <div>
+          <p className="font-bold text-gray-900 mb-0.5">{row.original.method}</p>
+          <a href="#" className="text-xs text-blue-500 hover:underline">{row.original.tx}</a>
+        </div>
+      ),
+    },
+    {
+      accessorKey: 'status',
+      header: 'Status',
+      cell: ({ row }) => (
+        <span className={`text-[11px] font-bold text-white px-2.5 py-1 rounded-md flex items-center gap-1.5 w-max ${row.original.statusColor}`}>
+          <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
+          {row.getValue('status')}
+        </span>
+      ),
+    },
+    {
+      accessorKey: 'amount',
+      header: 'Amount',
+      cell: ({ row }) => <span className="font-bold text-gray-900 text-right block">{row.getValue('amount')}</span>,
+    },
+  ];
+
   return (
     <div className="space-y-6">
       
@@ -143,51 +211,11 @@ export default function SalesDashboard() {
             </button>
           </div>
           
-          <div className="flex-1 overflow-x-auto">
-            <table className="w-full text-sm text-left">
-              <thead className="text-sm text-gray-700 font-bold border-b border-gray-100">
-                <tr>
-                  <th className="pb-4 font-bold">#</th>
-                  <th className="pb-4 font-bold">Order Details</th>
-                  <th className="pb-4 font-bold">Payment</th>
-                  <th className="pb-4 font-bold">Status</th>
-                  <th className="pb-4 font-bold text-right">Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { id: 1, name: 'Lobar Handy', time: '15 Mins', method: 'Paypal', tx: '#416645453773', status: 'Success', statusColor: 'bg-teal-500', amount: '$1099.00', img: 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=100' },
-                  { id: 2, name: 'Red Premium Handy', time: '15 Mins', method: 'Apple Pay', tx: '#147784454554', status: 'Cancelled', statusColor: 'bg-red-500', amount: '$600.55', img: 'https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?w=100' },
-                  { id: 3, name: 'Iphone 14 Pro', time: '15 Mins', method: 'Stripe', tx: '#147784454554', status: 'Pending', statusColor: 'bg-blue-400', amount: '$200.10', img: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=100' },
-                  { id: 4, name: 'Black Slim 200', time: '15 Mins', method: 'PayU', tx: '#147784454554', status: 'Success', statusColor: 'bg-teal-500', amount: '$1569.00', img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100' },
-                  { id: 5, name: 'Woodcraft Sandal', time: '15 Mins', method: 'Paytm', tx: '#147784454554', status: 'Success', statusColor: 'bg-teal-500', amount: '$1478.00', img: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=100' },
-                ].map((row) => (
-                  <tr key={row.id} className="border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors">
-                    <td className="py-4 text-gray-500 font-medium">{row.id}</td>
-                    <td className="py-4">
-                      <div className="flex items-center gap-3">
-                        <img src={row.img} alt={row.name} className="w-10 h-10 rounded-lg object-cover bg-gray-100" />
-                        <div>
-                          <p className="font-bold text-gray-900 mb-0.5">{row.name}</p>
-                          <p className="text-xs text-gray-400 flex items-center gap-1"><Clock className="w-3 h-3" /> {row.time}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="py-4">
-                      <p className="font-bold text-gray-900 mb-0.5">{row.method}</p>
-                      <a href="#" className="text-xs text-blue-500 hover:underline">{row.tx}</a>
-                    </td>
-                    <td className="py-4">
-                      <span className={`text-[11px] font-bold text-white px-2.5 py-1 rounded-md flex items-center gap-1.5 w-max ${row.statusColor}`}>
-                        <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
-                        {row.status}
-                      </span>
-                    </td>
-                    <td className="py-4 font-bold text-gray-900 text-right">{row.amount}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="flex-1 overflow-hidden">
+            <DataTable 
+              columns={transactionColumns} 
+              data={transactionData} 
+            />
           </div>
         </div>
       </div>
