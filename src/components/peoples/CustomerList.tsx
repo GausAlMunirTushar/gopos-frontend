@@ -6,6 +6,7 @@ import {
   Search, FileText, RefreshCcw, ChevronUp, ChevronRight, ChevronDown,
   Edit, Trash2, ChevronLeft, FileSpreadsheet, Plus, Eye
 } from 'lucide-react';
+import { PageHeader } from '@/components/shared/PageHeader';
 
 const customerData = [
   { code: 'CU001', name: 'Carl Evans', email: 'carlevans@example.com', phone: '+12163547758', country: 'Germany', status: 'Active' },
@@ -24,36 +25,29 @@ export default function CustomerList() {
   return (
     <div className="space-y-6">
       
-      {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">Customers</h1>
-          <div className="text-sm text-gray-500 flex items-center gap-2">
-            <span>Dashboard</span>
-            <ChevronRight className="w-3 h-3" />
-            <span className="text-gray-900 font-medium">Customers</span>
+      <PageHeader 
+        title="Customers" 
+        breadcrumbs={[
+          { label: 'Dashboard', href: '/dashboard' },
+          { label: 'Customers' }
+        ]}
+        actions={
+          <div className="flex flex-wrap items-center gap-2">
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-red-500 hover:bg-gray-50 bg-white">
+               <FileText className="w-5 h-5" />
+            </button>
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-green-600 hover:bg-gray-50 bg-white">
+               <FileSpreadsheet className="w-5 h-5" />
+            </button>
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
+               <RefreshCcw className="w-5 h-5" />
+            </button>
+            <button className="flex items-center gap-2 px-4 py-2 bg-[#FF9F43] hover:bg-[#ff9021] text-white rounded-lg font-medium transition-colors">
+              <Plus className="w-4 h-4" /> Add Customer
+            </button>
           </div>
-        </div>
-        
-        <div className="flex flex-wrap items-center gap-2">
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-red-500 hover:bg-gray-50 bg-white">
-             <FileText className="w-5 h-5" />
-          </button>
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-green-600 hover:bg-gray-50 bg-white">
-             <FileSpreadsheet className="w-5 h-5" />
-          </button>
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
-             <RefreshCcw className="w-5 h-5" />
-          </button>
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
-             <ChevronUp className="w-5 h-5" />
-          </button>
-          
-          <button className="flex items-center gap-2 px-4 py-2 bg-[#FF9F43] hover:bg-[#ff9021] text-white rounded-lg font-medium transition-colors">
-            <Plus className="w-4 h-4" /> Add Customer
-          </button>
-        </div>
-      </div>
+        }
+      />
 
       {/* Main Table Card */}
       <div className="bg-white border border-gray-200 rounded-2xl">

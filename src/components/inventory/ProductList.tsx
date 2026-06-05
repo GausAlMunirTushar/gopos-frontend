@@ -7,6 +7,7 @@ import {
   Eye, Edit, Trash2, ChevronLeft, ChevronRight, ChevronDown,
   FileSpreadsheet
 } from 'lucide-react';
+import { PageHeader } from '@/components/shared/PageHeader';
 
 const productsData = [
   { sku: 'PT001', name: 'Lenovo IdeaPad 3', cat: 'Computers', brand: 'Lenovo', price: '$600', unit: 'Pc', qty: 100, creator: 'James Kirwin', avatar: 'https://i.pravatar.cc/150?u=James' },
@@ -25,41 +26,35 @@ export default function ProductsPage() {
   return (
     <div className="space-y-6">
       
-      {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">Products</h1>
-          <div className="text-sm text-gray-500 flex items-center gap-2">
-            <span>Dashboard</span>
-            <ChevronRight className="w-3 h-3" />
-            <span className="text-gray-900 font-medium">Products</span>
-          </div>
-        </div>
-        
-        <div className="flex flex-wrap items-center gap-2">
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-red-500 hover:bg-gray-50 bg-white">
-             <FileText className="w-5 h-5" />
-          </button>
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-green-600 hover:bg-gray-50 bg-white">
-             <FileSpreadsheet className="w-5 h-5" />
-          </button>
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
-             <RefreshCcw className="w-5 h-5" />
-          </button>
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
-             <ChevronUp className="w-5 h-5" />
-          </button>
-          
-          <NextLink href="/products/create">
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#FF9F43] hover:bg-[#ff9021] text-white rounded-lg font-medium transition-colors">
-              <Plus className="w-4 h-4" /> Add Product
+      <PageHeader 
+        title="Products" 
+        breadcrumbs={[
+          { label: 'Dashboard', href: '/dashboard' },
+          { label: 'Products' }
+        ]}
+        actions={
+          <div className="flex flex-wrap items-center gap-2">
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-red-500 hover:bg-gray-50 bg-white">
+               <FileText className="w-5 h-5" />
             </button>
-          </NextLink>
-          <button className="flex items-center gap-2 px-4 py-2 bg-[#092C4C] hover:bg-[#061d33] text-white rounded-lg font-medium transition-colors">
-            <Download className="w-4 h-4" /> Import Product
-          </button>
-        </div>
-      </div>
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-green-600 hover:bg-gray-50 bg-white">
+               <FileSpreadsheet className="w-5 h-5" />
+            </button>
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
+               <RefreshCcw className="w-5 h-5" />
+            </button>
+            
+            <NextLink href="/inventory/products/create">
+              <button className="flex items-center gap-2 px-4 py-2 bg-[#FF9F43] hover:bg-[#ff9021] text-white rounded-lg font-medium transition-colors">
+                <Plus className="w-4 h-4" /> Add Product
+              </button>
+            </NextLink>
+            <button className="flex items-center gap-2 px-4 py-2 bg-[#092C4C] hover:bg-[#061d33] text-white rounded-lg font-medium transition-colors">
+              <Download className="w-4 h-4" /> Import Product
+            </button>
+          </div>
+        }
+      />
 
       {/* Main Table Card */}
       <div className="bg-white border border-gray-200 rounded-2xl">
