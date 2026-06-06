@@ -13,11 +13,11 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { 
-  Search, 
-  ChevronDown, 
-  MoreHorizontal, 
-  ChevronLeft, 
+import {
+  Search,
+  ChevronDown,
+  MoreHorizontal,
+  ChevronLeft,
   ChevronRight,
   Filter,
   RefreshCcw,
@@ -138,11 +138,11 @@ export function DataTable<TData, TValue>({
               />
             </div>
           )}
-          
+
           {filters?.map((filter) => (
             <div key={filter.column} className="relative">
               <select
-                className="h-10 px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm appearance-none focus:outline-none focus:border-[#FF9F43] pr-8 min-w-[120px]"
+                className="h-10 px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm appearance-none focus:outline-none focus:border-[#FF9F43] pr-8 min-w-30"
                 value={(table.getColumn(filter.column)?.getFilterValue() as string) ?? ""}
                 onChange={(event) =>
                   table.getColumn(filter.column)?.setFilterValue(event.target.value)
@@ -168,7 +168,7 @@ export function DataTable<TData, TValue>({
                 <ChevronDown className="h-4 w-4" /> Columns
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="w-[150px] bg-white border border-gray-200 shadow-xl rounded-xl p-1">
               {table
                 .getAllColumns()
                 .filter((column) => column.getCanHide())
@@ -176,7 +176,7 @@ export function DataTable<TData, TValue>({
                   return (
                     <DropdownMenuCheckboxItem
                       key={column.id}
-                      className="capitalize"
+                      className="capitalize cursor-pointer rounded-lg hover:bg-gray-50 focus:bg-gray-50 my-0.5"
                       checked={column.getIsVisible()}
                       onCheckedChange={(value) =>
                         column.toggleVisibility(!!value)
@@ -203,9 +203,9 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   )
                 })}
@@ -245,18 +245,18 @@ export function DataTable<TData, TValue>({
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between py-4">
+      <div className="flex items-center justify-between py-4 px-2">
         <div className="flex-1 text-sm text-gray-500">
           {enableSelection && (
-            <div className="font-medium text-gray-900">
+            <div className="font-medium text-gray-900 mb-2">
               {table.getFilteredSelectedRowModel().rows.length} of{" "}
               {table.getFilteredRowModel().rows.length} row(s) selected.
             </div>
           )}
-          <div className="flex items-center gap-2 mt-1">
-            <span>Rows per page</span>
+          <div className="flex items-center gap-2">
+            <span className="text-gray-600">Rows per page</span>
             <select
-              className="h-8 px-2 bg-white border border-gray-200 rounded text-xs focus:outline-none focus:border-[#FF9F43]"
+              className="h-8 px-2 bg-white border border-gray-200 rounded-md text-xs font-medium focus:outline-none focus:border-[#FF9F43] focus:ring-1 focus:ring-[#FF9F43] transition-colors"
               value={table.getState().pagination.pageSize}
               onChange={(e) => {
                 table.setPageSize(Number(e.target.value));
@@ -270,29 +270,31 @@ export function DataTable<TData, TValue>({
             </select>
           </div>
         </div>
-        <div className="flex items-center space-x-2">
-          <div className="flex items-center justify-center text-sm font-medium text-gray-700 mr-4">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center justify-center text-sm font-medium text-gray-700">
             Page {table.getState().pagination.pageIndex + 1} of{" "}
             {table.getPageCount()}
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-            className="h-9 w-9 p-0 border-gray-200"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-            className="h-9 w-9 p-0 border-gray-200"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
+          <div className="flex items-center gap-1.5">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+              className="h-8 w-8 p-0 border-gray-200 rounded-lg bg-white hover:bg-[#FF9F43]/10 hover:text-[#FF9F43] hover:border-[#FF9F43] transition-all"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+              className="h-8 w-8 p-0 border-gray-200 rounded-lg bg-white hover:bg-[#FF9F43]/10 hover:text-[#FF9F43] hover:border-[#FF9F43] transition-all"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
     </div>
