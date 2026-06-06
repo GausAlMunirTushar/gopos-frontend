@@ -2,16 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import NextLink from 'next/link';
+import { AppHeader } from './AppHeader';
 import { usePathname } from 'next/navigation';
 import { 
-  LayoutDashboard, ShoppingBag, Package, AlertCircle, TrendingDown,
-  Layers, List, Tag, Scale, SlidersHorizontal, ShieldCheck, Barcode, QrCode,
-  Box, Settings2, ArrowRightLeft, ShoppingCart, FileText, CornerDownLeft, FileSignature, Monitor,
-  Ticket, Gift, Percent, ShoppingBasket, ClipboardList, RefreshCcw, DollarSign, Wallet, Building2,
-  Banknote, ArrowLeftRight, FileBarChart, PieChart, Landmark, Users, UserCircle, Users2, Store, Warehouse,
-  UsersRound, Briefcase, Award, ChevronDown, Search, Plus, Globe, Maximize, Mail, Bell, Settings, PackageSearch
+  LayoutDashboard, ShoppingBag, Package, Box, ShoppingCart,
+  Percent, ShoppingBasket, DollarSign, FileBarChart, Users,
+  Briefcase, Settings, ChevronDown
 } from 'lucide-react';
-import { useCurrency } from '@/hooks/useCurrency';
 
 // Menu definition matching the mockups
 const MENU_ITEMS = [
@@ -134,17 +131,19 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
-  const { currency, setCurrency } = useCurrency();
+
 
   useEffect(() => {
-    if (window.innerWidth >= 768) {
-      setSidebarOpen(true);
+    if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+      const timer = setTimeout(() => setSidebarOpen(true), 0);
+      return () => clearTimeout(timer);
     }
   }, []);
 
   useEffect(() => {
-    if (window.innerWidth < 768) {
-      setSidebarOpen(false);
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      const timer = setTimeout(() => setSidebarOpen(false), 0);
+      return () => clearTimeout(timer);
     }
   }, [pathname]);
 
@@ -253,91 +252,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col h-full overflow-hidden w-full relative">
         
-        {/* Header */}
-        <header className="h-18 bg-white border-b border-gray-100 flex items-center justify-between px-6 z-40 shrink-0">
-          
-          <div className="flex items-center gap-6">
-            <button 
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-orange-100 text-orange-500 hover:bg-orange-200 transition-colors"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-            </button>
-
-            <div className="hidden md:flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg border border-gray-200 w-80 focus-within:border-[#FF9F43] focus-within:ring-1 focus-within:ring-[#FF9F43] transition-all">
-              <Search className="w-4 h-4 text-gray-400" />
-              <input 
-                type="text" 
-                placeholder="Search" 
-                className="bg-transparent border-none outline-none w-full text-sm text-gray-700 placeholder:text-gray-400"
-              />
-              <div className="flex items-center gap-1 bg-white px-1.5 py-0.5 rounded text-[10px] font-medium text-gray-400 border border-gray-200">
-                <span className="text-xs">⌘</span>K
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            {/* Currency Selector */}
-            <div className="hidden md:flex relative items-center">
-              <select 
-                value={currency} 
-                onChange={(e) => setCurrency(e.target.value as 'USD' | 'BDT')}
-                className="appearance-none bg-white border border-gray-200 rounded-lg px-3 py-2 pr-8 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:border-orange-500 cursor-pointer"
-              >
-                <option value="USD">USD ($)</option>
-                <option value="BDT">BDT (৳)</option>
-              </select>
-              <ChevronDown className="w-4 h-4 text-gray-400 absolute right-2 pointer-events-none" />
-            </div>
-
-            {/* Store Selector */}
-            <button className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
-              <img src="https://ui-avatars.com/api/?name=Freshmart&background=092C4C&color=fff&rounded=true" alt="Store" className="w-5 h-5 rounded-full" />
-              <span className="text-sm font-medium text-gray-700">Freshmart</span>
-              <ChevronDown className="w-4 h-4 text-gray-400" />
-            </button>
-
-            <NextLink href="/inventory/products/create">
-              <button className="hidden sm:flex items-center gap-2 px-4 py-2 bg-[#FF9F43] hover:bg-orange-500 text-white rounded-lg text-sm font-medium transition-colors">
-                <Plus className="w-4 h-4" /> Add New
-              </button>
-            </NextLink>
-
-            <NextLink href="/pos">
-              <button className="hidden sm:flex items-center gap-2 px-4 py-2 bg-[#092C4C] hover:bg-[#061d33] text-white rounded-lg text-sm font-medium transition-colors">
-                <Monitor className="w-4 h-4" /> POS
-              </button>
-            </NextLink>
-
-            <div className="h-8 w-px bg-gray-200 mx-1"></div>
-
-            {/* Icons */}
-            <div className="flex items-center gap-1">
-              <button className="hidden md:flex w-9 h-9 items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
-                <Globe className="w-5 h-5" />
-              </button>
-              <button className="hidden md:flex w-9 h-9 items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
-                <Maximize className="w-5 h-5" />
-              </button>
-              <button className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors relative">
-                <Mail className="w-5 h-5" />
-                <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white flex items-center justify-center text-[8px] font-bold text-white">01</span>
-              </button>
-              <button className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
-                <Bell className="w-5 h-5" />
-              </button>
-              <button className="hidden sm:flex w-9 h-9 items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
-                <Settings className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Profile */}
-            <button className="flex items-center gap-2 ml-2">
-              <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=100" alt="Profile" className="w-9 h-9 rounded-full border border-gray-200 object-cover" />
-            </button>
-          </div>
-        </header>
+        <AppHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
         {/* Page Content */}
         <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-[#F8F9FA] relative">

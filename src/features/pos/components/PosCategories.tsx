@@ -20,7 +20,7 @@ export function PosCategories({ categories, activeCategory, onSelectCategory }: 
     <div className="mb-4 shrink-0">
       <div className="flex items-center justify-between mb-2">
         <h3 className="font-bold text-gray-900 text-base sm:text-lg">Categories</h3>
-        <div className="flex gap-1 hidden sm:flex">
+        <div className="hidden sm:flex gap-1">
           <button className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-gray-50"><ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" /></button>
           <button className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-orange-500 text-white flex items-center justify-center hover:bg-orange-600"><ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" /></button>
         </div>
