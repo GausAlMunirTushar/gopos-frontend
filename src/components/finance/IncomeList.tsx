@@ -8,6 +8,7 @@ import { PageHeader } from '@/components/shared/PageHeader';
 import { StatsCard } from '@/components/shared/StatsCard';
 import { DataTable } from '@/components/ui/data-table';
 import { ColumnDef } from '@tanstack/react-table';
+import { useCurrency } from '@/hooks/useCurrency';
 
 interface Income {
   id: string;

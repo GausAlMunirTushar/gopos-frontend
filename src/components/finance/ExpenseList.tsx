@@ -8,6 +8,7 @@ import { PageHeader } from '@/components/shared/PageHeader';
 import { StatsCard } from '@/components/shared/StatsCard';
 import { DataTable } from '@/components/ui/data-table';
 import { ColumnDef } from '@tanstack/react-table';
+import { useCurrency } from '@/hooks/useCurrency';
 
 interface Expense {
   id: string;
@@ -25,6 +26,8 @@ const expenseData: Expense[] = [
 ];
 
 export default function ExpenseList() {
+  const { formatCurrency } = useCurrency();
+
   const columns: ColumnDef<Expense>[] = [
     {
       accessorKey: 'id',
@@ -44,7 +47,7 @@ export default function ExpenseList() {
     {
       accessorKey: 'amount',
       header: 'Amount',
-      cell: ({ row }) => <span className="font-bold text-gray-900">{row.original.amount}</span>,
+      cell: ({ row }) => <span className="font-bold text-gray-900">{formatCurrency(row.getValue('amount') as string)}</span>,
     },
     {
       accessorKey: 'status',
@@ -96,28 +99,28 @@ export default function ExpenseList() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatsCard 
           label="Total Expenses" 
-          value="$8,980,097" 
+          value={formatCurrency("8980097")} 
           icon={DollarSign}
           iconColor="text-red-600"
           iconBg="bg-red-50"
         />
         <StatsCard 
           label="Paid" 
-          value="$7,500,000" 
+          value={formatCurrency("7500000")} 
           icon={Wallet}
           iconColor="text-green-600"
           iconBg="bg-green-50"
         />
         <StatsCard 
           label="Pending" 
-          value="$1,480,097" 
+          value={formatCurrency("1480097")} 
           icon={RefreshCcw}
           iconColor="text-orange-600"
           iconBg="bg-orange-50"
         />
         <StatsCard 
           label="This Month" 
-          value="$450,000" 
+          value={formatCurrency("450000")} 
           icon={DollarSign}
           iconColor="text-blue-600"
           iconBg="bg-blue-50"
@@ -150,6 +153,10 @@ export default function ExpenseList() {
           }
         ]}
       />
+    </div>
+  );
+}
+>
     </div>
   );
 }

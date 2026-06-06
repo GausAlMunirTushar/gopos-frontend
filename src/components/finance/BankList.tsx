@@ -8,6 +8,7 @@ import { PageHeader } from '@/components/shared/PageHeader';
 import { StatsCard } from '@/components/shared/StatsCard';
 import { DataTable } from '@/components/ui/data-table';
 import { ColumnDef } from '@tanstack/react-table';
+import { useCurrency } from '@/hooks/useCurrency';
 
 interface Bank {
   id: string;
@@ -25,6 +26,8 @@ const bankData: Bank[] = [
 ];
 
 export default function BankList() {
+  const { formatCurrency } = useCurrency();
+
   const columns: ColumnDef<Bank>[] = [
     {
       accessorKey: 'id',
@@ -49,7 +52,7 @@ export default function BankList() {
     {
       accessorKey: 'balance',
       header: 'Balance',
-      cell: ({ row }) => <span className="font-bold text-gray-900">{row.original.balance}</span>,
+      cell: ({ row }) => <span className="font-bold text-gray-900">{formatCurrency(row.getValue('balance') as string)}</span>,
     },
     {
       accessorKey: 'status',
@@ -101,7 +104,7 @@ export default function BankList() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <StatsCard 
           label="Total Balance" 
-          value="$57,450" 
+          value={formatCurrency("57450")} 
           icon={Landmark}
           iconColor="text-blue-600"
           iconBg="bg-blue-50"
