@@ -3,6 +3,8 @@
 import NextLink from 'next/link';
 import { Search, Plus, Globe, Maximize, Mail, Bell, Settings, ChevronDown, Monitor } from 'lucide-react';
 import { useCurrency } from '@/hooks/useCurrency';
+import { Select } from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
 
 interface AppHeaderProps {
   sidebarOpen: boolean;
@@ -25,10 +27,10 @@ export function AppHeader({ sidebarOpen, setSidebarOpen }: AppHeaderProps) {
         {/* Search - Smaller and Responsive */}
         <div className="flex flex-1 md:flex-none items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg border border-gray-200 w-full md:w-48 lg:w-64 focus-within:border-[#FF9F43] focus-within:ring-1 focus-within:ring-[#FF9F43] transition-all">
           <Search className="w-4 h-4 text-gray-400 shrink-0" />
-          <input
-            type="text"
-            placeholder="Search..."
-            className="bg-transparent border-none outline-none w-full text-sm text-gray-700 placeholder:text-gray-400"
+          <Input 
+            type="text" 
+            placeholder="Search..." 
+            className="bg-transparent border-none shadow-none focus-visible:ring-0 px-0 h-auto w-full text-sm text-gray-700 placeholder:text-gray-400"
           />
           <div className="hidden md:flex items-center gap-1 bg-white px-1.5 py-0.5 rounded text-[10px] font-medium text-gray-400 border border-gray-200 shrink-0">
             <span>⌘</span>K
@@ -37,17 +39,15 @@ export function AppHeader({ sidebarOpen, setSidebarOpen }: AppHeaderProps) {
       </div>
 
       <div className="hidden md:flex items-center gap-2 lg:gap-3">
-        {/* Currency Selector */}
-        <div className="relative flex items-center">
-          <select
-            value={currency}
+        <div className="w-[100px]">
+          <Select 
+            value={currency} 
             onChange={(e) => setCurrency(e.target.value as 'USD' | 'BDT')}
-            className="appearance-none bg-white border border-gray-200 rounded-lg px-3 py-2 pr-8 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:border-[#FF9F43] focus:ring-1 focus:ring-[#FF9F43] cursor-pointer transition-colors "
+            className="font-medium text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors shadow-sm"
           >
             <option value="USD">USD ($)</option>
             <option value="BDT">BDT (৳)</option>
-          </select>
-          <ChevronDown className="w-4 h-4 text-gray-400 absolute right-2 pointer-events-none" />
+          </Select>
         </div>
 
         <NextLink href="/inventory/products/create">

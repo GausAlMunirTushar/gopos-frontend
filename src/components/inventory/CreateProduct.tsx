@@ -9,6 +9,7 @@ import {
   Paperclip, Smile, Trash2, Send
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { Select } from '@/components/ui/select';
 
 export default function CreateProductPage() {
   return (
@@ -54,21 +55,15 @@ export default function CreateProductPage() {
           <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Store <span className="text-red-500">*</span></label>
-              <div className="relative">
-                <select className="w-full h-11 px-4 bg-white border border-gray-200 rounded-lg text-sm appearance-none focus:outline-none focus:border-[#FF9F43]">
+                <Select>
                   <option>Select</option>
-                </select>
-                <ChevronDown className="w-4 h-4 text-gray-400 absolute right-4 top-3.5 pointer-events-none" />
-              </div>
+                </Select>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Warehouse <span className="text-red-500">*</span></label>
-              <div className="relative">
-                <select className="w-full h-11 px-4 bg-white border border-gray-200 rounded-lg text-sm appearance-none focus:outline-none focus:border-[#FF9F43]">
+                <Select>
                   <option>Select</option>
-                </select>
-                <ChevronDown className="w-4 h-4 text-gray-400 absolute right-4 top-3.5 pointer-events-none" />
-              </div>
+                </Select>
             </div>
 
             <div>
@@ -91,12 +86,9 @@ export default function CreateProductPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Selling Type <span className="text-red-500">*</span></label>
-              <div className="relative">
-                <select className="w-full h-11 px-4 bg-white border border-gray-200 rounded-lg text-sm appearance-none focus:outline-none focus:border-[#FF9F43]">
+                <Select>
                   <option>Select</option>
-                </select>
-                <ChevronDown className="w-4 h-4 text-gray-400 absolute right-4 top-3.5 pointer-events-none" />
-              </div>
+                </Select>
             </div>
 
             <div>
@@ -106,40 +98,28 @@ export default function CreateProductPage() {
                   <Plus className="w-3 h-3" /> Add New
                 </button>
               </div>
-              <div className="relative">
-                <select className="w-full h-11 px-4 bg-white border border-gray-200 rounded-lg text-sm appearance-none focus:outline-none focus:border-[#FF9F43]">
+                <Select>
                   <option>Select</option>
-                </select>
-                <ChevronDown className="w-4 h-4 text-gray-400 absolute right-4 top-3.5 pointer-events-none" />
-              </div>
+                </Select>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Sub Category <span className="text-red-500">*</span></label>
-              <div className="relative">
-                <select className="w-full h-11 px-4 bg-white border border-gray-200 rounded-lg text-sm appearance-none focus:outline-none focus:border-[#FF9F43]">
+                <Select>
                   <option>Select</option>
-                </select>
-                <ChevronDown className="w-4 h-4 text-gray-400 absolute right-4 top-3.5 pointer-events-none" />
-              </div>
+                </Select>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Brand <span className="text-red-500">*</span></label>
-              <div className="relative">
-                <select className="w-full h-11 px-4 bg-white border border-gray-200 rounded-lg text-sm appearance-none focus:outline-none focus:border-[#FF9F43]">
+                <Select>
                   <option>Select</option>
-                </select>
-                <ChevronDown className="w-4 h-4 text-gray-400 absolute right-4 top-3.5 pointer-events-none" />
-              </div>
+                </Select>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Unit <span className="text-red-500">*</span></label>
-              <div className="relative">
-                <select className="w-full h-11 px-4 bg-white border border-gray-200 rounded-lg text-sm appearance-none focus:outline-none focus:border-[#FF9F43]">
+                <Select>
                   <option>Select</option>
-                </select>
-                <ChevronDown className="w-4 h-4 text-gray-400 absolute right-4 top-3.5 pointer-events-none" />
-              </div>
+                </Select>
             </div>
 
             <div>
@@ -153,12 +133,9 @@ export default function CreateProductPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Barcode Symbology <span className="text-red-500">*</span></label>
-              <div className="relative">
-                <select className="w-full h-11 px-4 bg-white border border-gray-200 rounded-lg text-sm appearance-none focus:outline-none focus:border-[#FF9F43]">
+                <Select>
                   <option>Select</option>
-                </select>
-                <ChevronDown className="w-4 h-4 text-gray-400 absolute right-4 top-3.5 pointer-events-none" />
-              </div>
+                </Select>
             </div>
 
             <div className="md:col-span-2">
@@ -233,22 +210,16 @@ export default function CreateProductPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Tax Type <span className="text-red-500">*</span></label>
-              <div className="relative">
-                <select className="w-full h-11 px-4 bg-white border border-gray-200 rounded-lg text-sm appearance-none focus:outline-none focus:border-[#FF9F43]">
+                <Select>
                   <option>Select</option>
-                </select>
-                <ChevronDown className="w-4 h-4 text-gray-400 absolute right-4 top-3.5 pointer-events-none" />
-              </div>
+                </Select>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Discount Type <span className="text-red-500">*</span></label>
-              <div className="relative">
-                <select className="w-full h-11 px-4 bg-white border border-gray-200 rounded-lg text-sm appearance-none focus:outline-none focus:border-[#FF9F43]">
+                <Select>
                   <option>Select</option>
-                </select>
-                <ChevronDown className="w-4 h-4 text-gray-400 absolute right-4 top-3.5 pointer-events-none" />
-              </div>
+                </Select>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Discount Value <span className="text-red-500">*</span></label>
@@ -305,12 +276,9 @@ export default function CreateProductPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Warranty <span className="text-red-500">*</span></label>
-                <div className="relative">
-                  <select className="w-full h-11 px-4 bg-white border border-gray-200 rounded-lg text-sm appearance-none focus:outline-none focus:border-[#FF9F43]">
-                    <option>Select</option>
-                  </select>
-                  <ChevronDown className="w-4 h-4 text-gray-400 absolute right-4 top-3.5 pointer-events-none" />
-                </div>
+                <Select>
+                  <option>Select</option>
+                </Select>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Manufacturer <span className="text-red-500">*</span></label>

@@ -6,6 +6,8 @@ import {
   Search, RefreshCcw, ChevronUp, ChevronRight, ChevronDown,
   FileText, FileSpreadsheet, Eye, Power, Printer
 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Select } from '@/components/ui/select';
 
 export default function PrintQrCodePage() {
   return (
@@ -38,31 +40,25 @@ export default function PrintQrCodePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Warehouse <span className="text-red-500">*</span></label>
-                <div className="relative">
-                    <select className="w-full appearance-none bg-white border border-gray-200 rounded-lg px-4 py-2.5 pr-10 focus:outline-none focus:border-orange-500 text-gray-700">
-                        <option>Select</option>
-                    </select>
-                    <ChevronDown className="w-4 h-4 text-gray-400 absolute right-3 top-3.5 pointer-events-none" />
-                </div>
+                <Select>
+                    <option>Select</option>
+                </Select>
             </div>
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Store <span className="text-red-500">*</span></label>
-                <div className="relative">
-                    <select className="w-full appearance-none bg-white border border-gray-200 rounded-lg px-4 py-2.5 pr-10 focus:outline-none focus:border-orange-500 text-gray-700">
-                        <option>Select</option>
-                    </select>
-                    <ChevronDown className="w-4 h-4 text-gray-400 absolute right-3 top-3.5 pointer-events-none" />
-                </div>
+                <Select>
+                    <option>Select</option>
+                </Select>
             </div>
         </div>
 
         <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">Product <span className="text-red-500">*</span></label>
             <div className="relative w-full">
-                <input 
+                <Input 
                     type="text" 
                     placeholder="Search Product by Code" 
-                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:border-orange-500"
+                    className="pl-10"
                 />
                 <Search className="w-5 h-5 text-gray-400 absolute left-3 top-2.5" />
             </div>
@@ -86,12 +82,9 @@ export default function PrintQrCodePage() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end mb-8 border-b border-gray-100 pb-8">
             <div className="md:col-span-1">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Paper Size <span className="text-red-500">*</span></label>
-                <div className="relative">
-                    <select className="w-full appearance-none bg-white border border-gray-200 rounded-lg px-4 py-2.5 pr-10 focus:outline-none focus:border-orange-500 text-gray-700">
-                        <option>Select</option>
-                    </select>
-                    <ChevronDown className="w-4 h-4 text-gray-400 absolute right-3 top-3.5 pointer-events-none" />
-                </div>
+                <Select>
+                    <option>Select</option>
+                </Select>
             </div>
 
             <div className="flex items-center gap-3">

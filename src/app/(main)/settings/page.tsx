@@ -5,6 +5,7 @@ import { Save, User, Store, Bell, Shield, CreditCard } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Select } from '@/components/ui/select';
 
 export default function SettingsPage() {
   return (
@@ -55,11 +56,11 @@ export default function SettingsPage() {
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium text-gray-700">Store Category</label>
-                    <select className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                    <Select>
                       <option>Food & Beverage</option>
                       <option>Retail</option>
                       <option>Services</option>
-                    </select>
+                    </Select>
                   </div>
                 </div>
 
@@ -85,19 +86,19 @@ export default function SettingsPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium text-gray-700">Currency</label>
-                    <select className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                    <Select>
                       <option>USD ($)</option>
                       <option>EUR (€)</option>
                       <option>GBP (£)</option>
-                    </select>
+                    </Select>
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium text-gray-700">Timezone</label>
-                    <select className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                    <Select>
                       <option>Pacific Time (US & Canada)</option>
                       <option>Eastern Time (US & Canada)</option>
                       <option>UTC</option>
-                    </select>
+                    </Select>
                   </div>
                 </div>
               </div>
