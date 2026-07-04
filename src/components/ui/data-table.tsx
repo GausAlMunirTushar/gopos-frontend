@@ -16,13 +16,8 @@ import {
 import {
   Search,
   ChevronDown,
-  MoreHorizontal,
   ChevronLeft,
   ChevronRight,
-  Filter,
-  RefreshCcw,
-  FileText,
-  FileSpreadsheet
 } from 'lucide-react';
 
 import {
@@ -101,6 +96,8 @@ export function DataTable<TData, TValue>({
     return [selectionColumn, ...columns];
   }, [columns, enableSelection]);
 
+  // TanStack Table intentionally returns function-heavy objects that React Compiler cannot memoize safely.
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns: finalColumns,

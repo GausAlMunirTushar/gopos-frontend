@@ -7,6 +7,9 @@ import {
 import { PageHeader } from '@/components/shared/PageHeader';
 import { StatsCard } from '@/components/shared/StatsCard';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { quotationRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface Quotation {
@@ -26,6 +29,12 @@ const quotationData: Quotation[] = [
 ];
 
 export default function QuotationList() {
+  const { data: quotations } = useLiveRows<ApiRecord, Quotation>({
+    resource: apiEndpoints.sales.quotations,
+    fallbackData: quotationData,
+    mapRow: quotationRow,
+  });
+
   const columns: ColumnDef<Quotation>[] = [
     {
       accessorKey: 'id',
@@ -108,7 +117,7 @@ export default function QuotationList() {
 
       <DataTable 
         columns={columns} 
-        data={quotationData} 
+        data={quotations} 
         searchKey="id"
         searchPlaceholder="Search quotation ID..."
         filters={[

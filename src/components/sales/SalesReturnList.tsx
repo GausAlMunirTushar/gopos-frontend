@@ -7,6 +7,9 @@ import {
 import { PageHeader } from '@/components/shared/PageHeader';
 import { StatsCard } from '@/components/shared/StatsCard';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { saleReturnRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface SalesReturn {
@@ -25,6 +28,12 @@ const returnData: SalesReturn[] = [
 ];
 
 export default function SalesReturnList() {
+  const { data: returns } = useLiveRows<ApiRecord, SalesReturn>({
+    resource: apiEndpoints.sales.salesReturns,
+    fallbackData: returnData,
+    mapRow: saleReturnRow,
+  });
+
   const columns: ColumnDef<SalesReturn>[] = [
     {
       accessorKey: 'id',
@@ -100,7 +109,7 @@ export default function SalesReturnList() {
 
       <DataTable 
         columns={columns} 
-        data={returnData} 
+        data={returns} 
         searchKey="id"
         searchPlaceholder="Search return ID..."
         filters={[

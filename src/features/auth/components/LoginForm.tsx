@@ -2,12 +2,40 @@
 
 import { useTranslations } from 'next-intl';
 import NextLink from 'next/link';
+import { useRouter } from 'next/navigation';
+import type { FormEvent } from 'react';
+import { useState } from 'react';
 import { Mail, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { apiClient } from '@/lib/api/client';
+import type { AuthSession } from '@/lib/auth/session';
 
 export function LoginForm() {
   const t = useTranslations('auth');
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null);
+    setIsSubmitting(true);
+    const formData = new FormData(event.currentTarget);
+    try {
+      const response = await apiClient.post<AuthSession>('/auth/login', {
+        email: formData.get('email'),
+        password: formData.get('password'),
+        rememberMe: formData.get('rememberMe') === 'on',
+      });
+      apiClient.setSession(response.data);
+      router.push('/dashboard');
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : 'Unable to sign in');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <>
@@ -18,13 +46,15 @@ export function LoginForm() {
         </p>
       </div>
 
-      <form className="space-y-5">
+      <form className="space-y-5" onSubmit={handleSubmit}>
+        {error && <div className="rounded-lg bg-red-50 p-3 text-sm text-red-600">{error}</div>}
         <div className="space-y-1.5">
           <label className="text-sm font-medium text-gray-700">
             Email <span className="text-red-500">*</span>
           </label>
           <div className="relative">
             <Input
+              name="email"
               type="email"
               placeholder="Enter your email"
               className="pr-10 bg-white border-gray-200"
@@ -39,6 +69,7 @@ export function LoginForm() {
           </label>
           <div className="relative">
             <Input
+              name="password"
               type="password"
               placeholder="Enter your password"
               className="pr-10 bg-white border-gray-200"
@@ -49,7 +80,7 @@ export function LoginForm() {
 
         <div className="flex items-center justify-between">
           <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" className="rounded border-gray-300 text-orange-500 focus:ring-orange-500 w-4 h-4 accent-orange-500" />
+            <input name="rememberMe" type="checkbox" className="rounded border-gray-300 text-orange-500 focus:ring-orange-500 w-4 h-4 accent-orange-500" />
             <span className="text-sm text-gray-500">Remember Me</span>
           </label>
           <NextLink href="/forgot-password" className="text-sm text-orange-500 font-medium hover:underline">
@@ -57,8 +88,8 @@ export function LoginForm() {
           </NextLink>
         </div>
 
-        <Button className="w-full bg-orange-400 hover:bg-orange-500 text-white py-6 rounded-xl text-md font-medium">
-          Sign In
+        <Button disabled={isSubmitting} className="w-full bg-orange-400 hover:bg-orange-500 text-white py-6 rounded-xl text-md font-medium">
+          {isSubmitting ? 'Signing In...' : 'Sign In'}
         </Button>
       </form>
 

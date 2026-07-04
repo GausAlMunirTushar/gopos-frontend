@@ -5,7 +5,12 @@ import {
   FileText, RefreshCcw, Edit, Trash2, FileSpreadsheet, Plus, Eye
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
+import { ResourceCreateModal } from '@/components/shared/ResourceCreateModal';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { actionButtonClassName, contactFields } from '@/lib/api/resource-fields';
+import { contactRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface Biller {
@@ -32,6 +37,12 @@ const billerData: Biller[] = [
 ];
 
 export default function BillerList() {
+  const { data: billers } = useLiveRows<ApiRecord, Biller>({
+    resource: apiEndpoints.people.billers,
+    fallbackData: billerData,
+    mapRow: contactRow,
+  });
+
   const columns: ColumnDef<Biller>[] = [
     { accessorKey: 'code', header: 'Code' },
     {
@@ -90,16 +101,22 @@ export default function BillerList() {
             <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
                <RefreshCcw className="w-5 h-5" />
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#FF9F43] hover:bg-[#ff9021] text-white rounded-lg font-medium transition-colors">
+            <ResourceCreateModal
+              resource={apiEndpoints.people.billers}
+              title="Add Biller"
+              description="Create a tenant-scoped biller record."
+              fields={contactFields('BILLER')}
+              buttonClassName={actionButtonClassName}
+            >
               <Plus className="w-4 h-4" /> Add Biller
-            </button>
+            </ResourceCreateModal>
           </div>
         }
       />
 
       <DataTable 
         columns={columns} 
-        data={billerData} 
+        data={billers} 
         searchKey="name"
         searchPlaceholder="Search billers..."
         enableSelection

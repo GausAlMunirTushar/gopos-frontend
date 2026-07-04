@@ -1,315 +1,322 @@
 'use client';
 
-import React from 'react';
 import NextLink from 'next/link';
-import { 
-  ChevronRight, RefreshCcw, ChevronUp, ChevronDown, Plus,
-  Info, Target, Image as ImageIcon, List, Bold, Italic, Underline,
-  Strikethrough, Link2, ListOrdered, List as ListIcon, Quote, Code,
-  Paperclip, Smile, Trash2, Send
-} from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { FormEvent, useMemo, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { ChevronRight, RefreshCcw, Save } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
+import { apiClient } from '@/lib/api/client';
+import { apiEndpoints } from '@/lib/api/endpoints';
+
+interface OptionRecord {
+  id: string;
+  name: string;
+  shortName?: string;
+}
+
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+
+const toNumber = (value: FormDataEntryValue | null, fallback = 0) => {
+  const numeric = Number(value ?? fallback);
+  return Number.isFinite(numeric) ? numeric : fallback;
+};
+
+const useOptions = (key: string, endpoint: string) =>
+  useQuery({
+    queryKey: [key],
+    queryFn: async () =>
+      apiClient.get<OptionRecord[]>(endpoint, {
+        page: 1,
+        limit: 100,
+        sortBy: 'name',
+        sortOrder: 'asc',
+      }),
+  });
 
 export default function CreateProductPage() {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const [error, setError] = useState<string | null>(null);
+  const [name, setName] = useState('');
+  const [sku, setSku] = useState('');
+
+  const categoriesQuery = useOptions('product-categories', apiEndpoints.inventory.categories);
+  const brandsQuery = useOptions('product-brands', apiEndpoints.inventory.brands);
+  const unitsQuery = useOptions('product-units', apiEndpoints.inventory.units);
+  const warrantiesQuery = useOptions('product-warranties', apiEndpoints.inventory.warranties);
+
+  const generatedSlug = useMemo(() => slugify(name), [name]);
+
+  const createProduct = useMutation({
+    mutationFn: async (payload: Record<string, unknown>) =>
+      apiClient.post(apiEndpoints.inventory.products, payload),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: [apiEndpoints.inventory.products] });
+      router.push('/inventory/products');
+    },
+    onError: (caught) => {
+      setError(caught instanceof Error ? caught.message : 'Unable to create product');
+    },
+  });
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null);
+    const formData = new FormData(event.currentTarget);
+    const unitId = String(formData.get('unitId') ?? '');
+    const productName = String(formData.get('name') ?? '').trim();
+
+    if (!unitId) {
+      setError('Unit is required before creating a product.');
+      return;
+    }
+    if (!productName) {
+      setError('Product name is required.');
+      return;
+    }
+
+    const payload = {
+      name: productName,
+      slug: String(formData.get('slug') || slugify(productName)),
+      categoryId: String(formData.get('categoryId') || '') || undefined,
+      brandId: String(formData.get('brandId') || '') || undefined,
+      unitId,
+      warrantyId: String(formData.get('warrantyId') || '') || undefined,
+      productType: formData.get('productType') || 'STANDARD',
+      description: String(formData.get('description') || '') || undefined,
+      manufacturer: String(formData.get('manufacturer') || '') || undefined,
+      imageUrls: [],
+      taxType: formData.get('taxType') || 'EXCLUSIVE',
+      taxRate: toNumber(formData.get('taxRate')),
+      discountType: String(formData.get('discountType') || '') || undefined,
+      discountValue: toNumber(formData.get('discountValue')),
+      reorderLevel: toNumber(formData.get('reorderLevel')),
+      trackInventory: formData.get('trackInventory') === 'on',
+      trackExpiry: formData.get('trackExpiry') === 'on',
+      status: 'ACTIVE',
+      sku: String(formData.get('sku') || `SKU-${Date.now()}`),
+      barcode: String(formData.get('barcode') || '') || undefined,
+      purchasePrice: toNumber(formData.get('purchasePrice')),
+      sellingPrice: toNumber(formData.get('sellingPrice')),
+      wholesalePrice: toNumber(formData.get('wholesalePrice')),
+    };
+
+    createProduct.mutate(payload);
+  };
+
   return (
-    <div className="space-y-6">
-      
-      {/* Header */}
+    <form onSubmit={handleSubmit} className="space-y-6 pb-24">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 mb-1">Create Product</h1>
           <div className="text-sm text-gray-500 flex items-center gap-2">
-            <NextLink href="/dashboard" className="hover:text-orange-500 transition-colors">Dashboard</NextLink>
+            <NextLink href="/dashboard" className="hover:text-orange-500 transition-colors">
+              Dashboard
+            </NextLink>
+            <ChevronRight className="w-3 h-3" />
+            <NextLink href="/inventory/products" className="hover:text-orange-500 transition-colors">
+              Products
+            </NextLink>
             <ChevronRight className="w-3 h-3" />
             <span className="text-gray-900 font-medium">Create Product</span>
           </div>
         </div>
-        
+
         <div className="flex items-center gap-2">
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
-             <RefreshCcw className="w-5 h-5" />
+          <button
+            type="reset"
+            className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white"
+          >
+            <RefreshCcw className="w-5 h-5" />
           </button>
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
-             <ChevronUp className="w-5 h-5" />
-          </button>
-          <NextLink href="/products">
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#092C4C] hover:bg-[#061d33] text-white rounded-lg font-medium transition-colors">
-              <ChevronLeft className="w-4 h-4" /> Back to Products
-            </button>
+          <NextLink href="/inventory/products">
+            <Button type="button" variant="outline">Back to Products</Button>
           </NextLink>
         </div>
       </div>
 
-      <div className="space-y-6 pb-20">
-        
-        {/* Product Information Panel */}
-        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
-          <div className="flex justify-between items-center p-4 border-b border-gray-100 bg-white">
-             <h3 className="font-bold text-gray-900 flex items-center gap-2">
-               <Info className="w-5 h-5 text-[#FF9F43]" /> Product Information
-             </h3>
-             <ChevronDown className="w-5 h-5 text-gray-400" />
-          </div>
-          
-          <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Store <span className="text-red-500">*</span></label>
-                <Select>
-                  <option>Select</option>
-                </Select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Warehouse <span className="text-red-500">*</span></label>
-                <Select>
-                  <option>Select</option>
-                </Select>
-            </div>
+      {error && <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-600">{error}</div>}
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Product Name <span className="text-red-500">*</span></label>
-              <Input className="h-11 border-gray-200 focus-visible:ring-[#FF9F43]" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Slug <span className="text-red-500">*</span></label>
-              <Input className="h-11 border-gray-200 focus-visible:ring-[#FF9F43]" />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">SKU <span className="text-red-500">*</span></label>
-              <div className="relative flex items-center">
-                <Input className="h-11 border-gray-200 focus-visible:ring-[#FF9F43] pr-24" />
-                <button className="absolute right-1.5 bg-[#FF9F43] text-white text-xs font-bold px-3 py-1.5 rounded-md hover:bg-[#ff9021] transition-colors">
-                  Generate
-                </button>
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Selling Type <span className="text-red-500">*</span></label>
-                <Select>
-                  <option>Select</option>
-                </Select>
-            </div>
-
-            <div>
-              <div className="flex justify-between items-center mb-2">
-                <label className="block text-sm font-medium text-gray-700">Category <span className="text-red-500">*</span></label>
-                <button className="text-[#FF9F43] text-xs font-medium flex items-center gap-1 hover:underline">
-                  <Plus className="w-3 h-3" /> Add New
-                </button>
-              </div>
-                <Select>
-                  <option>Select</option>
-                </Select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Sub Category <span className="text-red-500">*</span></label>
-                <Select>
-                  <option>Select</option>
-                </Select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Brand <span className="text-red-500">*</span></label>
-                <Select>
-                  <option>Select</option>
-                </Select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Unit <span className="text-red-500">*</span></label>
-                <Select>
-                  <option>Select</option>
-                </Select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Item Code <span className="text-red-500">*</span></label>
-              <div className="relative flex items-center">
-                <Input className="h-11 border-gray-200 focus-visible:ring-[#FF9F43] pr-24" />
-                <button className="absolute right-1.5 bg-[#FF9F43] text-white text-xs font-bold px-3 py-1.5 rounded-md hover:bg-[#ff9021] transition-colors">
-                  Generate
-                </button>
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Barcode Symbology <span className="text-red-500">*</span></label>
-                <Select>
-                  <option>Select</option>
-                </Select>
-            </div>
-
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
-              <div className="border border-gray-200 rounded-lg overflow-hidden flex flex-col">
-                <div className="flex items-center gap-1 p-2 border-b border-gray-100 bg-gray-50 flex-wrap">
-                  <button className="p-1.5 hover:bg-gray-200 rounded text-gray-600"><Bold className="w-4 h-4" /></button>
-                  <button className="p-1.5 hover:bg-gray-200 rounded text-gray-600"><Italic className="w-4 h-4" /></button>
-                  <button className="p-1.5 hover:bg-gray-200 rounded text-gray-600"><Underline className="w-4 h-4" /></button>
-                  <button className="p-1.5 hover:bg-gray-200 rounded text-gray-600"><Strikethrough className="w-4 h-4" /></button>
-                  <div className="w-px h-4 bg-gray-300 mx-1"></div>
-                  <button className="p-1.5 hover:bg-gray-200 rounded text-gray-600"><Link2 className="w-4 h-4" /></button>
-                  <button className="p-1.5 hover:bg-gray-200 rounded text-gray-600"><ListIcon className="w-4 h-4" /></button>
-                  <button className="p-1.5 hover:bg-gray-200 rounded text-gray-600"><ListOrdered className="w-4 h-4" /></button>
-                  <button className="p-1.5 hover:bg-gray-200 rounded text-gray-600"><Quote className="w-4 h-4" /></button>
-                  <button className="p-1.5 hover:bg-gray-200 rounded text-gray-600"><Code className="w-4 h-4" /></button>
-                </div>
-                <textarea 
-                  className="w-full p-4 h-32 focus:outline-none text-sm resize-none" 
-                  placeholder="Type your message"
-                ></textarea>
-                <div className="flex items-center justify-between p-2 border-t border-gray-100 bg-gray-50 text-gray-500">
-                  <div className="flex gap-2">
-                    <button className="p-1 hover:text-gray-700"><Paperclip className="w-4 h-4" /></button>
-                    <button className="p-1 hover:text-gray-700"><Smile className="w-4 h-4" /></button>
-                    <button className="p-1 hover:text-gray-700"><Trash2 className="w-4 h-4" /></button>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs">Maximum 60 Words</span>
-                    <button className="flex items-center gap-1 text-xs font-bold text-[#FF9F43]">
-                       <Send className="w-3 h-3" /> <ChevronDown className="w-3 h-3" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-          </div>
+      <section className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+        <div className="border-b border-gray-100 p-4">
+          <h3 className="font-bold text-gray-900">Product Information</h3>
         </div>
 
-        {/* Pricing & Stocks Panel */}
-        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
-          <div className="flex justify-between items-center p-4 border-b border-gray-100 bg-white">
-             <h3 className="font-bold text-gray-900 flex items-center gap-2">
-               <Target className="w-5 h-5 text-[#FF9F43]" /> Pricing & Stocks
-             </h3>
-             <ChevronDown className="w-5 h-5 text-gray-400" />
-          </div>
-          
-          <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="md:col-span-3">
-              <label className="block text-sm font-medium text-gray-700 mb-3">Product Type <span className="text-red-500">*</span></label>
-              <div className="flex items-center gap-6">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="radio" name="productType" className="w-4 h-4 text-[#FF9F43] focus:ring-[#FF9F43] border-gray-300" defaultChecked />
-                  <span className="text-sm font-medium text-gray-900">Single Product</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="radio" name="productType" className="w-4 h-4 text-[#FF9F43] focus:ring-[#FF9F43] border-gray-300" />
-                  <span className="text-sm font-medium text-gray-500">Variable Product</span>
-                </label>
-              </div>
-            </div>
+        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Product Name *</span>
+            <Input
+              name="name"
+              value={name}
+              onChange={(event) => {
+                setName(event.target.value);
+                if (!sku) setSku(`SKU-${slugify(event.target.value).toUpperCase().slice(0, 16)}`);
+              }}
+              required
+            />
+          </label>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Quantity <span className="text-red-500">*</span></label>
-              <Input className="h-11 border-gray-200 focus-visible:ring-[#FF9F43]" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Price <span className="text-red-500">*</span></label>
-              <Input className="h-11 border-gray-200 focus-visible:ring-[#FF9F43]" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Tax Type <span className="text-red-500">*</span></label>
-                <Select>
-                  <option>Select</option>
-                </Select>
-            </div>
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Slug</span>
+            <Input name="slug" defaultValue={generatedSlug} key={generatedSlug} />
+          </label>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Discount Type <span className="text-red-500">*</span></label>
-                <Select>
-                  <option>Select</option>
-                </Select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Discount Value <span className="text-red-500">*</span></label>
-              <Input className="h-11 border-gray-200 focus-visible:ring-[#FF9F43]" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Quantity Alert <span className="text-red-500">*</span></label>
-              <Input className="h-11 border-gray-200 focus-visible:ring-[#FF9F43]" />
-            </div>
-          </div>
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">SKU *</span>
+            <Input name="sku" value={sku} onChange={(event) => setSku(event.target.value)} required />
+          </label>
+
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Barcode</span>
+            <Input name="barcode" />
+          </label>
+
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Category</span>
+            <Select name="categoryId">
+              <option value="">Select category</option>
+              {categoriesQuery.data?.data.map((category) => (
+                <option key={category.id} value={category.id}>{category.name}</option>
+              ))}
+            </Select>
+          </label>
+
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Brand</span>
+            <Select name="brandId">
+              <option value="">Select brand</option>
+              {brandsQuery.data?.data.map((brand) => (
+                <option key={brand.id} value={brand.id}>{brand.name}</option>
+              ))}
+            </Select>
+          </label>
+
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Unit *</span>
+            <Select name="unitId" required>
+              <option value="">Select unit</option>
+              {unitsQuery.data?.data.map((unit) => (
+                <option key={unit.id} value={unit.id}>
+                  {unit.name}{unit.shortName ? ` (${unit.shortName})` : ''}
+                </option>
+              ))}
+            </Select>
+          </label>
+
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Warranty</span>
+            <Select name="warrantyId">
+              <option value="">No warranty</option>
+              {warrantiesQuery.data?.data.map((warranty) => (
+                <option key={warranty.id} value={warranty.id}>{warranty.name}</option>
+              ))}
+            </Select>
+          </label>
+
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Product Type</span>
+            <Select name="productType" defaultValue="STANDARD">
+              <option value="STANDARD">Standard</option>
+              <option value="VARIABLE">Variable</option>
+              <option value="SERVICE">Service</option>
+            </Select>
+          </label>
+
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Manufacturer</span>
+            <Input name="manufacturer" />
+          </label>
+
+          <label className="md:col-span-2">
+            <span className="block text-sm font-medium text-gray-700 mb-2">Description</span>
+            <textarea
+              name="description"
+              className="min-h-28 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-[#FF9F43]"
+            />
+          </label>
+        </div>
+      </section>
+
+      <section className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+        <div className="border-b border-gray-100 p-4">
+          <h3 className="font-bold text-gray-900">Pricing, Tax & Inventory</h3>
         </div>
 
-        {/* Images Panel */}
-        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
-          <div className="flex justify-between items-center p-4 border-b border-gray-100 bg-white">
-             <h3 className="font-bold text-gray-900 flex items-center gap-2">
-               <ImageIcon className="w-5 h-5 text-[#FF9F43]" /> Images
-             </h3>
-             <ChevronDown className="w-5 h-5 text-gray-400" />
-          </div>
-          <div className="p-6">
-            <div className="w-32 h-32 border-2 border-dashed border-gray-200 rounded-xl flex flex-col items-center justify-center text-gray-400 hover:border-[#FF9F43] hover:text-[#FF9F43] cursor-pointer transition-colors bg-gray-50/50">
-               <Plus className="w-6 h-6 mb-2" />
-               <span className="text-xs font-medium">Add Image</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Custom Fields Panel */}
-        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
-          <div className="flex justify-between items-center p-4 border-b border-gray-100 bg-white">
-             <h3 className="font-bold text-gray-900 flex items-center gap-2">
-               <List className="w-5 h-5 text-[#FF9F43]" /> Custom Fields
-             </h3>
-             <ChevronDown className="w-5 h-5 text-gray-400" />
-          </div>
-          
-          <div className="p-6">
-            <div className="bg-gray-50 rounded-xl p-4 flex items-center gap-6 mb-6">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="w-4 h-4 text-[#FF9F43] rounded border-gray-300 focus:ring-[#FF9F43]" defaultChecked />
-                <span className="text-sm font-medium text-gray-700">Warranties</span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="w-4 h-4 text-[#FF9F43] rounded border-gray-300 focus:ring-[#FF9F43]" defaultChecked />
-                <span className="text-sm font-medium text-gray-700">Manufacturer</span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="w-4 h-4 text-[#FF9F43] rounded border-gray-300 focus:ring-[#FF9F43]" defaultChecked />
-                <span className="text-sm font-medium text-gray-700">Expiry</span>
-              </label>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Warranty <span className="text-red-500">*</span></label>
-                <Select>
-                  <option>Select</option>
-                </Select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Manufacturer <span className="text-red-500">*</span></label>
-                <Input className="h-11 border-gray-200 focus-visible:ring-[#FF9F43]" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Manufactured Date <span className="text-red-500">*</span></label>
-                <Input type="date" className="h-11 border-gray-200 focus-visible:ring-[#FF9F43]" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Expiry On <span className="text-red-500">*</span></label>
-                <Input type="date" className="h-11 border-gray-200 focus-visible:ring-[#FF9F43]" />
-              </div>
-            </div>
+        <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Purchase Price</span>
+            <Input name="purchasePrice" type="number" min="0" step="0.01" defaultValue="0" />
+          </label>
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Selling Price *</span>
+            <Input name="sellingPrice" type="number" min="0" step="0.01" defaultValue="0" required />
+          </label>
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Wholesale Price</span>
+            <Input name="wholesalePrice" type="number" min="0" step="0.01" />
+          </label>
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Tax Type</span>
+            <Select name="taxType" defaultValue="EXCLUSIVE">
+              <option value="EXCLUSIVE">Exclusive</option>
+              <option value="INCLUSIVE">Inclusive</option>
+            </Select>
+          </label>
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Tax Rate %</span>
+            <Input name="taxRate" type="number" min="0" max="100" step="0.01" defaultValue="0" />
+          </label>
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Reorder Level</span>
+            <Input name="reorderLevel" type="number" min="0" step="0.01" defaultValue="0" />
+          </label>
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Discount Type</span>
+            <Select name="discountType">
+              <option value="">No discount</option>
+              <option value="FIXED">Fixed</option>
+              <option value="PERCENTAGE">Percentage</option>
+            </Select>
+          </label>
+          <label>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Discount Value</span>
+            <Input name="discountValue" type="number" min="0" step="0.01" defaultValue="0" />
+          </label>
+          <div className="flex flex-col justify-end gap-3">
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+              <input name="trackInventory" type="checkbox" defaultChecked className="accent-orange-500" />
+              Track inventory
+            </label>
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+              <input name="trackExpiry" type="checkbox" className="accent-orange-500" />
+              Track expiry
+            </label>
           </div>
         </div>
+      </section>
 
-      </div>
-
-      {/* Fixed Bottom Action Bar */}
       <div className="fixed bottom-0 left-0 right-0 md:left-64 bg-white border-t border-gray-200 p-4 z-10 flex justify-end gap-3">
-         <button className="px-6 py-2.5 bg-[#092C4C] hover:bg-[#061d33] text-white rounded-lg font-medium transition-colors">
-           Cancel
-         </button>
-         <button className="px-6 py-2.5 bg-[#FF9F43] hover:bg-[#ff9021] text-white rounded-lg font-medium transition-colors">
-           Add Product
-         </button>
+        <NextLink href="/inventory/products">
+          <Button type="button" variant="outline">Cancel</Button>
+        </NextLink>
+        <Button
+          type="submit"
+          disabled={createProduct.isPending}
+          className="bg-[#FF9F43] hover:bg-[#ff9021] text-white"
+        >
+          <Save className="mr-2 h-4 w-4" />
+          {createProduct.isPending ? 'Saving...' : 'Add Product'}
+        </Button>
       </div>
-
-    </div>
+    </form>
   );
 }
-// Add ChevronLeft to import manually above
-import { ChevronLeft } from 'lucide-react';

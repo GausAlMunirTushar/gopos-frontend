@@ -7,6 +7,9 @@ import {
 import { PageHeader } from '@/components/shared/PageHeader';
 import { StatsCard } from '@/components/shared/StatsCard';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { couponRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface Coupon {
@@ -25,6 +28,12 @@ const couponData: Coupon[] = [
 ];
 
 export default function CouponList() {
+  const { data: coupons } = useLiveRows<ApiRecord, Coupon>({
+    resource: apiEndpoints.promo.coupons,
+    fallbackData: couponData,
+    mapRow: couponRow,
+  });
+
   const columns: ColumnDef<Coupon>[] = [
     {
       accessorKey: 'id',
@@ -124,7 +133,7 @@ export default function CouponList() {
 
       <DataTable 
         columns={columns} 
-        data={couponData} 
+        data={coupons} 
         searchKey="code"
         searchPlaceholder="Enter Code..."
         enableSelection={true}

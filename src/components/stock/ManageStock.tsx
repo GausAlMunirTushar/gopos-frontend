@@ -6,6 +6,9 @@ import {
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { stockBalanceRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface Stock {
@@ -32,6 +35,12 @@ const stockData: Stock[] = [
 ];
 
 export default function ManageStock() {
+  const { data: stock } = useLiveRows<ApiRecord, Stock>({
+    resource: apiEndpoints.inventory.balances,
+    fallbackData: stockData,
+    mapRow: stockBalanceRow,
+  });
+
   const columns: ColumnDef<Stock>[] = [
     { accessorKey: 'warehouse', header: 'Warehouse' },
     { accessorKey: 'store', header: 'Store' },
@@ -97,7 +106,7 @@ export default function ManageStock() {
 
       <DataTable 
         columns={columns} 
-        data={stockData} 
+        data={stock} 
         searchKey="product"
         searchPlaceholder="Search products..."
         enableSelection

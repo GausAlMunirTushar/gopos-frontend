@@ -6,6 +6,9 @@ import {
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { lowStockRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface LowStock {
@@ -33,6 +36,12 @@ const lowStockData: LowStock[] = [
 ];
 
 export default function LowStocksPage() {
+  const { data: lowStock } = useLiveRows<ApiRecord, LowStock>({
+    resource: apiEndpoints.inventory.lowStock,
+    fallbackData: lowStockData,
+    mapRow: lowStockRow,
+  });
+
   const columns: ColumnDef<LowStock>[] = [
     { accessorKey: 'warehouse', header: 'Warehouse' },
     { accessorKey: 'store', header: 'Store' },
@@ -105,7 +114,7 @@ export default function LowStocksPage() {
         <div className="p-4">
           <DataTable 
             columns={columns} 
-            data={lowStockData} 
+            data={lowStock} 
             searchKey="name"
             searchPlaceholder="Search products..."
             enableSelection

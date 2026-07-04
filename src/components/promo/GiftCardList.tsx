@@ -7,6 +7,9 @@ import {
 import { PageHeader } from '@/components/shared/PageHeader';
 import { StatsCard } from '@/components/shared/StatsCard';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { giftCardRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface GiftCard {
@@ -25,6 +28,12 @@ const giftCardData: GiftCard[] = [
 ];
 
 export default function GiftCardList() {
+  const { data: giftCards } = useLiveRows<ApiRecord, GiftCard>({
+    resource: apiEndpoints.promo.giftCards,
+    fallbackData: giftCardData,
+    mapRow: giftCardRow,
+  });
+
   const columns: ColumnDef<GiftCard>[] = [
     {
       accessorKey: 'id',
@@ -117,7 +126,7 @@ export default function GiftCardList() {
 
       <DataTable 
         columns={columns} 
-        data={giftCardData} 
+        data={giftCards} 
         searchKey="customer"
         searchPlaceholder="Search customer..."
         enableSelection={true}

@@ -35,7 +35,7 @@ export function VerifyForm() {
         </div>
 
         <div className="text-center text-sm text-gray-500 mt-6">
-          Didn't get the OTP? <button type="button" className="text-gray-900 font-medium hover:underline">Resend OTP</button>
+          Didn&apos;t get the OTP? <button type="button" className="text-gray-900 font-medium hover:underline">Resend OTP</button>
         </div>
 
         <Button className="w-full bg-orange-400 hover:bg-orange-500 text-white py-6 rounded-xl text-md font-medium mt-6">

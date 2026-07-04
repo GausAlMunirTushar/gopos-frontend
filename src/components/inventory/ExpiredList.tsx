@@ -6,6 +6,9 @@ import {
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { expiredProductRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface ExpiredProduct {
@@ -30,6 +33,12 @@ const expiredData: ExpiredProduct[] = [
 ];
 
 export default function ExpiredProductsPage() {
+  const { data: expiredProducts } = useLiveRows<ApiRecord, ExpiredProduct>({
+    resource: apiEndpoints.inventory.expired,
+    fallbackData: expiredData,
+    mapRow: expiredProductRow,
+  });
+
   const columns: ColumnDef<ExpiredProduct>[] = [
     {
       accessorKey: 'sku',
@@ -90,7 +99,7 @@ export default function ExpiredProductsPage() {
 
       <DataTable 
         columns={columns} 
-        data={expiredData} 
+        data={expiredProducts} 
         searchKey="name"
         searchPlaceholder="Search product..."
         enableSelection

@@ -7,6 +7,9 @@ import {
 import { PageHeader } from '@/components/shared/PageHeader';
 import { StatsCard } from '@/components/shared/StatsCard';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { invoiceRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface Invoice {
@@ -27,6 +30,12 @@ const invoiceData: Invoice[] = [
 ];
 
 export default function InvoiceList() {
+  const { data: invoices } = useLiveRows<ApiRecord, Invoice>({
+    resource: apiEndpoints.sales.invoices,
+    fallbackData: invoiceData,
+    mapRow: invoiceRow,
+  });
+
   const columns: ColumnDef<Invoice>[] = [
     {
       accessorKey: 'id',
@@ -109,7 +118,7 @@ export default function InvoiceList() {
 
       <DataTable 
         columns={columns} 
-        data={invoiceData} 
+        data={invoices} 
         searchKey="id"
         searchPlaceholder="Search invoice ID..."
         filters={[

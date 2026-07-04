@@ -4,14 +4,21 @@ import React from 'react';
 import { 
   X, ShoppingCart, ChevronDown, DollarSign, CreditCard, QrCode, RefreshCcw, Minus, Plus, Trash2
 } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 
 export interface CartItem {
   id: string;
+  variantId: string;
   name: string;
   price: number;
+  unitCost: number;
   qty: number;
+  stock: number;
   img: string;
+}
+
+export interface PosSelectOption {
+  id: string;
+  name: string;
 }
 
 interface PosCartProps {
@@ -24,6 +31,16 @@ interface PosCartProps {
   tax: number;
   discount: number;
   total: number;
+  locations: PosSelectOption[];
+  customers: PosSelectOption[];
+  selectedLocationId: string;
+  selectedCustomerId: string;
+  onSelectLocation: (id: string) => void;
+  onSelectCustomer: (id: string) => void;
+  onCheckout: () => void;
+  isCheckingOut: boolean;
+  checkoutError: string | null;
+  checkoutSuccess: string | null;
 }
 
 export function PosCart({ 
@@ -35,8 +52,21 @@ export function PosCart({
   subtotal,
   tax,
   discount,
-  total
+  total,
+  locations,
+  customers,
+  selectedLocationId,
+  selectedCustomerId,
+  onSelectLocation,
+  onSelectCustomer,
+  onCheckout,
+  isCheckingOut,
+  checkoutError,
+  checkoutSuccess
 }: PosCartProps) {
+  const hasInvalidStock = cartItems.some((item) => item.qty > item.stock);
+  const canCheckout = cartItems.length > 0 && Boolean(selectedLocationId) && !hasInvalidStock && !isCheckingOut;
+
   return (
     <div className={`flex-1 lg:flex-[0.4] xl:flex-[0.35] bg-white flex flex-col border-l border-gray-200 z-20 h-full ${activeTab === 'cart' ? 'flex absolute inset-0 lg:static' : 'hidden lg:flex'}`}>
       
@@ -53,8 +83,17 @@ export function PosCart({
           <h4 className="font-bold text-gray-900 text-sm">Customer Information</h4>
           <div className="flex gap-2">
             <div className="flex-1 relative">
-              <select className="w-full h-10 px-3 bg-white border border-gray-200 rounded-lg text-sm appearance-none focus:outline-none focus:border-orange-500">
-                <option>Walk In Customer</option>
+              <select
+                className="w-full h-10 px-3 bg-white border border-gray-200 rounded-lg text-sm appearance-none focus:outline-none focus:border-orange-500"
+                value={selectedCustomerId}
+                onChange={(event) => onSelectCustomer(event.target.value)}
+              >
+                <option value="">Walk In Customer</option>
+                {customers.map((customer) => (
+                  <option key={customer.id} value={customer.id}>
+                    {customer.name}
+                  </option>
+                ))}
               </select>
               <ChevronDown className="w-4 h-4 text-gray-400 absolute right-3 top-3 pointer-events-none" />
             </div>
@@ -63,8 +102,19 @@ export function PosCart({
             </button>
           </div>
           <div className="relative">
-            <Input type="text" placeholder="Scan Barcode or Search Item..." className="w-full bg-white border-gray-200 h-10" />
-            <SearchIcon className="w-4 h-4 text-gray-400 absolute right-3 top-3" />
+            <select
+              className="w-full h-10 px-3 bg-white border border-gray-200 rounded-lg text-sm appearance-none focus:outline-none focus:border-orange-500"
+              value={selectedLocationId}
+              onChange={(event) => onSelectLocation(event.target.value)}
+            >
+              <option value="">Select Store / Location</option>
+              {locations.map((location) => (
+                <option key={location.id} value={location.id}>
+                  {location.name}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="w-4 h-4 text-gray-400 absolute right-3 top-3 pointer-events-none" />
           </div>
         </div>
       </div>
@@ -109,6 +159,7 @@ export function PosCart({
                       <span className="font-bold text-xs w-4 text-center">{item.qty}</span>
                       <button 
                         onClick={() => onUpdateQty(item.id, item.qty + 1)}
+                        disabled={item.qty >= item.stock}
                         className="w-6 h-6 flex items-center justify-center bg-white rounded text-gray-600 hover:text-orange-500 transition-colors"
                       >
                         <Plus className="w-3 h-3" strokeWidth={3} />
@@ -122,6 +173,11 @@ export function PosCart({
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
+                {item.qty > item.stock && (
+                  <p className="absolute bottom-1 left-3 text-[10px] font-semibold text-red-500">
+                    Only {item.stock} in stock
+                  </p>
+                )}
               </div>
             ))}
           </div>
@@ -195,6 +251,22 @@ export function PosCart({
           <p className="text-white font-bold text-xl tracking-tight">${total.toFixed(2)}</p>
         </div>
 
+        {!selectedLocationId && (
+          <div className="mb-3 rounded-md bg-orange-50 px-3 py-2 text-xs font-medium text-orange-600">
+            Select a store/location before checkout.
+          </div>
+        )}
+        {checkoutError && (
+          <div className="mb-3 rounded-md bg-red-50 px-3 py-2 text-xs font-medium text-red-600">
+            {checkoutError}
+          </div>
+        )}
+        {checkoutSuccess && (
+          <div className="mb-3 rounded-md bg-green-50 px-3 py-2 text-xs font-medium text-green-600">
+            {checkoutSuccess}
+          </div>
+        )}
+
         <div className="grid grid-cols-3 gap-2">
           <button className="bg-purple-600 hover:bg-purple-700 text-white rounded-md py-2 text-[11px] sm:text-xs font-bold flex flex-col sm:flex-row items-center justify-center gap-1 active:scale-95 transition-all">
              <RefreshCcw className="w-3 h-3 sm:w-4 sm:h-4" /> Hold
@@ -202,8 +274,12 @@ export function PosCart({
           <button onClick={onClearCart} className="bg-red-500 hover:bg-red-600 text-white rounded-md py-2 text-[11px] sm:text-xs font-bold flex flex-col sm:flex-row items-center justify-center gap-1 active:scale-95 transition-all">
              <X className="w-3 h-3 sm:w-4 sm:h-4" strokeWidth={3} /> Void
           </button>
-          <button className="bg-teal-500 hover:bg-teal-600 text-white rounded-md py-2 text-[11px] sm:text-xs font-bold flex flex-col sm:flex-row items-center justify-center gap-1 active:scale-95 transition-all">
-             <DollarSign className="w-3 h-3 sm:w-4 sm:h-4" strokeWidth={3} /> Pay
+          <button
+            onClick={onCheckout}
+            disabled={!canCheckout}
+            className="bg-teal-500 hover:bg-teal-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-md py-2 text-[11px] sm:text-xs font-bold flex flex-col sm:flex-row items-center justify-center gap-1 active:scale-95 transition-all"
+          >
+             <DollarSign className="w-3 h-3 sm:w-4 sm:h-4" strokeWidth={3} /> {isCheckingOut ? 'Paying...' : 'Pay'}
           </button>
         </div>
       </div>
@@ -212,22 +288,3 @@ export function PosCart({
   );
 }
 
-function SearchIcon(props: React.ComponentProps<'svg'>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="11" cy="11" r="8" />
-      <path d="m21 21-4.3-4.3" />
-    </svg>
-  )
-}

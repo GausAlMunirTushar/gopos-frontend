@@ -5,7 +5,12 @@ import {
   FileText, RefreshCcw, Edit, Trash2, FileSpreadsheet, Plus
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
+import { ResourceCreateModal } from '@/components/shared/ResourceCreateModal';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { actionButtonClassName, variantFields } from '@/lib/api/resource-fields';
+import { variantAttributeRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface Variant {
@@ -29,6 +34,12 @@ const variantData: Variant[] = [
 ];
 
 export default function VariantAttributesPage() {
+  const { data: variants } = useLiveRows<ApiRecord, Variant>({
+    resource: apiEndpoints.inventory.variants,
+    fallbackData: variantData,
+    mapRow: variantAttributeRow,
+  });
+
   const columns: ColumnDef<Variant>[] = [
     { accessorKey: 'name', header: 'Variant' },
     { accessorKey: 'values', header: 'Values' },
@@ -73,16 +84,22 @@ export default function VariantAttributesPage() {
             <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
                <RefreshCcw className="w-5 h-5" />
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#FF9F43] hover:bg-[#ff9021] text-white rounded-lg font-medium transition-colors">
+            <ResourceCreateModal
+              resource={apiEndpoints.inventory.variants}
+              title="Add Variant"
+              description="Create a variant attribute and optional comma-separated values."
+              fields={variantFields}
+              buttonClassName={actionButtonClassName}
+            >
               <Plus className="w-4 h-4" /> Add Variant
-            </button>
+            </ResourceCreateModal>
           </div>
         }
       />
 
       <DataTable 
         columns={columns} 
-        data={variantData} 
+        data={variants} 
         searchKey="name"
         searchPlaceholder="Search variants..."
         enableSelection

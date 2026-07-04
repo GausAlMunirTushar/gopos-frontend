@@ -13,7 +13,7 @@ export function ForgotPasswordForm() {
     <>
       <h1 className="text-3xl font-bold text-gray-900 mb-2">Forgot password?</h1>
       <p className="text-gray-500 text-sm mb-8 leading-relaxed">
-        If you forgot your password, well, then we'll email you
+        If you forgot your password, well, then we&apos;ll email you
         instructions to reset your password.
       </p>
 

@@ -1,13 +1,15 @@
 'use client';
 
 import React from 'react';
-import { 
-  Eye, Edit, Trash2, Plus, ClipboardList
-} from 'lucide-react';
+import { Eye, Edit, Trash2, ClipboardList } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { StatsCard } from '@/components/shared/StatsCard';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { purchaseRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
+import { PurchaseWorkflowModal } from '@/components/purchases/PurchaseWorkflowModals';
 
 interface PurchaseOrder {
   id: string;
@@ -25,6 +27,12 @@ const orderData: PurchaseOrder[] = [
 ];
 
 export default function PurchaseOrderList() {
+  const { data: orders } = useLiveRows<ApiRecord, PurchaseOrder>({
+    resource: apiEndpoints.purchasing.purchaseOrders,
+    fallbackData: orderData,
+    mapRow: purchaseRow,
+  });
+
   const columns: ColumnDef<PurchaseOrder>[] = [
     {
       accessorKey: 'id',
@@ -74,11 +82,7 @@ export default function PurchaseOrderList() {
           { label: 'Purchases', href: '/purchases' },
           { label: 'Orders' }
         ]}
-        actions={
-          <button className="px-4 py-2 bg-[#FF9F43] hover:bg-orange-500 text-white rounded-lg text-sm font-medium flex items-center gap-2 transition-colors">
-            <Plus className="w-4 h-4" /> Create Order
-          </button>
-        }
+        actions={<PurchaseWorkflowModal mode="ORDER" />}
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -100,7 +104,7 @@ export default function PurchaseOrderList() {
 
       <DataTable 
         columns={columns} 
-        data={orderData} 
+        data={orders} 
         searchKey="id"
         searchPlaceholder="Search order ID..."
         filters={[

@@ -1,14 +1,15 @@
 'use client';
 
 import React from 'react';
-import { 
-  Eye, Edit, Trash2, Plus, DollarSign, TrendingUp
-} from 'lucide-react';
+import { Eye, Edit, Trash2, DollarSign, TrendingUp } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { StatsCard } from '@/components/shared/StatsCard';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { financeEntryRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
-import { useCurrency } from '@/hooks/useCurrency';
+import { FinanceEntryModal } from '@/components/finance/FinanceEntryModal';
 
 interface Income {
   id: string;
@@ -25,6 +26,12 @@ const incomeData: Income[] = [
 ];
 
 export default function IncomeList() {
+  const { data: income } = useLiveRows<ApiRecord, Income>({
+    resource: apiEndpoints.finance.income,
+    fallbackData: incomeData,
+    mapRow: financeEntryRow,
+  });
+
   const columns: ColumnDef<Income>[] = [
     {
       accessorKey: 'id',
@@ -86,11 +93,7 @@ export default function IncomeList() {
           { label: 'Finance' },
           { label: 'Income' }
         ]}
-        actions={
-          <button className="px-4 py-2 bg-[#FF9F43] hover:bg-orange-500 text-white rounded-lg text-sm font-medium flex items-center gap-2 transition-colors">
-            <Plus className="w-4 h-4" /> Add Income
-          </button>
-        }
+        actions={<FinanceEntryModal type="INCOME" />}
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -112,7 +115,7 @@ export default function IncomeList() {
 
       <DataTable 
         columns={columns} 
-        data={incomeData} 
+        data={income} 
         searchKey="source"
         searchPlaceholder="Search Source..."
         enableSelection={true}

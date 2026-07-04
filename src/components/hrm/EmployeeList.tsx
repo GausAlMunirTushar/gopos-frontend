@@ -5,8 +5,13 @@ import {
   Eye, Edit, Trash2, Plus, Users, Briefcase
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
+import { ResourceCreateModal } from '@/components/shared/ResourceCreateModal';
 import { StatsCard } from '@/components/shared/StatsCard';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { actionButtonClassName, employeeFields } from '@/lib/api/resource-fields';
+import { employeeRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface Employee {
@@ -27,6 +32,12 @@ const employeeData: Employee[] = [
 ];
 
 export default function EmployeeList() {
+  const { data: employees } = useLiveRows<ApiRecord, Employee>({
+    resource: apiEndpoints.hrm.employees,
+    fallbackData: employeeData,
+    mapRow: employeeRow,
+  });
+
   const columns: ColumnDef<Employee>[] = [
     {
       accessorKey: 'id',
@@ -105,9 +116,15 @@ export default function EmployeeList() {
           { label: 'Employees' }
         ]}
         actions={
-          <button className="px-4 py-2 bg-[#FF9F43] hover:bg-orange-500 text-white rounded-lg text-sm font-medium flex items-center gap-2 transition-colors">
+          <ResourceCreateModal
+            resource={apiEndpoints.hrm.employees}
+            title="Add Employee"
+            description="Create an employee profile. Department/designation linking can be added after the selector workflow is connected."
+            fields={employeeFields}
+            buttonClassName={actionButtonClassName}
+          >
             <Plus className="w-4 h-4" /> Add Employee
-          </button>
+          </ResourceCreateModal>
         }
       />
 
@@ -137,7 +154,7 @@ export default function EmployeeList() {
 
       <DataTable 
         columns={columns} 
-        data={employeeData} 
+        data={employees} 
         searchKey="name"
         searchPlaceholder="Search employees..."
         enableSelection={true}

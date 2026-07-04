@@ -2,12 +2,42 @@
 
 import { useTranslations } from 'next-intl';
 import NextLink from 'next/link';
+import { useRouter } from 'next/navigation';
+import type { FormEvent } from 'react';
+import { useState } from 'react';
 import { Mail, EyeOff, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { apiClient } from '@/lib/api/client';
+import type { AuthSession } from '@/lib/auth/session';
 
 export function RegisterForm() {
   const t = useTranslations('auth');
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null);
+    setIsSubmitting(true);
+    const formData = new FormData(event.currentTarget);
+    try {
+      const response = await apiClient.post<AuthSession>('/auth/register', {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        password: formData.get('password'),
+        confirmPassword: formData.get('confirmPassword'),
+        acceptedTerms: formData.get('acceptedTerms') === 'on',
+      });
+      apiClient.setSession(response.data);
+      router.push('/dashboard');
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : 'Unable to register');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <>
@@ -16,13 +46,15 @@ export function RegisterForm() {
         Create New goPOS Account
       </p>
 
-      <form className="space-y-5">
+      <form className="space-y-5" onSubmit={handleSubmit}>
+        {error && <div className="rounded-lg bg-red-50 p-3 text-sm text-red-600">{error}</div>}
         <div className="space-y-1.5">
           <label className="text-sm font-medium text-gray-700">
             Name <span className="text-red-500">*</span>
           </label>
           <div className="relative">
             <Input 
+              name="name"
               type="text" 
               placeholder="" 
               className="pr-10 bg-white border-gray-200"
@@ -37,6 +69,7 @@ export function RegisterForm() {
           </label>
           <div className="relative">
             <Input 
+              name="email"
               type="email" 
               placeholder="" 
               className="pr-10 bg-white border-gray-200"
@@ -51,6 +84,7 @@ export function RegisterForm() {
           </label>
           <div className="relative">
             <Input 
+              name="password"
               type="password" 
               placeholder="" 
               className="pr-10 bg-white border-gray-200"
@@ -65,6 +99,7 @@ export function RegisterForm() {
           </label>
           <div className="relative">
             <Input 
+              name="confirmPassword"
               type="password" 
               placeholder="" 
               className="pr-10 bg-white border-gray-200"
@@ -75,15 +110,15 @@ export function RegisterForm() {
 
         <div className="flex items-center">
           <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" className="rounded border-gray-300 text-orange-500 focus:ring-orange-500 w-4 h-4 accent-orange-500" />
+            <input name="acceptedTerms" type="checkbox" className="rounded border-gray-300 text-orange-500 focus:ring-orange-500 w-4 h-4 accent-orange-500" />
             <span className="text-sm text-gray-500">
               I agree to the <NextLink href="#" className="text-orange-500 hover:underline">Terms & Privacy</NextLink>
             </span>
           </label>
         </div>
 
-        <Button className="w-full bg-orange-400 hover:bg-orange-500 text-white py-6 rounded-xl text-md font-medium">
-          Sign Up
+        <Button disabled={isSubmitting} className="w-full bg-orange-400 hover:bg-orange-500 text-white py-6 rounded-xl text-md font-medium">
+          {isSubmitting ? 'Signing Up...' : 'Sign Up'}
         </Button>
       </form>
 

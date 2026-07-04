@@ -7,6 +7,9 @@ import {
 import { PageHeader } from '@/components/shared/PageHeader';
 import { StatsCard } from '@/components/shared/StatsCard';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { purchaseReturnRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface PurchaseReturn {
@@ -25,6 +28,12 @@ const returnData: PurchaseReturn[] = [
 ];
 
 export default function PurchaseReturnList() {
+  const { data: returns } = useLiveRows<ApiRecord, PurchaseReturn>({
+    resource: apiEndpoints.purchasing.purchaseReturns,
+    fallbackData: returnData,
+    mapRow: purchaseReturnRow,
+  });
+
   const columns: ColumnDef<PurchaseReturn>[] = [
     {
       accessorKey: 'id',
@@ -100,7 +109,7 @@ export default function PurchaseReturnList() {
 
       <DataTable 
         columns={columns} 
-        data={returnData} 
+        data={returns} 
         searchKey="id"
         searchPlaceholder="Search return ID..."
         filters={[

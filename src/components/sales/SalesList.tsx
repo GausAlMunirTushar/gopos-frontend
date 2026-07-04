@@ -9,6 +9,9 @@ import {
 import { PageHeader } from '@/components/shared/PageHeader';
 import { StatsCard } from '@/components/shared/StatsCard';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { saleRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface Sale {
@@ -31,6 +34,12 @@ const salesData: Sale[] = [
 ];
 
 export default function SalesList() {
+  const { data: sales } = useLiveRows<ApiRecord, Sale>({
+    resource: apiEndpoints.sales.sales,
+    fallbackData: salesData,
+    mapRow: saleRow,
+  });
+
   const columns: ColumnDef<Sale>[] = [
     {
       accessorKey: 'id',
@@ -165,7 +174,7 @@ export default function SalesList() {
 
       <DataTable 
         columns={columns} 
-        data={salesData} 
+        data={sales} 
         searchKey="customer"
         searchPlaceholder="Search customer..."
         actions={

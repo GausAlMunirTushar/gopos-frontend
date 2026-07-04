@@ -5,7 +5,12 @@ import {
   Eye, Edit, Trash2, Plus
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
+import { ResourceCreateModal } from '@/components/shared/ResourceCreateModal';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { actionButtonClassName, departmentFields } from '@/lib/api/resource-fields';
+import { departmentRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface Department {
@@ -24,6 +29,12 @@ const departmentData: Department[] = [
 ];
 
 export default function DepartmentList() {
+  const { data: departments } = useLiveRows<ApiRecord, Department>({
+    resource: apiEndpoints.hrm.departments,
+    fallbackData: departmentData,
+    mapRow: departmentRow,
+  });
+
   const columns: ColumnDef<Department>[] = [
     {
       accessorKey: 'id',
@@ -86,15 +97,21 @@ export default function DepartmentList() {
           { label: 'Departments' }
         ]}
         actions={
-          <button className="px-4 py-2 bg-[#FF9F43] hover:bg-orange-500 text-white rounded-lg text-sm font-medium flex items-center gap-2 transition-colors">
+          <ResourceCreateModal
+            resource={apiEndpoints.hrm.departments}
+            title="Add Department"
+            description="Create an HRM department."
+            fields={departmentFields}
+            buttonClassName={actionButtonClassName}
+          >
             <Plus className="w-4 h-4" /> Add Department
-          </button>
+          </ResourceCreateModal>
         }
       />
 
       <DataTable 
         columns={columns} 
-        data={departmentData} 
+        data={departments} 
         searchKey="name"
         searchPlaceholder="Search departments..."
         enableSelection={true}

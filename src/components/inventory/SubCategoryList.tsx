@@ -6,6 +6,9 @@ import {
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { subCategoryRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface SubCategory {
@@ -31,6 +34,12 @@ const subCategoryData: SubCategory[] = [
 ];
 
 export default function SubCategoryPage() {
+  const { data: subCategories } = useLiveRows<ApiRecord, SubCategory>({
+    resource: apiEndpoints.inventory.subCategories,
+    fallbackData: subCategoryData,
+    mapRow: subCategoryRow,
+  });
+
   const columns: ColumnDef<SubCategory>[] = [
     {
       accessorKey: 'img',
@@ -92,7 +101,7 @@ export default function SubCategoryPage() {
 
       <DataTable 
         columns={columns} 
-        data={subCategoryData} 
+        data={subCategories} 
         searchKey="name"
         searchPlaceholder="Search sub category..."
         enableSelection

@@ -7,6 +7,9 @@ import {
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { productRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface Product {
@@ -35,6 +38,12 @@ const productsData: Product[] = [
 ];
 
 export default function ProductsPage() {
+  const { data: products } = useLiveRows<ApiRecord, Product>({
+    resource: apiEndpoints.inventory.products,
+    fallbackData: productsData,
+    mapRow: productRow,
+  });
+
   const columns: ColumnDef<Product>[] = [
     {
       accessorKey: 'sku',
@@ -128,7 +137,7 @@ export default function ProductsPage() {
 
       <DataTable 
         columns={columns} 
-        data={productsData} 
+        data={products} 
         searchKey="name"
         searchPlaceholder="Search products..."
         enableSelection

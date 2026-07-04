@@ -5,7 +5,12 @@ import {
   Eye, Edit, Trash2, Plus
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
+import { ResourceCreateModal } from '@/components/shared/ResourceCreateModal';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { actionButtonClassName, designationFields } from '@/lib/api/resource-fields';
+import { designationRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface Designation {
@@ -22,6 +27,12 @@ const designationData: Designation[] = [
 ];
 
 export default function DesignationList() {
+  const { data: designations } = useLiveRows<ApiRecord, Designation>({
+    resource: apiEndpoints.hrm.designations,
+    fallbackData: designationData,
+    mapRow: designationRow,
+  });
+
   const columns: ColumnDef<Designation>[] = [
     {
       accessorKey: 'id',
@@ -74,15 +85,21 @@ export default function DesignationList() {
           { label: 'Designations' }
         ]}
         actions={
-          <button className="px-4 py-2 bg-[#FF9F43] hover:bg-orange-500 text-white rounded-lg text-sm font-medium flex items-center gap-2 transition-colors">
+          <ResourceCreateModal
+            resource={apiEndpoints.hrm.designations}
+            title="Add Designation"
+            description="Create an HRM designation."
+            fields={designationFields}
+            buttonClassName={actionButtonClassName}
+          >
             <Plus className="w-4 h-4" /> Add Designation
-          </button>
+          </ResourceCreateModal>
         }
       />
 
       <DataTable 
         columns={columns} 
-        data={designationData} 
+        data={designations} 
         searchKey="name"
         searchPlaceholder="Search designations..."
         enableSelection={true}

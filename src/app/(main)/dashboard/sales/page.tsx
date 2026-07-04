@@ -102,7 +102,7 @@ export default function SalesDashboard() {
           </div>
           <div>
             <h1 className="text-xl font-medium text-gray-900">
-              <span className="font-bold">Hi John Smilga,</span> here's what's happening with your store today.
+              <span className="font-bold">Hi John Smilga,</span> here&apos;s what&apos;s happening with your store today.
             </h1>
           </div>
         </div>

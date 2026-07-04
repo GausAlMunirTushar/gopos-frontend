@@ -6,6 +6,11 @@ import {
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { transferRow, type ApiRecord } from '@/lib/api/row-mappers';
+import { actionButtonClassName } from '@/lib/api/resource-fields';
+import { StockTransferCreateModal } from '@/components/stock/StockOperationModals';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface Transfer {
@@ -31,6 +36,12 @@ const transferData: Transfer[] = [
 ];
 
 export default function StockTransfer() {
+  const { data: transfers } = useLiveRows<ApiRecord, Transfer>({
+    resource: apiEndpoints.inventory.stockTransfers,
+    fallbackData: transferData,
+    mapRow: transferRow,
+  });
+
   const columns: ColumnDef<Transfer>[] = [
     { accessorKey: 'from', header: 'From Warehouse' },
     { accessorKey: 'to', header: 'To Warehouse' },
@@ -69,9 +80,9 @@ export default function StockTransfer() {
             <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
                <RefreshCcw className="w-5 h-5" />
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#FF9F43] hover:bg-[#ff9021] text-white rounded-lg font-medium transition-colors">
+            <StockTransferCreateModal buttonClassName={actionButtonClassName}>
               <Plus className="w-4 h-4" /> Add Transfer
-            </button>
+            </StockTransferCreateModal>
             <button className="flex items-center gap-2 px-4 py-2 bg-[#092C4C] hover:bg-[#061d33] text-white rounded-lg font-medium transition-colors">
               <Download className="w-4 h-4" /> Import Transfer
             </button>
@@ -81,7 +92,7 @@ export default function StockTransfer() {
 
       <DataTable 
         columns={columns} 
-        data={transferData} 
+        data={transfers} 
         searchKey="ref"
         searchPlaceholder="Search reference..."
         enableSelection

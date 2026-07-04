@@ -5,7 +5,12 @@ import {
   FileText, RefreshCcw, Edit, Trash2, FileSpreadsheet, Plus
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
+import { ResourceCreateModal } from '@/components/shared/ResourceCreateModal';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { actionButtonClassName, unitFields } from '@/lib/api/resource-fields';
+import { namedRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface Unit {
@@ -30,6 +35,12 @@ const unitData: Unit[] = [
 ];
 
 export default function UnitsPage() {
+  const { data: units } = useLiveRows<ApiRecord, Unit>({
+    resource: apiEndpoints.inventory.units,
+    fallbackData: unitData,
+    mapRow: namedRow,
+  });
+
   const columns: ColumnDef<Unit>[] = [
     { accessorKey: 'name', header: 'Unit' },
     { accessorKey: 'short', header: 'Short Name' },
@@ -75,16 +86,22 @@ export default function UnitsPage() {
             <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
                <RefreshCcw className="w-5 h-5" />
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#FF9F43] hover:bg-[#ff9021] text-white rounded-lg font-medium transition-colors">
+            <ResourceCreateModal
+              resource={apiEndpoints.inventory.units}
+              title="Add Unit"
+              description="Create a product measurement unit."
+              fields={unitFields}
+              buttonClassName={actionButtonClassName}
+            >
               <Plus className="w-4 h-4" /> Add Unit
-            </button>
+            </ResourceCreateModal>
           </div>
         }
       />
 
       <DataTable 
         columns={columns} 
-        data={unitData} 
+        data={units} 
         searchKey="name"
         searchPlaceholder="Search units..."
         enableSelection

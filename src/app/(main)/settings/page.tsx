@@ -45,7 +45,7 @@ export default function SettingsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Store Information</CardTitle>
-              <CardDescription>Update your store's basic details and contact information.</CardDescription>
+              <CardDescription>Update your store&apos;s basic details and contact information.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">

@@ -6,6 +6,11 @@ import {
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { DataTable } from '@/components/ui/data-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { stockBalanceRow, type ApiRecord } from '@/lib/api/row-mappers';
+import { actionButtonClassName } from '@/lib/api/resource-fields';
+import { StockAdjustmentCreateModal } from '@/components/stock/StockOperationModals';
 import { ColumnDef } from '@tanstack/react-table';
 
 interface Adjustment {
@@ -31,6 +36,12 @@ const adjustmentData: Adjustment[] = [
 ];
 
 export default function StockAdjustment() {
+  const { data: adjustments } = useLiveRows<ApiRecord, Adjustment>({
+    resource: apiEndpoints.inventory.stockAdjustments,
+    fallbackData: adjustmentData,
+    mapRow: stockBalanceRow,
+  });
+
   const columns: ColumnDef<Adjustment>[] = [
     { accessorKey: 'warehouse', header: 'Warehouse' },
     { accessorKey: 'store', header: 'Store' },
@@ -87,16 +98,16 @@ export default function StockAdjustment() {
             <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
                <RefreshCcw className="w-5 h-5" />
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#FF9F43] hover:bg-[#ff9021] text-white rounded-lg font-medium transition-colors">
+            <StockAdjustmentCreateModal buttonClassName={actionButtonClassName}>
               <Plus className="w-4 h-4" /> Add Adjustment
-            </button>
+            </StockAdjustmentCreateModal>
           </div>
         }
       />
 
       <DataTable 
         columns={columns} 
-        data={adjustmentData} 
+        data={adjustments} 
         searchKey="product"
         searchPlaceholder="Search products..."
         enableSelection

@@ -24,7 +24,7 @@ export default function NotFound() {
           Oops, something went wrong
         </h2>
         <p className="text-gray-500 text-sm leading-relaxed">
-          Error 404 Page not found. Sorry the page you looking for doesn't exist or has been moved.
+          Error 404 Page not found. Sorry the page you looking for doesn&apos;t exist or has been moved.
         </p>
         
         <div className="pt-4">

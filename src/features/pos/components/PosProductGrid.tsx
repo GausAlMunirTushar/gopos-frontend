@@ -5,10 +5,13 @@ import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
 interface Product {
+  id: string;
+  variantId: string;
   name: string;
   cat: string;
   stock: number;
-  price: string;
+  price: number;
+  unitCost: number;
   priceColor?: string;
   img: string;
 }
@@ -62,7 +65,9 @@ export function PosProductGrid({ products, onAddToCart, searchQuery, onSearchCha
                   <h4 className="font-bold text-gray-900 text-xs sm:text-sm mb-2 leading-tight line-clamp-2">{p.name}</h4>
                   <div className="flex items-center justify-between mt-auto pt-1">
                     <span className="text-[10px] sm:text-xs font-bold text-pink-500">{p.stock} Pcs</span>
-                    <span className={`text-xs sm:text-sm font-bold ${p.priceColor || 'text-teal-600'}`}>{p.price}</span>
+                    <span className={`text-xs sm:text-sm font-bold ${p.priceColor || 'text-teal-600'}`}>
+                      ${p.price.toFixed(2)}
+                    </span>
                   </div>
                 </div>
               </div>
