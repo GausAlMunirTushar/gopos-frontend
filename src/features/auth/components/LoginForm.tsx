@@ -57,6 +57,7 @@ export function LoginForm() {
               name="email"
               type="email"
               placeholder="Enter your email"
+              defaultValue="gopos@gausalmunir.site"
               className="pr-10 bg-white border-gray-200"
             />
             <Mail className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
@@ -72,6 +73,7 @@ export function LoginForm() {
               name="password"
               type="password"
               placeholder="Enter your password"
+              defaultValue="password"
               className="pr-10 bg-white border-gray-200"
             />
             <EyeOff className="absolute right-3 top-2.5 h-5 w-5 text-gray-400 cursor-pointer" />
