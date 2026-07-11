@@ -8,33 +8,16 @@ import { useState } from 'react';
 import { Mail, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { apiClient } from '@/lib/api/client';
-import type { AuthSession } from '@/lib/auth/session';
 
 export function LoginForm() {
   const t = useTranslations('auth');
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setError(null);
     setIsSubmitting(true);
-    const formData = new FormData(event.currentTarget);
-    try {
-      const response = await apiClient.post<AuthSession>('/auth/login', {
-        email: formData.get('email'),
-        password: formData.get('password'),
-        rememberMe: formData.get('rememberMe') === 'on',
-      });
-      apiClient.setSession(response.data);
-      router.push('/dashboard');
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : 'Unable to sign in');
-    } finally {
-      setIsSubmitting(false);
-    }
+    router.push('/dashboard');
   };
 
   return (
@@ -47,7 +30,6 @@ export function LoginForm() {
       </div>
 
       <form className="space-y-5" onSubmit={handleSubmit}>
-        {error && <div className="rounded-lg bg-red-50 p-3 text-sm text-red-600">{error}</div>}
         <div className="space-y-1.5">
           <label className="text-sm font-medium text-gray-700">
             Email <span className="text-red-500">*</span>
@@ -58,7 +40,7 @@ export function LoginForm() {
               type="email"
               placeholder="Enter your email"
               defaultValue="gopos@gausalmunir.site"
-              className="pr-10 bg-white border-gray-200"
+              className="pr-10 bg-white border-gray-200 text-black placeholder:text-black"
             />
             <Mail className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
           </div>
@@ -74,7 +56,7 @@ export function LoginForm() {
               type="password"
               placeholder="Enter your password"
               defaultValue="password"
-              className="pr-10 bg-white border-gray-200"
+              className="pr-10 bg-white border-gray-200 text-black placeholder:text-black"
             />
             <EyeOff className="absolute right-3 top-2.5 h-5 w-5 text-gray-400 cursor-pointer" />
           </div>
