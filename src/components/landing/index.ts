@@ -1,0 +1,12 @@
+export { Navbar } from './Navbar';
+export { HeroSection } from './HeroSection';
+export { StatsBar } from './StatsBar';
+export { InteractivePOSSimulator } from './InteractivePOSSimulator';
+export { FeaturesBentoGrid } from './FeaturesBentoGrid';
+export { IndustrySolutions } from './IndustrySolutions';
+export { HardwareIntegration } from './HardwareIntegration';
+export { PricingSection } from './PricingSection';
+export { TestimonialsSection } from './TestimonialsSection';
+export { FaqSection } from './FaqSection';
+export { CtaBanner } from './CtaBanner';
+export { Footer } from './Footer';
