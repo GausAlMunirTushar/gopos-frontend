@@ -86,18 +86,15 @@ export default function SettingsPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium text-gray-700">Currency</label>
-                    <Select>
-                      <option>USD ($)</option>
-                      <option>EUR (€)</option>
-                      <option>GBP (£)</option>
+                    <Select defaultValue="BDT">
+                      <option value="BDT">BDT (৳) - Bangladeshi Taka</option>
                     </Select>
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium text-gray-700">Timezone</label>
-                    <Select>
-                      <option>Pacific Time (US & Canada)</option>
-                      <option>Eastern Time (US & Canada)</option>
-                      <option>UTC</option>
+                    <Select defaultValue="Asia/Dhaka">
+                      <option value="Asia/Dhaka">Asia/Dhaka (GMT+6)</option>
+                      <option value="UTC">UTC (GMT+0)</option>
                     </Select>
                   </div>
                 </div>

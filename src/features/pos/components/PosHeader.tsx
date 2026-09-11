@@ -75,25 +75,12 @@ export function PosHeader() {
       {/* Center: Store & Actions */}
       <div className="flex items-center gap-2 sm:gap-3 flex-1 justify-end sm:justify-center">
         <NextLink href="/dashboard" className="hidden sm:block">
-          <button className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors">
+          <button className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors cursor-pointer">
             <BarChart2 className="w-4 h-4" /> <span className="hidden sm:inline">Dashboard</span>
           </button>
         </NextLink>
 
-        {/* Currency Selector */}
-        <div className="hidden md:flex relative items-center">
-          <select 
-            value={currency} 
-            onChange={(e) => setCurrency(e.target.value as 'USD' | 'BDT')}
-            className="appearance-none bg-white border border-gray-200 rounded-lg px-2 sm:px-3 py-2 pr-6 sm:pr-8 text-xs sm:text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:border-orange-500 cursor-pointer"
-          >
-            <option value="USD">USD</option>
-            <option value="BDT">BDT</option>
-          </select>
-          <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 absolute right-2 pointer-events-none" />
-        </div>
-
-        <button className="flex items-center gap-2 px-2 sm:px-3 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors bg-white">
+        <button className="flex items-center gap-2 px-2.5 sm:px-3 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors bg-white cursor-pointer">
           <img src="https://ui-avatars.com/api/?name=Freshmart&background=092C4C&color=fff&rounded=true" alt="Store" className="w-5 h-5 rounded-full" />
           <span className="text-xs sm:text-sm font-medium text-gray-700 hidden xs:inline">Freshmart</span>
           <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />

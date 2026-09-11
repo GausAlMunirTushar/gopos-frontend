@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-type Currency = 'USD' | 'BDT';
+export type Currency = 'BDT';
 
 interface SettingsState {
   currency: Currency;
@@ -11,7 +11,7 @@ interface SettingsState {
 export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
-      currency: 'USD',
+      currency: 'BDT',
       setCurrency: (currency) => set({ currency }),
     }),
     {
@@ -19,3 +19,4 @@ export const useSettingsStore = create<SettingsState>()(
     }
   )
 );
+

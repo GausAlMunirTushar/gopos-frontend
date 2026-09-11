@@ -5,10 +5,10 @@ export function useCurrency() {
   const setCurrency = useSettingsStore((state) => state.setCurrency);
 
   const formatCurrency = (amount: number | string) => {
-    if (amount === undefined || amount === null) return '';
+    if (amount === undefined || amount === null || amount === '') return '৳0.00';
     
     // Parse the number, removing any existing currency symbols or commas
-    const numStr = typeof amount === 'string' ? amount.replace(/[^0-9.-]+/g, "") : amount;
+    const numStr = typeof amount === 'string' ? amount.replace(/[^0-9.-]+/g, '') : amount;
     const num = Number(numStr);
     
     if (isNaN(num)) return amount.toString();
@@ -19,8 +19,9 @@ export function useCurrency() {
     });
     
     const formattedNum = formatter.format(num);
-    return currency === 'BDT' ? `৳${formattedNum}` : `$${formattedNum}`;
+    return `৳${formattedNum}`;
   };
 
-  return { currency, setCurrency, formatCurrency };
+  return { currency: 'BDT' as const, setCurrency, formatCurrency };
 }
+
