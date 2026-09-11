@@ -23,9 +23,9 @@ interface Quotation {
 }
 
 const quotationData: Quotation[] = [
-  { id: 'QT-001', customer: 'Andrea Willer', date: '24 May 2025', expiry: '30 May 2025', amount: '$4560', status: 'Sent', color: 'bg-blue-100 text-blue-600' },
-  { id: 'QT-002', customer: 'Timothy Sands', date: '23 May 2025', expiry: '05 Jun 2025', amount: '$3569', status: 'Accepted', color: 'bg-green-100 text-green-600' },
-  { id: 'QT-003', customer: 'Bonnie Rodrigues', date: '22 May 2025', expiry: '25 May 2025', amount: '$2659', status: 'Expired', color: 'bg-red-100 text-red-600' },
+  { id: 'QT-001', customer: 'Andrea Willer', date: '24 May 2025', expiry: '30 May 2025', amount: '৳4560', status: 'Sent', color: 'bg-blue-100 text-blue-600' },
+  { id: 'QT-002', customer: 'Timothy Sands', date: '23 May 2025', expiry: '05 Jun 2025', amount: '৳3569', status: 'Accepted', color: 'bg-green-100 text-green-600' },
+  { id: 'QT-003', customer: 'Bonnie Rodrigues', date: '22 May 2025', expiry: '25 May 2025', amount: '৳2659', status: 'Expired', color: 'bg-red-100 text-red-600' },
 ];
 
 export default function QuotationList() {

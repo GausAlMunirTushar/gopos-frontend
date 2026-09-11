@@ -43,14 +43,14 @@ export function PosProductGrid({ products, onAddToCart, searchQuery, onSearchCha
       {/* Products Grid */}
       <div className="flex-1 overflow-y-auto custom-scrollbar pr-1 sm:pr-2 pb-20 lg:pb-0">
         {products.length === 0 ? (
-           <div className="flex flex-col items-center justify-center h-40 text-gray-400">
-             <p>No products found.</p>
-           </div>
+          <div className="flex flex-col items-center justify-center h-40 text-gray-400">
+            <p>No products found.</p>
+          </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-4">
-            {products.map((p, i) => (
+            {products.map((p) => (
               <div 
-                key={i} 
+                key={p.variantId || p.id} 
                 onClick={() => onAddToCart(p)}
                 className="bg-white rounded-xl p-2 sm:p-3 border border-gray-100 hover:border-orange-500 hover:shadow-md transition-all cursor-pointer group flex flex-col h-full active:scale-95 duration-150"
               >
@@ -66,7 +66,7 @@ export function PosProductGrid({ products, onAddToCart, searchQuery, onSearchCha
                   <div className="flex items-center justify-between mt-auto pt-1">
                     <span className="text-[10px] sm:text-xs font-bold text-pink-500">{p.stock} Pcs</span>
                     <span className={`text-xs sm:text-sm font-bold ${p.priceColor || 'text-teal-600'}`}>
-                      ${p.price.toFixed(2)}
+                      ৳{p.price.toFixed(2)}
                     </span>
                   </div>
                 </div>

@@ -124,14 +124,14 @@ export function DataTable<TData, TValue>({
         <div className="flex flex-1 items-center gap-2 w-full md:w-auto">
           {searchKey && (
             <div className="relative w-full md:w-80">
-              <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-              <Input
+              <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400 pointer-events-none" />
+              <input
                 placeholder={searchPlaceholder}
                 value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
                 onChange={(event) =>
                   table.getColumn(searchKey)?.setFilterValue(event.target.value)
                 }
-                className="pl-10 h-10 border-gray-200"
+                className="w-full pl-9 pr-4 h-10 bg-white border border-gray-200 rounded-lg text-sm text-gray-800 placeholder:text-gray-400 outline-none focus:outline-none focus:ring-0 focus:border-[#FF9F43] transition-colors"
               />
             </div>
           )}
@@ -139,7 +139,7 @@ export function DataTable<TData, TValue>({
           {filters?.map((filter) => (
             <div key={filter.column} className="relative">
               <select
-                className="h-10 px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm appearance-none focus:outline-none focus:border-[#FF9F43] pr-8 min-w-30"
+                className="h-10 px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 appearance-none outline-none focus:outline-none focus:ring-0 focus:border-[#FF9F43] pr-8 min-w-30 cursor-pointer"
                 value={(table.getColumn(filter.column)?.getFilterValue() as string) ?? ""}
                 onChange={(event) =>
                   table.getColumn(filter.column)?.setFilterValue(event.target.value)
@@ -161,11 +161,11 @@ export function DataTable<TData, TValue>({
           {actions}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="h-10 border-gray-200 gap-2">
+              <Button variant="outline" className="h-10 border-gray-200 gap-2 bg-white text-gray-700 hover:bg-gray-50 hover:text-gray-900 outline-none focus:outline-none focus:ring-0 shadow-none">
                 <ChevronDown className="h-4 w-4" /> Columns
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-40 bg-white border border-gray-200 shadow-xl rounded-xl p-1">
+            <DropdownMenuContent align="end" className="w-44 bg-white border border-gray-200 shadow-xl rounded-xl p-1 z-50">
               {table
                 .getAllColumns()
                 .filter((column) => column.getCanHide())
@@ -173,7 +173,7 @@ export function DataTable<TData, TValue>({
                   return (
                     <DropdownMenuCheckboxItem
                       key={column.id}
-                      className="capitalize cursor-pointer rounded-lg hover:bg-gray-50 focus:bg-gray-50 my-0.5"
+                      className="capitalize cursor-pointer rounded-lg hover:bg-orange-50 focus:bg-orange-50 text-gray-700 focus:text-gray-900 my-0.5 text-xs font-medium"
                       checked={column.getIsVisible()}
                       onCheckedChange={(value) =>
                         column.toggleVisibility(!!value)

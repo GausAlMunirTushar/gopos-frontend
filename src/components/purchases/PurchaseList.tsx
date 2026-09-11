@@ -22,9 +22,9 @@ interface Purchase {
 }
 
 const purchaseData: Purchase[] = [
-  { id: 'PR001', supplier: 'Apex Computers', date: '24 May 2025', status: 'Received', payment: 'Paid', total: '$12,500', color: 'bg-teal-500' },
-  { id: 'PR002', supplier: 'Beats Electronics', date: '23 May 2025', status: 'Pending', payment: 'Partial', total: '$8,600', color: 'bg-orange-500' },
-  { id: 'PR003', supplier: 'Nike Global', date: '22 May 2025', status: 'Ordered', payment: 'Unpaid', total: '$5,400', color: 'bg-blue-500' },
+  { id: 'PR001', supplier: 'Apex Computers', date: '24 May 2025', status: 'Received', payment: 'Paid', total: '৳12,500', color: 'bg-teal-500' },
+  { id: 'PR002', supplier: 'Beats Electronics', date: '23 May 2025', status: 'Pending', payment: 'Partial', total: '৳8,600', color: 'bg-orange-500' },
+  { id: 'PR003', supplier: 'Nike Global', date: '22 May 2025', status: 'Ordered', payment: 'Unpaid', total: '৳5,400', color: 'bg-blue-500' },
 ];
 
 export default function PurchaseList() {
@@ -103,21 +103,21 @@ export default function PurchaseList() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatsCard 
           label="Total Purchases" 
-          value="$24,145,789" 
+          value="৳24,145,789" 
           icon={ShoppingBasket}
           iconColor="text-blue-600"
           iconBg="bg-blue-50"
         />
         <StatsCard 
           label="Purchase Returns" 
-          value="$18,458,747" 
+          value="৳18,458,747" 
           icon={RefreshCcw}
           iconColor="text-red-600"
           iconBg="bg-red-50"
         />
         <StatsCard 
           label="Pending Payments" 
-          value="$2,458,000" 
+          value="৳2,458,000" 
           icon={FileText}
           iconColor="text-orange-600"
           iconBg="bg-orange-50"

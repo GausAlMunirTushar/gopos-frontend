@@ -19,11 +19,11 @@ interface ProductReportData {
 }
 
 const productData: ProductReportData[] = [
-  { sku: 'PT001', name: 'Lenovo IdeaPad 3', category: 'Computers', price: '$300', qtySold: '50', revenue: '$15000', img: 'laptop' },
-  { sku: 'PT002', name: 'Beats Pro', category: 'Electronics', price: '$160', qtySold: '120', revenue: '$19200', img: 'headphones' },
-  { sku: 'PT003', name: 'Nike Jordan', category: 'Shoe', price: '$110', qtySold: '30', revenue: '$3300', img: 'shoes' },
-  { sku: 'PT004', name: 'Apple Series 5 Watch', category: 'Electronics', price: '$120', qtySold: '45', revenue: '$5400', img: 'watch' },
-  { sku: 'PT005', name: 'Amazon Echo Dot', category: 'Electronics', price: '$80', qtySold: '25', revenue: '$2000', img: 'speaker' },
+  { sku: 'PT001', name: 'Lenovo IdeaPad 3', category: 'Computers', price: '৳30,000', qtySold: '50', revenue: '৳1,500,000', img: 'laptop' },
+  { sku: 'PT002', name: 'Beats Pro', category: 'Electronics', price: '৳16,000', qtySold: '120', revenue: '৳1,920,000', img: 'headphones' },
+  { sku: 'PT003', name: 'Nike Jordan', category: 'Shoe', price: '৳11,000', qtySold: '30', revenue: '৳330,000', img: 'shoes' },
+  { sku: 'PT004', name: 'Apple Series 5 Watch', category: 'Electronics', price: '৳12,000', qtySold: '45', revenue: '৳540,000', img: 'watch' },
+  { sku: 'PT005', name: 'Amazon Echo Dot', category: 'Electronics', price: '৳8,000', qtySold: '25', revenue: '৳200,000', img: 'speaker' },
 ];
 
 export default function ProductReport() {

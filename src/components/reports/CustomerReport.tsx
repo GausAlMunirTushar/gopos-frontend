@@ -2,11 +2,12 @@
 
 import React from 'react';
 import { 
-  FileText, RefreshCcw, ChevronUp, ChevronRight,
+  FileText, RefreshCcw, ChevronUp,
   FileSpreadsheet, Calendar
 } from 'lucide-react';
 import { DataTable } from '@/components/ui/data-table';
 import { ColumnDef } from '@tanstack/react-table';
+import { PageHeader } from '@/components/shared/PageHeader';
 
 interface CustomerReportData {
   name: string;
@@ -17,11 +18,11 @@ interface CustomerReportData {
 }
 
 const customerData: CustomerReportData[] = [
-  { name: 'Carl Evans', phone: '+12163547758', totalOrders: '12', totalAmount: '$1500', due: '$0' },
-  { name: 'Minerva Rameriz', phone: '+11367529510', totalOrders: '5', totalAmount: '$450', due: '$120' },
-  { name: 'Robert Lamon', phone: '+15362789414', totalOrders: '18', totalAmount: '$3200', due: '$0' },
-  { name: 'Patricia Lewis', phone: '+18513094627', totalOrders: '3', totalAmount: '$800', due: '$400' },
-  { name: 'Mark Joslyn', phone: '+14678219025', totalOrders: '9', totalAmount: '$1200', due: '$0' },
+  { name: 'Carl Evans', phone: '+12163547758', totalOrders: '12', totalAmount: '৳1500', due: '৳0' },
+  { name: 'Minerva Rameriz', phone: '+11367529510', totalOrders: '5', totalAmount: '৳450', due: '৳120' },
+  { name: 'Robert Lamon', phone: '+15362789414', totalOrders: '18', totalAmount: '৳3200', due: '৳0' },
+  { name: 'Patricia Lewis', phone: '+18513094627', totalOrders: '3', totalAmount: '৳800', due: '৳400' },
+  { name: 'Mark Joslyn', phone: '+14678219025', totalOrders: '9', totalAmount: '৳1200', due: '৳0' },
 ];
 
 export default function CustomerReport() {
@@ -45,7 +46,7 @@ export default function CustomerReport() {
       cell: ({ row }) => {
         const due = row.getValue('due') as string;
         return (
-          <span className={`font-medium ${due === '$0' ? 'text-green-600' : 'text-red-500'}`}>
+          <span className={`font-medium ${due === '৳0' ? 'text-green-600' : 'text-red-500'}`}>
             {due}
           </span>
         );
@@ -55,27 +56,24 @@ export default function CustomerReport() {
 
   return (
     <div className="space-y-6">
-      
-      {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">Customer Report</h1>
-          <div className="text-sm text-gray-500 flex items-center gap-2">
-            <span>Dashboard</span>
-            <ChevronRight className="w-3 h-3" />
-            <span className="text-gray-900 font-medium">Customer Report</span>
+      <PageHeader 
+        title="Customer Report" 
+        breadcrumbs={[
+          { label: 'Dashboard', href: '/dashboard' },
+          { label: 'Reports', href: '/reports' },
+          { label: 'Customer Report' }
+        ]}
+        actions={
+          <div className="flex items-center gap-2">
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
+               <RefreshCcw className="w-5 h-5" />
+            </button>
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
+               <ChevronUp className="w-5 h-5" />
+            </button>
           </div>
-        </div>
-        
-        <div className="flex items-center gap-2">
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
-             <RefreshCcw className="w-5 h-5" />
-          </button>
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
-             <ChevronUp className="w-5 h-5" />
-          </button>
-        </div>
-      </div>
+        }
+      />
 
       {/* Filters Form */}
       <div className="bg-white p-6 rounded-2xl border border-gray-200 flex flex-col md:flex-row gap-6">
@@ -117,7 +115,6 @@ export default function CustomerReport() {
           }
         />
       </div>
-
     </div>
   );
 }

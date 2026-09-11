@@ -35,12 +35,12 @@ export function AppHeader({ sidebarOpen, setSidebarOpen }: AppHeaderProps) {
         </button>
 
         {/* Enhanced Responsive Search Bar */}
-        <div className="group relative flex items-center gap-2.5 bg-gray-50/80 hover:bg-gray-100/60 focus-within:bg-white border border-gray-200/90 focus-within:border-[#FF9F43] focus-within:ring-2 focus-within:ring-orange-500/15 rounded-xl px-3.5 py-2 w-full sm:w-72 md:w-80 lg:w-96 transition-all duration-200">
+        <div className="group relative flex items-center gap-2.5 bg-gray-50/80 hover:bg-gray-100/60 focus-within:bg-white border border-gray-200/90 focus-within:border-[#FF9F43] focus-within:ring-0 rounded-xl px-3.5 py-2 w-full sm:w-72 md:w-80 lg:w-96 transition-all duration-200">
           <Search className="w-4 h-4 text-gray-400 group-focus-within:text-[#FF9F43] shrink-0 transition-colors" />
           <input 
             type="text" 
             placeholder="Search products, orders, customers..." 
-            className="bg-transparent border-none outline-none shadow-none p-0 w-full text-sm text-gray-800 placeholder:text-gray-400 focus:ring-0"
+            className="bg-transparent border-none outline-none focus:outline-none shadow-none p-0 w-full text-sm text-gray-800 placeholder:text-gray-400 focus:ring-0"
           />
           <div className="hidden sm:flex items-center gap-0.5 bg-white px-1.5 py-0.5 rounded-md text-[11px] font-medium text-gray-400 border border-gray-200/80 shrink-0 shadow-2xs">
             <span>⌘</span>K

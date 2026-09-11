@@ -2,13 +2,16 @@
 
 import React from 'react';
 import { 
-  FileText, RefreshCcw, ChevronUp, ChevronRight,
+  FileText, RefreshCcw, ChevronUp,
   FileSpreadsheet, Calendar, TrendingUp, Users, Package
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { StatsCard } from '@/components/shared/StatsCard';
 import { DataTable } from '@/components/ui/data-table';
 import { ColumnDef } from '@tanstack/react-table';
+import { useLiveRows } from '@/hooks/api/useLiveRows';
+import { apiEndpoints } from '@/lib/api/endpoints';
+import { type ApiRecord } from '@/lib/api/row-mappers';
 
 interface SalesReportData {
   sku: string;
@@ -22,16 +25,38 @@ interface SalesReportData {
 }
 
 const salesData: SalesReportData[] = [
-  { sku: 'PT001', name: 'Lenovo IdeaPad 3', brand: 'Lenovo', category: 'Computers', soldQty: '05', soldAmount: '$3000', instock: '100', img: 'laptop' },
-  { sku: 'PT002', name: 'Beats Pro', brand: 'Beats', category: 'Electronics', soldQty: '10', soldAmount: '$1600', instock: '140', img: 'headphones' },
-  { sku: 'PT003', name: 'Nike Jordan', brand: 'Nike', category: 'Shoe', soldQty: '08', soldAmount: '$880', instock: '300', img: 'shoes' },
-  { sku: 'PT004', name: 'Apple Series 5 Watch', brand: 'Apple', category: 'Electronics', soldQty: '10', soldAmount: '$1200', instock: '450', img: 'watch' },
-  { sku: 'PT005', name: 'Amazon Echo Dot', brand: 'Amazon', category: 'Electronics', soldQty: '05', soldAmount: '$400', instock: '320', img: 'speaker' },
-  { sku: 'PT006', name: 'Sanford Chair Sofa', brand: 'Modern Wave', category: 'Furniture', soldQty: '07', soldAmount: '$2240', instock: '650', img: 'chair' },
-  { sku: 'PT007', name: 'Red Premium Satchel', brand: 'Dior', category: 'Bags', soldQty: '15', soldAmount: '$900', instock: '700', img: 'bag' },
+  { sku: 'PT001', name: 'Lenovo IdeaPad 3', brand: 'Lenovo', category: 'Computers', soldQty: '05', soldAmount: '৳3000', instock: '100', img: 'laptop' },
+  { sku: 'PT002', name: 'Beats Pro', brand: 'Beats', category: 'Electronics', soldQty: '10', soldAmount: '৳1600', instock: '140', img: 'headphones' },
+  { sku: 'PT003', name: 'Nike Jordan', brand: 'Nike', category: 'Shoe', soldQty: '08', soldAmount: '৳880', instock: '300', img: 'shoes' },
+  { sku: 'PT004', name: 'Apple Series 5 Watch', brand: 'Apple', category: 'Electronics', soldQty: '10', soldAmount: '৳1200', instock: '450', img: 'watch' },
+  { sku: 'PT005', name: 'Amazon Echo Dot', brand: 'Amazon', category: 'Electronics', soldQty: '05', soldAmount: '৳400', instock: '320', img: 'speaker' },
+  { sku: 'PT006', name: 'Sanford Chair Sofa', brand: 'Modern Wave', category: 'Furniture', soldQty: '07', soldAmount: '৳2240', instock: '650', img: 'chair' },
+  { sku: 'PT007', name: 'Red Premium Satchel', brand: 'Dior', category: 'Bags', soldQty: '15', soldAmount: '৳900', instock: '700', img: 'bag' },
 ];
 
 export default function SalesReport() {
+  const { data: rows } = useLiveRows<ApiRecord, SalesReportData>({
+    resource: apiEndpoints.reports.product,
+    fallbackData: salesData,
+    mapRow: (row: ApiRecord, index: number) => {
+      const variant = row.variant as ApiRecord | undefined;
+      const product = variant?.product as ApiRecord | undefined;
+      const category = product?.category as ApiRecord | undefined;
+      const brand = product?.brand as ApiRecord | undefined;
+
+      return {
+        sku: String(variant?.sku || `PT${String(index + 1).padStart(3, '0')}`),
+        name: String(product?.name || variant?.name || 'Product'),
+        brand: String(brand?.name || 'General'),
+        category: String(category?.name || 'General'),
+        soldQty: String((row._sum as ApiRecord | undefined)?.quantity || 1),
+        soldAmount: `৳${Number((row._sum as ApiRecord | undefined)?.lineTotal || 0).toLocaleString()}`,
+        instock: String(row.instock || '100'),
+        img: 'laptop',
+      };
+    },
+  });
+
   const columns: ColumnDef<SalesReportData>[] = [
     { accessorKey: 'sku', header: 'SKU' },
     {
@@ -57,7 +82,6 @@ export default function SalesReport() {
 
   return (
     <div className="space-y-6">
-      
       <PageHeader 
         title="Sales Report" 
         breadcrumbs={[
@@ -81,7 +105,7 @@ export default function SalesReport() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatsCard 
           label="New Sales" 
-          value="$40,565,000" 
+          value="৳40,565,000" 
           trend="25.5%" 
           trendType="up"
           icon={TrendingUp}
@@ -148,7 +172,7 @@ export default function SalesReport() {
       <div className="bg-white border border-gray-200 rounded-2xl p-4">
         <DataTable 
           columns={columns} 
-          data={salesData} 
+          data={rows} 
           searchKey="name"
           searchPlaceholder="Search product..."
           actions={
@@ -163,7 +187,6 @@ export default function SalesReport() {
           }
         />
       </div>
-
     </div>
   );
 }

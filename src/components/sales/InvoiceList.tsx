@@ -23,10 +23,10 @@ interface Invoice {
 }
 
 const invoiceData: Invoice[] = [
-  { id: 'INV-001', customer: 'Andrea Willer', date: '24 May 2025', dueDate: '30 May 2025', amount: '$4560', status: 'Paid', color: 'bg-green-100 text-green-600' },
-  { id: 'INV-002', customer: 'Timothy Sands', date: '23 May 2025', dueDate: '05 Jun 2025', amount: '$3569', status: 'Sent', color: 'bg-blue-100 text-blue-600' },
-  { id: 'INV-003', customer: 'Bonnie Rodrigues', date: '22 May 2025', dueDate: '25 May 2025', amount: '$2659', status: 'Overdue', color: 'bg-red-100 text-red-600' },
-  { id: 'INV-004', customer: 'Randy McCree', date: '21 May 2025', dueDate: '10 Jun 2025', amount: '$2155', status: 'Draft', color: 'bg-gray-100 text-gray-600' },
+  { id: 'INV-001', customer: 'Andrea Willer', date: '24 May 2025', dueDate: '30 May 2025', amount: '৳4560', status: 'Paid', color: 'bg-green-100 text-green-600' },
+  { id: 'INV-002', customer: 'Timothy Sands', date: '23 May 2025', dueDate: '05 Jun 2025', amount: '৳3569', status: 'Sent', color: 'bg-blue-100 text-blue-600' },
+  { id: 'INV-003', customer: 'Bonnie Rodrigues', date: '22 May 2025', dueDate: '25 May 2025', amount: '৳2659', status: 'Overdue', color: 'bg-red-100 text-red-600' },
+  { id: 'INV-004', customer: 'Randy McCree', date: '21 May 2025', dueDate: '10 Jun 2025', amount: '৳2155', status: 'Draft', color: 'bg-gray-100 text-gray-600' },
 ];
 
 export default function InvoiceList() {
@@ -95,21 +95,21 @@ export default function InvoiceList() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatsCard 
           label="Total Invoiced" 
-          value="$128,450" 
+          value="৳128,450" 
           icon={FileText}
           iconColor="text-blue-600"
           iconBg="bg-blue-50"
         />
         <StatsCard 
           label="Paid Invoices" 
-          value="$85,200" 
+          value="৳85,200" 
           icon={FileText}
           iconColor="text-green-600"
           iconBg="bg-green-50"
         />
         <StatsCard 
           label="Unpaid Invoices" 
-          value="$43,250" 
+          value="৳43,250" 
           icon={FileText}
           iconColor="text-red-600"
           iconBg="bg-red-50"

@@ -23,8 +23,8 @@ interface GiftCard {
 }
 
 const giftCardData: GiftCard[] = [
-  { id: 'GC001', customer: 'Andrea Willer', amount: '$100', balance: '$80', expiry: '24 May 2025', status: 'Active', color: 'bg-green-100 text-green-600' },
-  { id: 'GC002', customer: 'Timothy Sands', amount: '$50', balance: '$0', expiry: '20 May 2025', status: 'Used', color: 'bg-gray-100 text-gray-600' },
+  { id: 'GC001', customer: 'Andrea Willer', amount: '৳100', balance: '৳80', expiry: '24 May 2025', status: 'Active', color: 'bg-green-100 text-green-600' },
+  { id: 'GC002', customer: 'Timothy Sands', amount: '৳50', balance: '৳0', expiry: '20 May 2025', status: 'Used', color: 'bg-gray-100 text-gray-600' },
 ];
 
 export default function GiftCardList() {
@@ -117,7 +117,7 @@ export default function GiftCardList() {
         />
         <StatsCard 
           label="Total Balance" 
-          value="$12,450" 
+          value="৳12,450" 
           icon={Gift}
           iconColor="text-green-600"
           iconBg="bg-green-50"

@@ -21,8 +21,8 @@ interface Income {
 }
 
 const incomeData: Income[] = [
-  { id: 'INC001', source: 'Product Sales', date: '24 May 2025', amount: '$45,000', status: 'Received', color: 'bg-green-100 text-green-600' },
-  { id: 'INC002', source: 'Services', date: '23 May 2025', amount: '$1,200', status: 'Pending', color: 'bg-orange-100 text-orange-600' },
+  { id: 'INC001', source: 'Product Sales', date: '24 May 2025', amount: '৳45,000', status: 'Received', color: 'bg-green-100 text-green-600' },
+  { id: 'INC002', source: 'Services', date: '23 May 2025', amount: '৳1,200', status: 'Pending', color: 'bg-orange-100 text-orange-600' },
 ];
 
 export default function IncomeList() {
@@ -99,14 +99,14 @@ export default function IncomeList() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <StatsCard 
           label="Total Income" 
-          value="$148,988,078" 
+          value="৳148,988,078" 
           icon={TrendingUp}
           iconColor="text-green-600"
           iconBg="bg-green-50"
         />
         <StatsCard 
           label="This Month" 
-          value="$1,450,000" 
+          value="৳1,450,000" 
           icon={DollarSign}
           iconColor="text-blue-600"
           iconBg="bg-blue-50"

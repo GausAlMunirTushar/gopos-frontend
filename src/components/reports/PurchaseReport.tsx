@@ -2,11 +2,12 @@
 
 import React from 'react';
 import { 
-  FileText, RefreshCcw, ChevronUp, ChevronRight,
+  FileText, RefreshCcw, ChevronUp,
   FileSpreadsheet, Calendar
 } from 'lucide-react';
 import { DataTable } from '@/components/ui/data-table';
 import { ColumnDef } from '@tanstack/react-table';
+import { PageHeader } from '@/components/shared/PageHeader';
 
 interface PurchaseReportData {
   no: string;
@@ -18,10 +19,10 @@ interface PurchaseReportData {
 }
 
 const purchaseData: PurchaseReportData[] = [
-  { no: 'PUR-101', supplier: 'Apex Computers', date: '22 Dec 2024', amount: '$5000', paid: '$5000', status: 'Paid' },
-  { no: 'PUR-102', supplier: 'Beats Headphones', date: '19 Dec 2024', amount: '$2500', paid: '$1500', status: 'Partial' },
-  { no: 'PUR-103', supplier: 'Dazzle Shoes', date: '15 Dec 2024', amount: '$3200', paid: '$0', status: 'Unpaid' },
-  { no: 'PUR-104', supplier: 'Best Accessories', date: '10 Dec 2024', amount: '$1100', paid: '$1100', status: 'Paid' },
+  { no: 'PUR-101', supplier: 'Apex Computers', date: '22 Dec 2024', amount: '৳5000', paid: '৳5000', status: 'Paid' },
+  { no: 'PUR-102', supplier: 'Beats Headphones', date: '19 Dec 2024', amount: '৳2500', paid: '৳1500', status: 'Partial' },
+  { no: 'PUR-103', supplier: 'Dazzle Shoes', date: '15 Dec 2024', amount: '৳3200', paid: '৳0', status: 'Unpaid' },
+  { no: 'PUR-104', supplier: 'Best Accessories', date: '10 Dec 2024', amount: '৳1100', paid: '৳1100', status: 'Paid' },
 ];
 
 export default function PurchaseReport() {
@@ -58,27 +59,24 @@ export default function PurchaseReport() {
 
   return (
     <div className="space-y-6">
-      
-      {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">Purchase Report</h1>
-          <div className="text-sm text-gray-500 flex items-center gap-2">
-            <span>Dashboard</span>
-            <ChevronRight className="w-3 h-3" />
-            <span className="text-gray-900 font-medium">Purchase Report</span>
+      <PageHeader 
+        title="Purchase Report" 
+        breadcrumbs={[
+          { label: 'Dashboard', href: '/dashboard' },
+          { label: 'Reports', href: '/reports' },
+          { label: 'Purchase Report' }
+        ]}
+        actions={
+          <div className="flex items-center gap-2">
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
+               <RefreshCcw className="w-5 h-5" />
+            </button>
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
+               <ChevronUp className="w-5 h-5" />
+            </button>
           </div>
-        </div>
-        
-        <div className="flex items-center gap-2">
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
-             <RefreshCcw className="w-5 h-5" />
-          </button>
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
-             <ChevronUp className="w-5 h-5" />
-          </button>
-        </div>
-      </div>
+        }
+      />
 
       {/* Filters Form */}
       <div className="bg-white p-6 rounded-2xl border border-gray-200 flex flex-col md:flex-row gap-6">
@@ -126,7 +124,6 @@ export default function PurchaseReport() {
           }
         />
       </div>
-
     </div>
   );
 }

@@ -25,16 +25,16 @@ interface Product {
 }
 
 const productsData: Product[] = [
-  { sku: 'PT001', name: 'Lenovo IdeaPad 3', cat: 'Computers', brand: 'Lenovo', price: '$600', unit: 'Pc', qty: 100, creator: 'James Kirwin', avatar: 'https://i.pravatar.cc/150?u=James' },
-  { sku: 'PT002', name: 'Beats Pro', cat: 'Electronics', brand: 'Beats', price: '$160', unit: 'Pc', qty: 140, creator: 'Francis Chang', avatar: 'https://i.pravatar.cc/150?u=Francis' },
-  { sku: 'PT003', name: 'Nike Jordan', cat: 'Shoe', brand: 'Nike', price: '$110', unit: 'Pc', qty: 300, creator: 'Antonio Engle', avatar: 'https://i.pravatar.cc/150?u=Antonio' },
-  { sku: 'PT004', name: 'Apple Series 5 Watch', cat: 'Electronics', brand: 'Apple', price: '$120', unit: 'Pc', qty: 450, creator: 'Leo Kelly', avatar: 'https://i.pravatar.cc/150?u=Leo' },
-  { sku: 'PT005', name: 'Amazon Echo Dot', cat: 'Electronics', brand: 'Amazon', price: '$80', unit: 'Pc', qty: 320, creator: 'Annette Walker', avatar: 'https://i.pravatar.cc/150?u=Annette' },
-  { sku: 'PT006', name: 'Sanford Chair Sofa', cat: 'Furniture', brand: 'Modern Wave', price: '$320', unit: 'Pc', qty: 650, creator: 'John Weaver', avatar: 'https://i.pravatar.cc/150?u=John' },
-  { sku: 'PT007', name: 'Red Premium Satchel', cat: 'Bags', brand: 'Dior', price: '$60', unit: 'Pc', qty: 700, creator: 'Gary Hennessy', avatar: 'https://i.pravatar.cc/150?u=Gary' },
-  { sku: 'PT008', name: 'Iphone 14 Pro', cat: 'Phone', brand: 'Apple', price: '$540', unit: 'Pc', qty: 630, creator: 'Eleanor Panek', avatar: 'https://i.pravatar.cc/150?u=Eleanor' },
-  { sku: 'PT009', name: 'Gaming Chair', cat: 'Furniture', brand: 'Arlime', price: '$200', unit: 'Pc', qty: 410, creator: 'William Levy', avatar: 'https://i.pravatar.cc/150?u=William' },
-  { sku: 'PT010', name: 'Borealis Backpack', cat: 'Bags', brand: 'The North Face', price: '$45', unit: 'Pc', qty: 550, creator: 'Charlotte Klotz', avatar: 'https://i.pravatar.cc/150?u=Charlotte' },
+  { sku: 'PT001', name: 'Lenovo IdeaPad 3', cat: 'Computers', brand: 'Lenovo', price: '৳60,000', unit: 'Pc', qty: 100, creator: 'James Kirwin', avatar: 'https://i.pravatar.cc/150?u=James' },
+  { sku: 'PT002', name: 'Beats Pro', cat: 'Electronics', brand: 'Beats', price: '৳16,000', unit: 'Pc', qty: 140, creator: 'Francis Chang', avatar: 'https://i.pravatar.cc/150?u=Francis' },
+  { sku: 'PT003', name: 'Nike Jordan', cat: 'Shoe', brand: 'Nike', price: '৳11,000', unit: 'Pc', qty: 300, creator: 'Antonio Engle', avatar: 'https://i.pravatar.cc/150?u=Antonio' },
+  { sku: 'PT004', name: 'Apple Series 5 Watch', cat: 'Electronics', brand: 'Apple', price: '৳12,000', unit: 'Pc', qty: 450, creator: 'Leo Kelly', avatar: 'https://i.pravatar.cc/150?u=Leo' },
+  { sku: 'PT005', name: 'Amazon Echo Dot', cat: 'Electronics', brand: 'Amazon', price: '৳8,000', unit: 'Pc', qty: 320, creator: 'Annette Walker', avatar: 'https://i.pravatar.cc/150?u=Annette' },
+  { sku: 'PT006', name: 'Sanford Chair Sofa', cat: 'Furniture', brand: 'Modern Wave', price: '৳32,000', unit: 'Pc', qty: 650, creator: 'John Weaver', avatar: 'https://i.pravatar.cc/150?u=John' },
+  { sku: 'PT007', name: 'Red Premium Satchel', cat: 'Bags', brand: 'Dior', price: '৳6,000', unit: 'Pc', qty: 700, creator: 'Gary Hennessy', avatar: 'https://i.pravatar.cc/150?u=Gary' },
+  { sku: 'PT008', name: 'Iphone 14 Pro', cat: 'Phone', brand: 'Apple', price: '৳140,000', unit: 'Pc', qty: 630, creator: 'Eleanor Panek', avatar: 'https://i.pravatar.cc/150?u=Eleanor' },
+  { sku: 'PT009', name: 'Gaming Chair', cat: 'Furniture', brand: 'Arlime', price: '৳20,000', unit: 'Pc', qty: 410, creator: 'William Levy', avatar: 'https://i.pravatar.cc/150?u=William' },
+  { sku: 'PT010', name: 'Borealis Backpack', cat: 'Bags', brand: 'The North Face', price: '৳4,500', unit: 'Pc', qty: 550, creator: 'Charlotte Klotz', avatar: 'https://i.pravatar.cc/150?u=Charlotte' },
 ];
 
 export default function ProductsPage() {

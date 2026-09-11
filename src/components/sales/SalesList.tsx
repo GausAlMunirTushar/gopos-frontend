@@ -26,11 +26,11 @@ interface Sale {
 }
 
 const salesData: Sale[] = [
-  { id: 'SL001', customer: 'Andrea Willer', date: '24 May 2025', status: 'Completed', payment: 'Paid', total: '$4560', baddr: 'USA', color: 'bg-teal-500' },
-  { id: 'SL002', customer: 'Timothy Sands', date: '23 May 2025', status: 'Completed', payment: 'Paid', total: '$3569', baddr: 'UAE', color: 'bg-teal-500' },
-  { id: 'SL003', customer: 'Bonnie Rodrigues', date: '22 May 2025', status: 'Pending', payment: 'Unpaid', total: '$2659', baddr: 'Germany', color: 'bg-orange-500' },
-  { id: 'SL004', customer: 'Randy McCree', date: '21 May 2025', status: 'Completed', payment: 'Paid', total: '$2155', baddr: 'Belgium', color: 'bg-teal-500' },
-  { id: 'SL005', customer: 'Carlos Curran', date: '20 May 2025', status: 'Cancelled', payment: 'Refunded', total: '$1250', baddr: 'Greenland', color: 'bg-red-500' },
+  { id: 'SL001', customer: 'Andrea Willer', date: '24 May 2025', status: 'Completed', payment: 'Paid', total: '৳4560', baddr: 'USA', color: 'bg-teal-500' },
+  { id: 'SL002', customer: 'Timothy Sands', date: '23 May 2025', status: 'Completed', payment: 'Paid', total: '৳3569', baddr: 'UAE', color: 'bg-teal-500' },
+  { id: 'SL003', customer: 'Bonnie Rodrigues', date: '22 May 2025', status: 'Pending', payment: 'Unpaid', total: '৳2659', baddr: 'Germany', color: 'bg-orange-500' },
+  { id: 'SL004', customer: 'Randy McCree', date: '21 May 2025', status: 'Completed', payment: 'Paid', total: '৳2155', baddr: 'Belgium', color: 'bg-teal-500' },
+  { id: 'SL005', customer: 'Carlos Curran', date: '20 May 2025', status: 'Cancelled', payment: 'Refunded', total: '৳1250', baddr: 'Greenland', color: 'bg-red-500' },
 ];
 
 export default function SalesList() {
@@ -136,7 +136,7 @@ export default function SalesList() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatsCard 
           label="Total Sales" 
-          value="$48,988,078" 
+          value="৳48,988,078" 
           trend="22%" 
           trendType="up"
           icon={ShoppingCart}
@@ -145,7 +145,7 @@ export default function SalesList() {
         />
         <StatsCard 
           label="Sales Returns" 
-          value="$16,478,145" 
+          value="৳16,478,145" 
           trend="12%" 
           trendType="down"
           icon={RefreshCcw}
@@ -163,7 +163,7 @@ export default function SalesList() {
         />
         <StatsCard 
           label="Pending Payments" 
-          value="$12,458,747" 
+          value="৳12,458,747" 
           trend="8%" 
           trendType="up"
           icon={Package}
@@ -175,7 +175,6 @@ export default function SalesList() {
       <DataTable 
         columns={columns} 
         data={sales} 
-        searchKey="customer"
         searchPlaceholder="Search customer..."
         actions={
           <>

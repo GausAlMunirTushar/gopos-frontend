@@ -23,8 +23,8 @@ interface PurchaseReturn {
 }
 
 const returnData: PurchaseReturn[] = [
-  { id: 'PR-001', purchaseId: 'PR001', supplier: 'Apex Computers', date: '25 May 2025', amount: '$1,200', status: 'Pending', color: 'bg-orange-100 text-orange-600' },
-  { id: 'PR-002', purchaseId: 'PR002', supplier: 'Beats Electronics', date: '24 May 2025', amount: '$500', status: 'Completed', color: 'bg-green-100 text-green-600' },
+  { id: 'PR-001', purchaseId: 'PR001', supplier: 'Apex Computers', date: '25 May 2025', amount: '৳1,200', status: 'Pending', color: 'bg-orange-100 text-orange-600' },
+  { id: 'PR-002', purchaseId: 'PR002', supplier: 'Beats Electronics', date: '24 May 2025', amount: '৳500', status: 'Completed', color: 'bg-green-100 text-green-600' },
 ];
 
 export default function PurchaseReturnList() {
@@ -93,7 +93,7 @@ export default function PurchaseReturnList() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <StatsCard 
           label="Total Returns" 
-          value="$18,458,747" 
+          value="৳18,458,747" 
           icon={ArrowLeftRight}
           iconColor="text-red-600"
           iconBg="bg-red-50"

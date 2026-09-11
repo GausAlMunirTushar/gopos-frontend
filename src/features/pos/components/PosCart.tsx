@@ -148,11 +148,11 @@ export function PosCart({
                     <h5 className="font-bold text-gray-900 text-sm line-clamp-1">{item.name}</h5>
                   </div>
                   <div className="flex justify-between items-end mt-2">
-                    <span className="font-bold text-[#FF9F43]">${item.price.toFixed(2)}</span>
+                    <span className="font-bold text-[#FF9F43]">৳{item.price.toFixed(2)}</span>
                     <div className="flex items-center gap-2 bg-gray-50 rounded-lg p-1 border border-gray-100">
                       <button 
                         onClick={() => onUpdateQty(item.id, item.qty - 1)}
-                        className="w-6 h-6 flex items-center justify-center bg-white rounded text-gray-600 hover:text-orange-500 transition-colors"
+                        className="w-6 h-6 flex items-center justify-center bg-white rounded text-gray-600 hover:text-orange-500 transition-colors cursor-pointer"
                       >
                         <Minus className="w-3 h-3" strokeWidth={3} />
                       </button>
@@ -160,7 +160,7 @@ export function PosCart({
                       <button 
                         onClick={() => onUpdateQty(item.id, item.qty + 1)}
                         disabled={item.qty >= item.stock}
-                        className="w-6 h-6 flex items-center justify-center bg-white rounded text-gray-600 hover:text-orange-500 transition-colors"
+                        className="w-6 h-6 flex items-center justify-center bg-white rounded text-gray-600 hover:text-orange-500 transition-colors cursor-pointer disabled:opacity-40"
                       >
                         <Plus className="w-3 h-3" strokeWidth={3} />
                       </button>
@@ -169,7 +169,7 @@ export function PosCart({
                 </div>
                 <button 
                   onClick={() => onRemoveItem(item.id)}
-                  className="absolute top-2 right-2 p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors"
+                  className="absolute top-2 right-2 p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors cursor-pointer"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -189,7 +189,7 @@ export function PosCart({
         
         <div className="flex justify-between items-center mb-3 px-1">
           <span className="text-sm text-gray-500 font-medium">Subtotal</span>
-          <span className="text-sm font-bold text-gray-900">${subtotal.toFixed(2)}</span>
+          <span className="text-sm font-bold text-gray-900">৳{subtotal.toFixed(2)}</span>
         </div>
 
         <div className="grid grid-cols-3 gap-3 mb-4">
@@ -208,7 +208,7 @@ export function PosCart({
             <p className="text-[10px] sm:text-xs font-bold text-gray-700 mb-1">Shipping</p>
             <div className="relative">
               <select className="w-full h-9 px-2 bg-white border border-gray-200 rounded-md text-[11px] sm:text-xs appearance-none focus:border-orange-500 outline-none">
-                <option>$0</option>
+                <option>৳0</option>
               </select>
               <ChevronDown className="w-3 h-3 text-gray-400 absolute right-1.5 top-3 pointer-events-none" />
             </div>
@@ -218,7 +218,7 @@ export function PosCart({
             <div className="relative flex items-center border border-gray-200 rounded-md overflow-hidden bg-white h-9 focus-within:border-orange-500">
               <select className="pl-1.5 pr-4 text-[11px] sm:text-xs appearance-none bg-transparent outline-none h-full border-r border-gray-100 font-medium">
                 <option>%</option>
-                <option>$</option>
+                <option>৳</option>
               </select>
               <ChevronDown className="w-2 h-2 text-gray-400 absolute left-6 pointer-events-none" />
               <input type="number" defaultValue="0" className="w-full pl-1.5 text-[11px] sm:text-xs outline-none font-medium text-gray-900" />
@@ -229,17 +229,17 @@ export function PosCart({
         <div className="mb-4">
           <p className="text-xs font-bold text-gray-900 mb-2">Payment Method</p>
           <div className="grid grid-cols-3 gap-2">
-            <button className="flex flex-col items-center justify-center py-2 rounded-md border-2 border-orange-500 bg-orange-50 text-orange-600 transition-all active:scale-95">
+            <button className="flex flex-col items-center justify-center py-2 rounded-md border-2 border-orange-500 bg-orange-50 text-orange-600 transition-all active:scale-95 cursor-pointer font-bold">
               <DollarSign className="w-4 h-4 mb-0.5" />
-              <span className="text-[10px] font-bold">Cash</span>
+              <span className="text-[10px]">Cash</span>
             </button>
-            <button className="flex flex-col items-center justify-center py-2 rounded-md border border-gray-200 text-gray-500 hover:bg-gray-50 hover:border-gray-300 transition-all active:scale-95">
+            <button className="flex flex-col items-center justify-center py-2 rounded-md border border-gray-200 text-gray-500 hover:bg-gray-50 hover:border-gray-300 transition-all active:scale-95 cursor-pointer font-bold">
               <CreditCard className="w-4 h-4 mb-0.5" />
-              <span className="text-[10px] font-bold">Card</span>
+              <span className="text-[10px]">Card</span>
             </button>
-            <button className="flex flex-col items-center justify-center py-2 rounded-md border border-gray-200 text-gray-500 hover:bg-gray-50 hover:border-gray-300 transition-all active:scale-95">
+            <button className="flex flex-col items-center justify-center py-2 rounded-md border border-gray-200 text-gray-500 hover:bg-gray-50 hover:border-gray-300 transition-all active:scale-95 cursor-pointer font-bold">
               <QrCode className="w-4 h-4 mb-0.5" />
-              <span className="text-[10px] font-bold">Scan</span>
+              <span className="text-[10px]">MFS / Scan</span>
             </button>
           </div>
         </div>
@@ -248,7 +248,7 @@ export function PosCart({
           <div className="absolute top-0 right-0 w-12 h-12 bg-white/5 rounded-bl-full pointer-events-none"></div>
           <div className="absolute bottom-0 left-0 w-8 h-8 bg-white/5 rounded-tr-full pointer-events-none"></div>
           <p className="text-white/80 font-medium text-sm">Grand Total</p>
-          <p className="text-white font-bold text-xl tracking-tight">${total.toFixed(2)}</p>
+          <p className="text-white font-bold text-xl tracking-tight">৳{total.toFixed(2)}</p>
         </div>
 
         {!selectedLocationId && (
@@ -268,23 +268,21 @@ export function PosCart({
         )}
 
         <div className="grid grid-cols-3 gap-2">
-          <button className="bg-purple-600 hover:bg-purple-700 text-white rounded-md py-2 text-[11px] sm:text-xs font-bold flex flex-col sm:flex-row items-center justify-center gap-1 active:scale-95 transition-all">
+          <button className="bg-purple-600 hover:bg-purple-700 text-white rounded-md py-2 text-[11px] sm:text-xs font-bold flex flex-col sm:flex-row items-center justify-center gap-1 active:scale-95 transition-all cursor-pointer">
              <RefreshCcw className="w-3 h-3 sm:w-4 sm:h-4" /> Hold
           </button>
-          <button onClick={onClearCart} className="bg-red-500 hover:bg-red-600 text-white rounded-md py-2 text-[11px] sm:text-xs font-bold flex flex-col sm:flex-row items-center justify-center gap-1 active:scale-95 transition-all">
+          <button onClick={onClearCart} className="bg-red-500 hover:bg-red-600 text-white rounded-md py-2 text-[11px] sm:text-xs font-bold flex flex-col sm:flex-row items-center justify-center gap-1 active:scale-95 transition-all cursor-pointer">
              <X className="w-3 h-3 sm:w-4 sm:h-4" strokeWidth={3} /> Void
           </button>
           <button
             onClick={onCheckout}
             disabled={!canCheckout}
-            className="bg-teal-500 hover:bg-teal-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-md py-2 text-[11px] sm:text-xs font-bold flex flex-col sm:flex-row items-center justify-center gap-1 active:scale-95 transition-all"
+            className="bg-teal-500 hover:bg-teal-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-md py-2 text-[11px] sm:text-xs font-bold flex flex-col sm:flex-row items-center justify-center gap-1 active:scale-95 transition-all cursor-pointer"
           >
              <DollarSign className="w-3 h-3 sm:w-4 sm:h-4" strokeWidth={3} /> {isCheckingOut ? 'Paying...' : 'Pay'}
           </button>
         </div>
       </div>
-
     </div>
   );
 }
-

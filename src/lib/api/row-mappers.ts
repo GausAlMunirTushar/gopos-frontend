@@ -86,7 +86,7 @@ export const productRow = (row: ApiRecord, index: number) => {
     name: asString(row.name, 'Unnamed product'),
     cat: asString(category?.name ?? row.categoryName, '—'),
     brand: asString(brand?.name ?? row.brandName, '—'),
-    price: `$${asNumber(firstVariant.sellingPrice ?? row.sellingPrice).toFixed(2)}`,
+    price: `৳${asNumber(firstVariant.sellingPrice ?? row.sellingPrice).toFixed(2)}`,
     unit: asString(unit?.shortName ?? unit?.name ?? row.unitName, 'Pc'),
     qty: asNumber(row.quantity ?? row.stock),
     creator: asString(createdBy?.name ?? row.creator, 'System'),
@@ -181,7 +181,7 @@ export const saleRow = (row: ApiRecord, index: number) => ({
   date: asDate(row.saleDate ?? row.createdAt),
   status: asStatus(row.status),
   payment: asStatus(row.paymentStatus),
-  total: `$${asNumber(row.grandTotal ?? row.total).toFixed(2)}`,
+  total: `৳${asNumber(row.grandTotal ?? row.total).toFixed(2)}`,
   baddr: asString((row.customer as ApiRecord | undefined)?.country, '—'),
   color: statusColor(row.status),
 });
@@ -193,8 +193,8 @@ export const purchaseRow = (row: ApiRecord, index: number) => ({
   deliveryDate: asDate(row.expectedDate ?? row.deliveryDate),
   status: asStatus(row.status),
   payment: asStatus(row.paymentStatus),
-  total: `$${asNumber(row.grandTotal ?? row.total).toFixed(2)}`,
-  amount: `$${asNumber(row.grandTotal ?? row.total).toFixed(2)}`,
+  total: `৳${asNumber(row.grandTotal ?? row.total).toFixed(2)}`,
+  amount: `৳${asNumber(row.grandTotal ?? row.total).toFixed(2)}`,
   color: statusColor(row.status),
 });
 
@@ -203,7 +203,7 @@ export const invoiceRow = (row: ApiRecord, index: number) => ({
   customer: asString((row.sale as ApiRecord | undefined)?.customerName ?? row.customerName, '—'),
   date: asDate(row.issuedAt ?? row.createdAt),
   dueDate: asDate(row.dueAt),
-  amount: `$${asNumber(row.total).toFixed(2)}`,
+  amount: `৳${asNumber(row.total).toFixed(2)}`,
   status: asStatus(row.status),
   color: pillColor(row.status),
 });
@@ -213,7 +213,7 @@ export const quotationRow = (row: ApiRecord, index: number) => ({
   customer: asString((row.customer as ApiRecord | undefined)?.name ?? row.customerName, '—'),
   date: asDate(row.quotationDate ?? row.createdAt),
   expiry: asDate(row.expiresAt),
-  amount: `$${asNumber(row.grandTotal ?? row.total).toFixed(2)}`,
+  amount: `৳${asNumber(row.grandTotal ?? row.total).toFixed(2)}`,
   status: asStatus(row.status),
   color: pillColor(row.status),
 });
@@ -223,7 +223,7 @@ export const saleReturnRow = (row: ApiRecord, index: number) => ({
   saleId: asString((row.sale as ApiRecord | undefined)?.saleNumber, '—'),
   customer: asString((row.sale as ApiRecord | undefined)?.customerName ?? row.customerName, '—'),
   date: asDate(row.returnDate ?? row.createdAt),
-  amount: `$${asNumber(row.total).toFixed(2)}`,
+  amount: `৳${asNumber(row.total).toFixed(2)}`,
   status: asStatus(row.status),
   color: pillColor(row.status),
 });
@@ -233,7 +233,7 @@ export const purchaseReturnRow = (row: ApiRecord, index: number) => ({
   purchaseId: asString((row.purchase as ApiRecord | undefined)?.purchaseNumber, '—'),
   supplier: asString((row.purchase as ApiRecord | undefined)?.supplierName ?? row.supplierName, '—'),
   date: asDate(row.returnDate ?? row.createdAt),
-  amount: `$${asNumber(row.total).toFixed(2)}`,
+  amount: `৳${asNumber(row.total).toFixed(2)}`,
   status: asStatus(row.status),
   color: pillColor(row.status),
 });
@@ -253,7 +253,7 @@ export const financeEntryRow = (row: ApiRecord, index: number) => ({
   source: asString(row.title ?? row.description ?? (row.category as ApiRecord | undefined)?.name, 'Income'),
   category: asString((row.category as ApiRecord | undefined)?.name ?? row.title, 'Expense'),
   date: asDate(row.entryDate ?? row.date ?? row.createdAt),
-  amount: `$${asNumber(row.amount).toFixed(2)}`,
+  amount: `৳${asNumber(row.amount).toFixed(2)}`,
   status: asStatus(row.status),
   color: pillColor(row.status),
 });
@@ -288,7 +288,7 @@ export const employeeRow = (row: ApiRecord, index: number) => ({
 export const couponRow = (row: ApiRecord, index: number) => ({
   id: asString(row.code, `CPN${String(index + 1).padStart(3, '0')}`),
   code: asString(row.code, '—'),
-  discount: `${asNumber(row.discountValue).toFixed(row.discountType === 'PERCENTAGE' ? 0 : 2)}${row.discountType === 'PERCENTAGE' ? '%' : ''}`,
+  discount: `${asNumber(row.discountValue).toFixed(row.discountType === 'PERCENTAGE' ? 0 : 2)}${row.discountType === 'PERCENTAGE' ? '%' : ' ৳'}`,
   type: asStatus(row.discountType),
   expiry: asDate(row.endsAt ?? row.expiresAt),
   status: asStatus(row.status),
@@ -298,8 +298,8 @@ export const couponRow = (row: ApiRecord, index: number) => ({
 export const giftCardRow = (row: ApiRecord, index: number) => ({
   id: asString(row.code, `GC${String(index + 1).padStart(3, '0')}`),
   customer: asString((row.customer as ApiRecord | undefined)?.name ?? row.customerName, '—'),
-  amount: `$${asNumber(row.initialBalance ?? row.amount).toFixed(2)}`,
-  balance: `$${asNumber(row.currentBalance ?? row.balance).toFixed(2)}`,
+  amount: `৳${asNumber(row.initialBalance ?? row.amount).toFixed(2)}`,
+  balance: `৳${asNumber(row.currentBalance ?? row.balance).toFixed(2)}`,
   expiry: asDate(row.expiresAt),
   status: asStatus(row.status),
   color: pillColor(row.status),

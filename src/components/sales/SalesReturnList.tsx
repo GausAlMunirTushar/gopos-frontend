@@ -23,8 +23,8 @@ interface SalesReturn {
 }
 
 const returnData: SalesReturn[] = [
-  { id: 'SR-001', saleId: 'SL001', customer: 'Andrea Willer', date: '25 May 2025', amount: '$450', status: 'Received', color: 'bg-green-100 text-green-600' },
-  { id: 'SR-002', saleId: 'SL002', customer: 'Timothy Sands', date: '24 May 2025', amount: '$120', status: 'Pending', color: 'bg-orange-100 text-orange-600' },
+  { id: 'SR-001', saleId: 'SL001', customer: 'Andrea Willer', date: '25 May 2025', amount: '৳450', status: 'Received', color: 'bg-green-100 text-green-600' },
+  { id: 'SR-002', saleId: 'SL002', customer: 'Timothy Sands', date: '24 May 2025', amount: '৳120', status: 'Pending', color: 'bg-orange-100 text-orange-600' },
 ];
 
 export default function SalesReturnList() {
@@ -93,7 +93,7 @@ export default function SalesReturnList() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <StatsCard 
           label="Total Returns" 
-          value="$16,478,145" 
+          value="৳16,478,145" 
           icon={ArrowLeftRight}
           iconColor="text-red-600"
           iconBg="bg-red-50"

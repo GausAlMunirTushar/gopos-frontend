@@ -22,8 +22,8 @@ interface PurchaseOrder {
 }
 
 const orderData: PurchaseOrder[] = [
-  { id: 'PO-001', supplier: 'Apex Computers', date: '24 May 2025', deliveryDate: '30 May 2025', amount: '$12,500', status: 'Sent', color: 'bg-blue-100 text-blue-600' },
-  { id: 'PO-002', supplier: 'Beats Electronics', date: '23 May 2025', deliveryDate: '05 Jun 2025', amount: '$8,600', status: 'Pending', color: 'bg-orange-100 text-orange-600' },
+  { id: 'PO-001', supplier: 'Apex Computers', date: '24 May 2025', deliveryDate: '30 May 2025', amount: '৳12,500', status: 'Sent', color: 'bg-blue-100 text-blue-600' },
+  { id: 'PO-002', supplier: 'Beats Electronics', date: '23 May 2025', deliveryDate: '05 Jun 2025', amount: '৳8,600', status: 'Pending', color: 'bg-orange-100 text-orange-600' },
 ];
 
 export default function PurchaseOrderList() {
