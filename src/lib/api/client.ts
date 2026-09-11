@@ -35,10 +35,19 @@ const buildUrl = (path: string, query?: Record<string, string | number | boolean
   return url.toString();
 };
 
+let isRefreshing = false;
+let refreshSubscribers: ((token: string) => void)[] = [];
+
+const onRefreshed = (token: string) => {
+  refreshSubscribers.forEach((callback) => callback(token));
+  refreshSubscribers = [];
+};
+
 export const apiClient = {
   async request<T>(
     path: string,
     options: RequestInit & { query?: Record<string, string | number | boolean | undefined> } = {},
+    isRetry = false,
   ): Promise<ApiResponse<T>> {
     const session = authSession.get();
     const headers = new Headers(options.headers);
@@ -50,6 +59,42 @@ export const apiClient = {
       headers,
       body: options.body,
     });
+
+    // Handle 401 token expiry with automatic refresh
+    if (response.status === 401 && !isRetry && session?.refreshToken && path !== '/auth/login' && path !== '/auth/refresh') {
+      if (!isRefreshing) {
+        isRefreshing = true;
+        try {
+          const refreshRes = await fetch(buildUrl('/auth/refresh'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ refreshToken: session.refreshToken }),
+          });
+          const refreshData = (await refreshRes.json()) as ApiResponse<AuthSession>;
+          if (refreshRes.ok && refreshData.success && refreshData.data) {
+            authSession.set(refreshData.data);
+            isRefreshing = false;
+            onRefreshed(refreshData.data.accessToken);
+            return this.request<T>(path, options, true);
+          }
+        } catch {
+          authSession.clear();
+        } finally {
+          isRefreshing = false;
+        }
+      } else {
+        // Queue retry while refreshing
+        return new Promise((resolve, reject) => {
+          refreshSubscribers.push((newToken: string) => {
+            headers.set('Authorization', `Bearer ${newToken}`);
+            this.request<T>(path, { ...options, headers }, true)
+              .then(resolve)
+              .catch(reject);
+          });
+        });
+      }
+    }
+
     const payload = (await response.json().catch(() => null)) as ApiResponse<T> | null;
     if (!response.ok || !payload?.success) {
       throw new ApiError(payload?.message ?? 'Request failed', response.status, payload);
@@ -65,7 +110,17 @@ export const apiClient = {
   patch<T>(path: string, body: unknown) {
     return this.request<T>(path, { method: 'PATCH', body: JSON.stringify(body) });
   },
+  put<T>(path: string, body: unknown) {
+    return this.request<T>(path, { method: 'PUT', body: JSON.stringify(body) });
+  },
+  delete<T>(path: string, query?: Record<string, string | number | boolean | undefined>) {
+    return this.request<T>(path, { method: 'DELETE', query });
+  },
   setSession(session: AuthSession) {
     authSession.set(session);
   },
+  clearSession() {
+    authSession.clear();
+  },
 };
+

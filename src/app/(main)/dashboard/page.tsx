@@ -14,6 +14,7 @@ import {
 } from 'recharts';
 import { DataTable } from '@/components/ui/data-table';
 import { ColumnDef } from '@tanstack/react-table';
+import { useCurrency } from '@/hooks/useCurrency';
 
 // Mock Data
 const salesPurchaseData = [
@@ -63,18 +64,19 @@ interface Transaction {
   id: string;
   status: string;
   color: string;
-  total: string;
+  total: number;
 }
 
 const transactionData: Transaction[] = [
-  { date: '24 May 2025', name: 'Andrea Willer', id: '#114589', status: 'Completed', color: 'bg-teal-500', total: '$4560' },
-  { date: '23 May 2025', name: 'Timothy Sands', id: '#114589', status: 'Completed', color: 'bg-teal-500', total: '$3569' },
-  { date: '22 May 2025', name: 'Bonnie Rodrigues', id: '#114589', status: 'Draft', color: 'bg-pink-500', total: '$2659' },
-  { date: '21 May 2025', name: 'Randy McCree', id: '#114589', status: 'Completed', color: 'bg-teal-500', total: '$2155' },
+  { date: '24 May 2025', name: 'Andrea Willer', id: '#114589', status: 'Completed', color: 'bg-teal-500', total: 4560 },
+  { date: '23 May 2025', name: 'Timothy Sands', id: '#114589', status: 'Completed', color: 'bg-teal-500', total: 3569 },
+  { date: '22 May 2025', name: 'Bonnie Rodrigues', id: '#114589', status: 'Draft', color: 'bg-pink-500', total: 2659 },
+  { date: '21 May 2025', name: 'Randy McCree', id: '#114589', status: 'Completed', color: 'bg-teal-500', total: 2155 },
 ];
 
 export default function Dashboard() {
   const [alertVisible, setAlertVisible] = useState(true);
+  const { formatCurrency } = useCurrency();
 
   const transactionColumns: ColumnDef<Transaction>[] = [
     { accessorKey: 'date', header: 'Date' },
@@ -104,7 +106,7 @@ export default function Dashboard() {
     {
       accessorKey: 'total',
       header: 'Total',
-      cell: ({ row }) => <span className="font-bold text-gray-900 text-right block">{row.getValue('total')}</span>,
+      cell: ({ row }) => <span className="font-bold text-gray-900 text-right block">{formatCurrency(row.original.total)}</span>,
     },
   ];
 
@@ -144,7 +146,7 @@ export default function Dashboard() {
           <div>
             <p className="text-white/80 text-sm font-medium mb-1">Total Sales</p>
             <div className="flex items-end gap-2">
-              <h3 className="text-2xl font-bold">$48,988,078</h3>
+              <h3 className="text-2xl font-bold">{formatCurrency(48988078)}</h3>
               <span className="flex items-center text-xs font-medium bg-white/20 px-1.5 py-0.5 rounded-md mb-1 text-white">
                 <ArrowUpRight className="w-3 h-3 mr-0.5" /> 22%
               </span>
@@ -159,7 +161,7 @@ export default function Dashboard() {
           <div>
             <p className="text-white/80 text-sm font-medium mb-1">Total Sales Return</p>
             <div className="flex items-end gap-2">
-              <h3 className="text-2xl font-bold">$16,478,145</h3>
+              <h3 className="text-2xl font-bold">{formatCurrency(16478145)}</h3>
               <span className="flex items-center text-xs font-medium bg-white/10 px-1.5 py-0.5 rounded-md mb-1 text-white">
                 <ArrowDownRight className="w-3 h-3 mr-0.5" /> 22%
               </span>
@@ -174,7 +176,7 @@ export default function Dashboard() {
           <div>
             <p className="text-white/80 text-sm font-medium mb-1">Total Purchase</p>
             <div className="flex items-end gap-2">
-              <h3 className="text-2xl font-bold">$24,145,789</h3>
+              <h3 className="text-2xl font-bold">{formatCurrency(24145789)}</h3>
               <span className="flex items-center text-xs font-medium bg-white/20 px-1.5 py-0.5 rounded-md mb-1 text-white">
                 <ArrowDownRight className="w-3 h-3 mr-0.5" /> 22%
               </span>
@@ -189,7 +191,7 @@ export default function Dashboard() {
           <div>
             <p className="text-white/80 text-sm font-medium mb-1">Total Purchase Return</p>
             <div className="flex items-end gap-2">
-              <h3 className="text-2xl font-bold">$18,458,747</h3>
+              <h3 className="text-2xl font-bold">{formatCurrency(18458747)}</h3>
               <span className="flex items-center text-xs font-medium bg-white/20 px-1.5 py-0.5 rounded-md mb-1 text-white">
                 <ArrowDownRight className="w-3 h-3 mr-0.5" /> 22%
               </span>
@@ -201,10 +203,10 @@ export default function Dashboard() {
       {/* Secondary Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: 'Profit', value: '$8,458,798', trend: '+35%', icon: TrendingUp, color: 'text-[#14B8A6]', bg: 'bg-teal-50' },
-          { label: 'Invoice Due', value: '$48,988,78', trend: '-19%', icon: FileText, color: 'text-[#14B8A6]', bg: 'bg-teal-50' },
-          { label: 'Total Expenses', value: '$8,980,097', trend: '+41%', icon: RefreshCcw, color: 'text-orange-500', bg: 'bg-orange-50' },
-          { label: 'Total Payment Returns', value: '$78,458,798', trend: '-20%', icon: CornerDownLeft, color: 'text-purple-500', bg: 'bg-purple-50' },
+          { label: 'Profit', value: formatCurrency(8458798), trend: '+35%', icon: TrendingUp, color: 'text-[#14B8A6]', bg: 'bg-teal-50' },
+          { label: 'Invoice Due', value: formatCurrency(4898878), trend: '-19%', icon: FileText, color: 'text-[#14B8A6]', bg: 'bg-teal-50' },
+          { label: 'Total Expenses', value: formatCurrency(8980097), trend: '+41%', icon: RefreshCcw, color: 'text-orange-500', bg: 'bg-orange-50' },
+          { label: 'Total Payment Returns', value: formatCurrency(78458798), trend: '-20%', icon: CornerDownLeft, color: 'text-purple-500', bg: 'bg-purple-50' },
         ].map((item, idx) => {
           const Icon = item.icon;
           const isPositive = item.trend.startsWith('+');
