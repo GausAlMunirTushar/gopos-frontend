@@ -12,6 +12,9 @@ import { apiEndpoints } from '@/lib/api/endpoints';
 import { quotationRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
+
 interface Quotation {
   id: string;
   customer: string;
@@ -29,11 +32,32 @@ const quotationData: Quotation[] = [
 ];
 
 export default function QuotationList() {
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deleteQuotation = useDeleteApiResource(apiEndpoints.sales.quotations);
+
   const { data: quotations } = useLiveRows<ApiRecord, Quotation>({
     resource: apiEndpoints.sales.quotations,
     fallbackData: quotationData,
-    mapRow: quotationRow,
+    mapRow: (row, idx) => ({
+      ...quotationRow(row, idx),
+      id: String(row.id || `QT-${String(idx + 1).padStart(3, '0')}`),
+    }),
   });
+
+  const handleDelete = (quotation: Quotation) => {
+    confirm({
+      title: 'Delete Quotation',
+      description: 'Are you sure you want to delete this sales quotation? Client price guarantee will be revoked.',
+      itemName: `${quotation.id} - ${quotation.customer} (${quotation.amount})`,
+      confirmText: 'Delete Quotation',
+      variant: 'danger',
+      onConfirm: async () => {
+        if (quotation.id) {
+          await deleteQuotation.mutateAsync(quotation.id);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<Quotation>[] = [
     {
@@ -67,9 +91,15 @@ export default function QuotationList() {
       header: () => <div className="text-center">Action</div>,
       cell: ({ row }) => (
         <div className="flex items-center justify-center gap-2">
-          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors"><Eye className="w-4 h-4" /></button>
-          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors"><Edit className="w-4 h-4" /></button>
-          <button className="p-1.5 text-gray-400 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors" title="View quotation"><Eye className="w-4 h-4" /></button>
+          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors" title="Edit quotation"><Edit className="w-4 h-4" /></button>
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 text-gray-400 hover:text-red-500 transition-colors cursor-pointer" 
+            title="Delete quotation"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
         </div>
       ),
     },
@@ -77,6 +107,7 @@ export default function QuotationList() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
       <PageHeader 
         title="Quotations" 
         breadcrumbs={[

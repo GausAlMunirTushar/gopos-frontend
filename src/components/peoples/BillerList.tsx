@@ -13,7 +13,11 @@ import { actionButtonClassName, contactFields } from '@/lib/api/resource-fields'
 import { contactRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
+
 interface Biller {
+  id?: string;
   code: string;
   name: string;
   company: string;
@@ -24,24 +28,45 @@ interface Biller {
 }
 
 const billerData: Biller[] = [
-  { code: 'BI001', name: 'Shaun Farley', company: 'GreenTech Industries', email: 'shaun@example.com', phone: '+18647961254', country: 'USA', status: 'Active' },
-  { code: 'BI002', name: 'Jenny Ellis', company: 'BlueSky Logistics', email: 'jenny@example.com', phone: '+13197521863', country: 'Germany', status: 'Active' },
-  { code: 'BI003', name: 'Leon Baxter', company: 'EcoFarm Organics', email: 'leon@example.com', phone: '+18496275831', country: 'Japan', status: 'Active' },
-  { code: 'BI004', name: 'Karen Flores', company: 'SmartTech Solutions', email: 'karen@example.com', phone: '+18731498524', country: 'Austria', status: 'Active' },
-  { code: 'BI005', name: 'Michael Dawson', company: 'Fresh Supplies', email: 'michael@example.com', phone: '+12876928738', country: 'Turkey', status: 'Active' },
-  { code: 'BI006', name: 'Karen Galvan', company: 'BrightSource Lighting', email: 'karen@example.com', phone: '+17534896148', country: 'Mexico', status: 'Active' },
-  { code: 'BI007', name: 'Thomas Ward', company: 'GlobalTech Industries', email: 'thomas@example.com', phone: '+16482479624', country: 'France', status: 'Active' },
-  { code: 'BI008', name: 'Aliza Duncan', company: 'HealthWell Pharma', email: 'aliza@example.com', phone: '+13175964827', country: 'Greece', status: 'Active' },
-  { code: 'BI009', name: 'James Higham', company: 'HomeStyle Furnishings', email: 'james@example.com', phone: '+13875196482', country: 'Italy', status: 'Active' },
-  { code: 'BI010', name: 'Jada Robinson', company: 'EcoLogistics Partners', email: 'robinson@example.com', phone: '+17586143284', country: 'China', status: 'Active' },
+  { id: '1', code: 'BI001', name: 'Shaun Farley', company: 'GreenTech Industries', email: 'shaun@example.com', phone: '+18647961254', country: 'USA', status: 'Active' },
+  { id: '2', code: 'BI002', name: 'Jenny Ellis', company: 'BlueSky Logistics', email: 'jenny@example.com', phone: '+13197521863', country: 'Germany', status: 'Active' },
+  { id: '3', code: 'BI003', name: 'Leon Baxter', company: 'EcoFarm Organics', email: 'leon@example.com', phone: '+18496275831', country: 'Japan', status: 'Active' },
+  { id: '4', code: 'BI004', name: 'Karen Flores', company: 'SmartTech Solutions', email: 'karen@example.com', phone: '+18731498524', country: 'Austria', status: 'Active' },
+  { id: '5', code: 'BI005', name: 'Michael Dawson', company: 'Fresh Supplies', email: 'michael@example.com', phone: '+12876928738', country: 'Turkey', status: 'Active' },
+  { id: '6', code: 'BI006', name: 'Karen Galvan', company: 'BrightSource Lighting', email: 'karen@example.com', phone: '+17534896148', country: 'Mexico', status: 'Active' },
+  { id: '7', code: 'BI007', name: 'Thomas Ward', company: 'GlobalTech Industries', email: 'thomas@example.com', phone: '+16482479624', country: 'France', status: 'Active' },
+  { id: '8', code: 'BI008', name: 'Aliza Duncan', company: 'HealthWell Pharma', email: 'aliza@example.com', phone: '+13175964827', country: 'Greece', status: 'Active' },
+  { id: '9', code: 'BI009', name: 'James Higham', company: 'HomeStyle Furnishings', email: 'james@example.com', phone: '+13875196482', country: 'Italy', status: 'Active' },
+  { id: '10', code: 'BI010', name: 'Jada Robinson', company: 'EcoLogistics Partners', email: 'robinson@example.com', phone: '+17586143284', country: 'China', status: 'Active' },
 ];
 
 export default function BillerList() {
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deleteBiller = useDeleteApiResource(apiEndpoints.people.billers);
+
   const { data: billers } = useLiveRows<ApiRecord, Biller>({
     resource: apiEndpoints.people.billers,
     fallbackData: billerData,
-    mapRow: contactRow,
+    mapRow: (row, idx) => ({
+      ...contactRow(row, idx),
+      id: String(row.id || ''),
+    }),
   });
+
+  const handleDelete = (biller: Biller) => {
+    confirm({
+      title: 'Delete Biller',
+      description: 'Are you sure you want to delete this biller profile? Their invoicing history and signature authority will be revoked.',
+      itemName: `${biller.name} (${biller.code})`,
+      confirmText: 'Delete Biller',
+      variant: 'danger',
+      onConfirm: async () => {
+        if (biller.id) {
+          await deleteBiller.mutateAsync(biller.id);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<Biller>[] = [
     { accessorKey: 'code', header: 'Code' },
@@ -74,9 +99,15 @@ export default function BillerList() {
       header: () => <div className="text-right">Action</div>,
       cell: ({ row }) => (
         <div className="flex gap-2 justify-end">
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-blue-500 transition-colors"><Eye className="w-4 h-4" /></button>
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-orange-500 transition-colors"><Edit className="w-4 h-4" /></button>
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-blue-500 transition-colors" title="View details"><Eye className="w-4 h-4" /></button>
+          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-orange-500 transition-colors" title="Edit biller"><Edit className="w-4 h-4" /></button>
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-colors cursor-pointer" 
+            title="Delete biller"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
         </div>
       ),
     },
@@ -84,6 +115,7 @@ export default function BillerList() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
       <PageHeader 
         title="Billers" 
         breadcrumbs={[

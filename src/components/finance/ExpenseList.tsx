@@ -11,6 +11,8 @@ import { financeEntryRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 import { useCurrency } from '@/hooks/useCurrency';
 import { FinanceEntryModal } from '@/components/finance/FinanceEntryModal';
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
 
 interface Expense {
   id: string;
@@ -19,21 +21,43 @@ interface Expense {
   amount: string;
   status: string;
   color: string;
+  rawId?: string;
 }
 
 const expenseData: Expense[] = [
-  { id: 'EXP001', category: 'Rent', date: '24 May 2025', amount: '$2,000', status: 'Paid', color: 'bg-green-100 text-green-600' },
-  { id: 'EXP002', category: 'Electricity', date: '23 May 2025', amount: '$150', status: 'Pending', color: 'bg-orange-100 text-orange-600' },
-  { id: 'EXP003', category: 'Internet', date: '22 May 2025', amount: '$80', status: 'Paid', color: 'bg-green-100 text-green-600' },
+  { id: 'EXP001', category: 'Rent', date: '24 May 2025', amount: '৳2,000', status: 'Paid', color: 'bg-green-100 text-green-600' },
+  { id: 'EXP002', category: 'Electricity', date: '23 May 2025', amount: '৳150', status: 'Pending', color: 'bg-orange-100 text-orange-600' },
+  { id: 'EXP003', category: 'Internet', date: '22 May 2025', amount: '৳80', status: 'Paid', color: 'bg-green-100 text-green-600' },
 ];
 
 export default function ExpenseList() {
   const { formatCurrency } = useCurrency();
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deleteExpense = useDeleteApiResource(apiEndpoints.finance.expenses);
+
   const { data: expenses } = useLiveRows<ApiRecord, Expense>({
     resource: apiEndpoints.finance.expenses,
     fallbackData: expenseData,
-    mapRow: financeEntryRow,
+    mapRow: (row, idx) => ({
+      ...financeEntryRow(row, idx),
+      rawId: String(row.id || ''),
+    }),
   });
+
+  const handleDelete = (expense: Expense) => {
+    confirm({
+      title: 'Delete Expense Entry',
+      description: 'Are you sure you want to delete this expense voucher? Linked account ledger balances will be restored.',
+      itemName: `${expense.id} - ${expense.category} (${expense.amount})`,
+      confirmText: 'Yes, Delete Expense',
+      variant: 'danger',
+      onConfirm: async () => {
+        if (expense.rawId) {
+          await deleteExpense.mutateAsync(expense.rawId);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<Expense>[] = [
     {
@@ -54,7 +78,7 @@ export default function ExpenseList() {
     {
       accessorKey: 'amount',
       header: 'Amount',
-      cell: ({ row }) => <span className="font-bold text-gray-900">{formatCurrency(row.getValue('amount') as string)}</span>,
+      cell: ({ row }) => <span className="font-bold text-gray-900">{row.getValue('amount')}</span>,
     },
     {
       accessorKey: 'status',
@@ -71,15 +95,19 @@ export default function ExpenseList() {
     {
       id: 'actions',
       header: () => <div className="text-center">Action</div>,
-      cell: () => (
+      cell: ({ row }) => (
         <div className="flex items-center justify-center gap-2">
-          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors">
+          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors" title="View details">
             <Eye className="w-4 h-4" />
           </button>
-          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors">
+          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors" title="Edit expense">
             <Edit className="w-4 h-4" />
           </button>
-          <button className="p-1.5 text-gray-400 hover:text-red-500 transition-colors">
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 text-gray-400 hover:text-red-500 transition-colors cursor-pointer" 
+            title="Delete expense"
+          >
             <Trash2 className="w-4 h-4" />
           </button>
         </div>
@@ -89,6 +117,8 @@ export default function ExpenseList() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
+
       <PageHeader 
         title="Expenses" 
         breadcrumbs={[

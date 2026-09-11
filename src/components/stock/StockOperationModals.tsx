@@ -2,11 +2,11 @@
 
 import { FormEvent, ReactNode, useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { X } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
+import { Modal } from '@/components/ui/modal';
 import { apiClient } from '@/lib/api/client';
 import { apiEndpoints } from '@/lib/api/endpoints';
 
@@ -102,69 +102,75 @@ export function StockTransferCreateModal({ children, buttonClassName }: StockMod
       <button type="button" className={buttonClassName} onClick={() => setIsOpen(true)}>
         {children}
       </button>
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-sm">
-          <form onSubmit={handleSubmit} className="w-full max-w-xl rounded-2xl bg-white shadow-2xl">
-            <div className="flex items-start justify-between border-b border-gray-100 p-6">
-              <div>
-                <h2 className="text-xl font-bold text-gray-900">Add Stock Transfer</h2>
-                <p className="mt-1 text-sm text-gray-500">Transfer stock between two locations atomically.</p>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="Add Stock Transfer"
+        description="Transfer stock between two stores or warehouses atomically with real-time balance updates."
+        size="xl"
+      >
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <label>
+              <span className="mb-1.5 block text-sm font-semibold text-gray-700">From Location *</span>
+              <Select name="sourceLocationId" required>
+                <option value="">Select source location</option>
+                {locations.data?.data.map((location) => (
+                  <option key={location.id} value={location.id}>{location.name}</option>
+                ))}
+              </Select>
+            </label>
+            <label>
+              <span className="mb-1.5 block text-sm font-semibold text-gray-700">To Location *</span>
+              <Select name="destinationLocationId" required>
+                <option value="">Select destination location</option>
+                {locations.data?.data.map((location) => (
+                  <option key={location.id} value={location.id}>{location.name}</option>
+                ))}
+              </Select>
+            </label>
+            <label className="md:col-span-2">
+              <span className="mb-1.5 block text-sm font-semibold text-gray-700">Product Variant *</span>
+              <Select name="variantId" required>
+                <option value="">Select product variant</option>
+                {variants.data?.data.map((variant) => (
+                  <option key={variant.id} value={variant.id}>{variantLabel(variant)}</option>
+                ))}
+              </Select>
+            </label>
+            <label>
+              <span className="mb-1.5 block text-sm font-semibold text-gray-700">Quantity *</span>
+              <Input name="quantity" type="number" min="0.0001" step="0.0001" placeholder="Quantity" required />
+            </label>
+            <label>
+              <span className="mb-1.5 block text-sm font-semibold text-gray-700">Reference / Transfer #</span>
+              <Input name="reference" placeholder="Auto-generated if empty" />
+            </label>
+            <label className="md:col-span-2">
+              <span className="mb-1.5 block text-sm font-semibold text-gray-700">Note / Reason</span>
+              <textarea
+                name="note"
+                rows={2}
+                placeholder="Additional notes..."
+                className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-800 placeholder:text-gray-400 outline-none focus:outline-none focus:ring-0 focus:border-[#FF9F43] transition-colors"
+              />
+            </label>
+            {error && (
+              <div className="md:col-span-2 rounded-xl bg-red-50 p-3 text-sm font-medium text-red-600 border border-red-200">
+                {error}
               </div>
-              <button type="button" className="rounded-lg p-2 hover:bg-gray-100" onClick={() => setIsOpen(false)}>
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-            <div className="grid grid-cols-1 gap-4 p-6 md:grid-cols-2">
-              <label>
-                <span className="mb-1.5 block text-sm font-semibold text-gray-700">From Location *</span>
-                <Select name="sourceLocationId" required>
-                  <option value="">Select source</option>
-                  {locations.data?.data.map((location) => (
-                    <option key={location.id} value={location.id}>{location.name}</option>
-                  ))}
-                </Select>
-              </label>
-              <label>
-                <span className="mb-1.5 block text-sm font-semibold text-gray-700">To Location *</span>
-                <Select name="destinationLocationId" required>
-                  <option value="">Select destination</option>
-                  {locations.data?.data.map((location) => (
-                    <option key={location.id} value={location.id}>{location.name}</option>
-                  ))}
-                </Select>
-              </label>
-              <label className="md:col-span-2">
-                <span className="mb-1.5 block text-sm font-semibold text-gray-700">Product Variant *</span>
-                <Select name="variantId" required>
-                  <option value="">Select product</option>
-                  {variants.data?.data.map((variant) => (
-                    <option key={variant.id} value={variant.id}>{variantLabel(variant)}</option>
-                  ))}
-                </Select>
-              </label>
-              <label>
-                <span className="mb-1.5 block text-sm font-semibold text-gray-700">Quantity *</span>
-                <Input name="quantity" type="number" min="0.0001" step="0.0001" required />
-              </label>
-              <label>
-                <span className="mb-1.5 block text-sm font-semibold text-gray-700">Reference</span>
-                <Input name="reference" placeholder="Auto-generated if empty" />
-              </label>
-              <label className="md:col-span-2">
-                <span className="mb-1.5 block text-sm font-semibold text-gray-700">Note</span>
-                <textarea name="note" className="min-h-20 w-full rounded-md border border-gray-300 px-3 py-2 text-sm" />
-              </label>
-              {error && <div className="md:col-span-2 rounded-lg bg-red-50 p-3 text-sm text-red-600">{error}</div>}
-            </div>
-            <div className="flex justify-end gap-3 border-t border-gray-100 p-6">
-              <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>Cancel</Button>
-              <Button type="submit" disabled={mutation.isPending} className="bg-[#FF9F43] hover:bg-[#ff9021]">
-                {mutation.isPending ? 'Posting...' : 'Post Transfer'}
-              </Button>
-            </div>
-          </form>
-        </div>
-      )}
+            )}
+          </div>
+
+          <div className="flex justify-end gap-3 border-t border-gray-100 pt-5 mt-6">
+            <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>Cancel</Button>
+            <Button type="submit" disabled={mutation.isPending} className="bg-[#FF9F43] hover:bg-[#ff9021] text-white px-5 rounded-xl font-medium shadow-xs">
+              {mutation.isPending ? 'Posting...' : 'Post Transfer'}
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </>
   );
 }
@@ -213,60 +219,61 @@ export function StockAdjustmentCreateModal({ children, buttonClassName }: StockM
       <button type="button" className={buttonClassName} onClick={() => setIsOpen(true)}>
         {children}
       </button>
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-sm">
-          <form onSubmit={handleSubmit} className="w-full max-w-xl rounded-2xl bg-white shadow-2xl">
-            <div className="flex items-start justify-between border-b border-gray-100 p-6">
-              <div>
-                <h2 className="text-xl font-bold text-gray-900">Add Stock Adjustment</h2>
-                <p className="mt-1 text-sm text-gray-500">Set the counted quantity for a product at a location.</p>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="Add Stock Adjustment"
+        description="Set the physical counted quantity for a product lot at a specific warehouse or store location."
+        size="xl"
+      >
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <label>
+              <span className="mb-1.5 block text-sm font-semibold text-gray-700">Location *</span>
+              <Select name="locationId" required>
+                <option value="">Select location</option>
+                {locationOptions.map((location) => (
+                  <option key={location.id} value={location.id}>{location.name}</option>
+                ))}
+              </Select>
+            </label>
+            <label>
+              <span className="mb-1.5 block text-sm font-semibold text-gray-700">Physical Counted Qty *</span>
+              <Input name="countedQty" type="number" min="0" step="0.0001" placeholder="Actual quantity" required />
+            </label>
+            <label className="md:col-span-2">
+              <span className="mb-1.5 block text-sm font-semibold text-gray-700">Product Variant *</span>
+              <Select name="variantId" required>
+                <option value="">Select product variant</option>
+                {variants.data?.data.map((variant) => (
+                  <option key={variant.id} value={variant.id}>{variantLabel(variant)}</option>
+                ))}
+              </Select>
+            </label>
+            <label>
+              <span className="mb-1.5 block text-sm font-semibold text-gray-700">Reference / Document</span>
+              <Input name="reference" placeholder="Auto-generated if empty" />
+            </label>
+            <label>
+              <span className="mb-1.5 block text-sm font-semibold text-gray-700">Adjustment Reason</span>
+              <Input name="reason" placeholder="e.g. Annual Audit, Damaged Stock" />
+            </label>
+            {error && (
+              <div className="md:col-span-2 rounded-xl bg-red-50 p-3 text-sm font-medium text-red-600 border border-red-200">
+                {error}
               </div>
-              <button type="button" className="rounded-lg p-2 hover:bg-gray-100" onClick={() => setIsOpen(false)}>
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-            <div className="grid grid-cols-1 gap-4 p-6 md:grid-cols-2">
-              <label>
-                <span className="mb-1.5 block text-sm font-semibold text-gray-700">Location *</span>
-                <Select name="locationId" required>
-                  <option value="">Select location</option>
-                  {locationOptions.map((location) => (
-                    <option key={location.id} value={location.id}>{location.name}</option>
-                  ))}
-                </Select>
-              </label>
-              <label>
-                <span className="mb-1.5 block text-sm font-semibold text-gray-700">Counted Qty *</span>
-                <Input name="countedQty" type="number" min="0" step="0.0001" required />
-              </label>
-              <label className="md:col-span-2">
-                <span className="mb-1.5 block text-sm font-semibold text-gray-700">Product Variant *</span>
-                <Select name="variantId" required>
-                  <option value="">Select product</option>
-                  {variants.data?.data.map((variant) => (
-                    <option key={variant.id} value={variant.id}>{variantLabel(variant)}</option>
-                  ))}
-                </Select>
-              </label>
-              <label>
-                <span className="mb-1.5 block text-sm font-semibold text-gray-700">Reference</span>
-                <Input name="reference" placeholder="Auto-generated if empty" />
-              </label>
-              <label>
-                <span className="mb-1.5 block text-sm font-semibold text-gray-700">Reason</span>
-                <Input name="reason" />
-              </label>
-              {error && <div className="md:col-span-2 rounded-lg bg-red-50 p-3 text-sm text-red-600">{error}</div>}
-            </div>
-            <div className="flex justify-end gap-3 border-t border-gray-100 p-6">
-              <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>Cancel</Button>
-              <Button type="submit" disabled={mutation.isPending} className="bg-[#FF9F43] hover:bg-[#ff9021]">
-                {mutation.isPending ? 'Posting...' : 'Post Adjustment'}
-              </Button>
-            </div>
-          </form>
-        </div>
-      )}
+            )}
+          </div>
+
+          <div className="flex justify-end gap-3 border-t border-gray-100 pt-5 mt-6">
+            <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>Cancel</Button>
+            <Button type="submit" disabled={mutation.isPending} className="bg-[#FF9F43] hover:bg-[#ff9021] text-white px-5 rounded-xl font-medium shadow-xs">
+              {mutation.isPending ? 'Posting...' : 'Post Adjustment'}
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </>
   );
 }

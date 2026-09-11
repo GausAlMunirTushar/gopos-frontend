@@ -11,6 +11,8 @@ import { useLiveRows } from '@/hooks/api/useLiveRows';
 import { apiEndpoints } from '@/lib/api/endpoints';
 import { couponRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
 
 interface Discount {
   id: string;
@@ -30,11 +32,32 @@ const discountData: Discount[] = [
 ];
 
 export default function DiscountList() {
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deleteDiscount = useDeleteApiResource(apiEndpoints.promo.coupons);
+
   const { data: discounts } = useLiveRows<ApiRecord, Discount>({
     resource: apiEndpoints.promo.coupons,
     fallbackData: discountData,
-    mapRow: couponRow,
+    mapRow: (row, idx) => ({
+      ...couponRow(row, idx),
+      id: String(row.id || `DSC${String(idx + 1).padStart(3, '0')}`),
+    }),
   });
+
+  const handleDelete = (discount: Discount) => {
+    confirm({
+      title: 'Delete Discount Campaign',
+      description: 'Are you sure you want to delete this discount campaign? The promo code will become inactive immediately.',
+      itemName: `${discount.code} (${discount.discount} ${discount.type})`,
+      confirmText: 'Delete Discount',
+      variant: 'danger',
+      onConfirm: async () => {
+        if (discount.id) {
+          await deleteDiscount.mutateAsync(discount.id);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<Discount>[] = [
     {
@@ -69,15 +92,19 @@ export default function DiscountList() {
     {
       id: 'actions',
       header: () => <div className="text-center">Action</div>,
-      cell: () => (
+      cell: ({ row }) => (
         <div className="flex items-center justify-center gap-2">
-          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors">
+          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors" title="View details">
             <Eye className="w-4 h-4" />
           </button>
-          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors">
+          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors" title="Edit discount">
             <Edit className="w-4 h-4" />
           </button>
-          <button className="p-1.5 text-gray-400 hover:text-red-500 transition-colors">
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 text-gray-400 hover:text-red-500 transition-colors cursor-pointer" 
+            title="Delete discount"
+          >
             <Trash2 className="w-4 h-4" />
           </button>
         </div>
@@ -87,6 +114,7 @@ export default function DiscountList() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
       <PageHeader 
         title="Discounts & Promos" 
         breadcrumbs={[

@@ -11,6 +11,9 @@ import { purchaseRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 import { PurchaseWorkflowModal } from '@/components/purchases/PurchaseWorkflowModals';
 
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
+
 interface Purchase {
   id: string;
   supplier: string;
@@ -28,11 +31,32 @@ const purchaseData: Purchase[] = [
 ];
 
 export default function PurchaseList() {
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deletePurchase = useDeleteApiResource(apiEndpoints.purchasing.purchases);
+
   const { data: purchases } = useLiveRows<ApiRecord, Purchase>({
     resource: apiEndpoints.purchasing.purchases,
     fallbackData: purchaseData,
-    mapRow: purchaseRow,
+    mapRow: (row, idx) => ({
+      ...purchaseRow(row, idx),
+      id: String(row.id || `PR${String(idx + 1).padStart(3, '0')}`),
+    }),
   });
+
+  const handleDelete = (purchase: Purchase) => {
+    confirm({
+      title: 'Delete Purchase Record',
+      description: 'Are you sure you want to delete this purchase invoice? Associated product stock balance adjustments and supplier payable ledger items will be recalculated.',
+      itemName: `${purchase.id} - ${purchase.supplier} (${purchase.total})`,
+      confirmText: 'Delete Purchase',
+      variant: 'danger',
+      onConfirm: async () => {
+        if (purchase.id) {
+          await deletePurchase.mutateAsync(purchase.id);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<Purchase>[] = [
     {
@@ -81,9 +105,15 @@ export default function PurchaseList() {
       header: () => <div className="text-center">Action</div>,
       cell: ({ row }) => (
         <div className="flex items-center justify-center gap-2">
-          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors"><Eye className="w-4 h-4" /></button>
-          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors"><Edit className="w-4 h-4" /></button>
-          <button className="p-1.5 text-gray-400 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors" title="View details"><Eye className="w-4 h-4" /></button>
+          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors" title="Edit purchase"><Edit className="w-4 h-4" /></button>
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 text-gray-400 hover:text-red-500 transition-colors cursor-pointer" 
+            title="Delete purchase"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
         </div>
       ),
     },
@@ -91,6 +121,7 @@ export default function PurchaseList() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
       <PageHeader 
         title="Purchase List" 
         breadcrumbs={[

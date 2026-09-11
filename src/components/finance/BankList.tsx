@@ -14,6 +14,8 @@ import { actionButtonClassName, bankFields } from '@/lib/api/resource-fields';
 import { bankRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 import { useCurrency } from '@/hooks/useCurrency';
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
 
 interface Bank {
   id: string;
@@ -26,17 +28,38 @@ interface Bank {
 }
 
 const bankData: Bank[] = [
-  { id: 'BNK001', name: 'Chase Bank', accountName: 'goPOS Main', accountNo: '****1234', balance: '$45,000', status: 'Active', color: 'bg-green-100 text-green-600' },
-  { id: 'BNK002', name: 'Bank of America', accountName: 'goPOS Savings', accountNo: '****5678', balance: '$12,450', status: 'Active', color: 'bg-green-100 text-green-600' },
+  { id: 'BNK001', name: 'Dutch Bangla Bank', accountName: 'goPOS Main Account', accountNo: '****1234', balance: '৳450,000', status: 'Active', color: 'bg-green-100 text-green-600' },
+  { id: 'BNK002', name: 'BRAC Bank', accountName: 'goPOS Savings Account', accountNo: '****5678', balance: '৳124,500', status: 'Active', color: 'bg-green-100 text-green-600' },
 ];
 
 export default function BankList() {
   const { formatCurrency } = useCurrency();
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deleteBank = useDeleteApiResource(apiEndpoints.finance.banks);
+
   const { data: banks } = useLiveRows<ApiRecord, Bank>({
     resource: apiEndpoints.finance.banks,
     fallbackData: bankData,
-    mapRow: bankRow,
+    mapRow: (row, idx) => ({
+      ...bankRow(row, idx),
+      id: String(row.id || `BNK${String(idx + 1).padStart(3, '0')}`),
+    }),
   });
+
+  const handleDelete = (bank: Bank) => {
+    confirm({
+      title: 'Delete Bank Account',
+      description: 'Are you sure you want to delete this bank account? Please ensure all active payment methods linked to this account are updated.',
+      itemName: `${bank.name} - ${bank.accountName} (${bank.accountNo})`,
+      confirmText: 'Delete Account',
+      variant: 'danger',
+      onConfirm: async () => {
+        if (bank.id) {
+          await deleteBank.mutateAsync(bank.id);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<Bank>[] = [
     {
@@ -79,15 +102,19 @@ export default function BankList() {
     {
       id: 'actions',
       header: () => <div className="text-center">Action</div>,
-      cell: () => (
+      cell: ({ row }) => (
         <div className="flex items-center justify-center gap-2">
-          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors">
+          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors" title="View details">
             <Eye className="w-4 h-4" />
           </button>
-          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors">
+          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors" title="Edit account">
             <Edit className="w-4 h-4" />
           </button>
-          <button className="p-1.5 text-gray-400 hover:text-red-500 transition-colors">
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 text-gray-400 hover:text-red-500 transition-colors cursor-pointer" 
+            title="Delete account"
+          >
             <Trash2 className="w-4 h-4" />
           </button>
         </div>
@@ -97,6 +124,7 @@ export default function BankList() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
       <PageHeader 
         title="Bank Accounts" 
         breadcrumbs={[
@@ -120,7 +148,7 @@ export default function BankList() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <StatsCard 
           label="Total Balance" 
-          value={formatCurrency("57450")} 
+          value={formatCurrency("574500")} 
           icon={Landmark}
           iconColor="text-blue-600"
           iconBg="bg-blue-50"

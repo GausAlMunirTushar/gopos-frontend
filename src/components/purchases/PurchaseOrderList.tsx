@@ -11,6 +11,9 @@ import { purchaseRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 import { PurchaseWorkflowModal } from '@/components/purchases/PurchaseWorkflowModals';
 
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
+
 interface PurchaseOrder {
   id: string;
   supplier: string;
@@ -27,11 +30,34 @@ const orderData: PurchaseOrder[] = [
 ];
 
 export default function PurchaseOrderList() {
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deleteOrder = useDeleteApiResource(apiEndpoints.purchasing.purchaseOrders);
+
   const { data: orders } = useLiveRows<ApiRecord, PurchaseOrder>({
     resource: apiEndpoints.purchasing.purchaseOrders,
     fallbackData: orderData,
-    mapRow: purchaseRow,
+    mapRow: (row, idx) => ({
+      ...purchaseRow(row, idx),
+      id: String(row.id || `PO-${String(idx + 1).padStart(3, '0')}`),
+      deliveryDate: String(row.deliveryDate || row.date || '—'),
+      amount: String(row.total || row.amount || '৳0'),
+    }),
   });
+
+  const handleDelete = (order: PurchaseOrder) => {
+    confirm({
+      title: 'Delete Purchase Order',
+      description: 'Are you sure you want to delete this purchase order? Pending shipments scheduled against this PO will be cancelled.',
+      itemName: `${order.id} - ${order.supplier} (${order.amount})`,
+      confirmText: 'Delete Order',
+      variant: 'danger',
+      onConfirm: async () => {
+        if (order.id) {
+          await deleteOrder.mutateAsync(order.id);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<PurchaseOrder>[] = [
     {
@@ -65,9 +91,15 @@ export default function PurchaseOrderList() {
       header: () => <div className="text-center">Action</div>,
       cell: ({ row }) => (
         <div className="flex items-center justify-center gap-2">
-          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors"><Eye className="w-4 h-4" /></button>
-          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors"><Edit className="w-4 h-4" /></button>
-          <button className="p-1.5 text-gray-400 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors" title="View details"><Eye className="w-4 h-4" /></button>
+          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors" title="Edit order"><Edit className="w-4 h-4" /></button>
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 text-gray-400 hover:text-red-500 transition-colors cursor-pointer" 
+            title="Delete order"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
         </div>
       ),
     },
@@ -75,6 +107,7 @@ export default function PurchaseOrderList() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
       <PageHeader 
         title="Purchase Orders" 
         breadcrumbs={[

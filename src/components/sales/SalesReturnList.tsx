@@ -12,6 +12,9 @@ import { apiEndpoints } from '@/lib/api/endpoints';
 import { saleReturnRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
+
 interface SalesReturn {
   id: string;
   saleId: string;
@@ -28,11 +31,32 @@ const returnData: SalesReturn[] = [
 ];
 
 export default function SalesReturnList() {
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deleteReturn = useDeleteApiResource(apiEndpoints.sales.salesReturns);
+
   const { data: returns } = useLiveRows<ApiRecord, SalesReturn>({
     resource: apiEndpoints.sales.salesReturns,
     fallbackData: returnData,
-    mapRow: saleReturnRow,
+    mapRow: (row, idx) => ({
+      ...saleReturnRow(row, idx),
+      id: String(row.id || `SR-${String(idx + 1).padStart(3, '0')}`),
+    }),
   });
+
+  const handleDelete = (ret: SalesReturn) => {
+    confirm({
+      title: 'Delete Sales Return',
+      description: 'Are you sure you want to delete this sales return record? Customer refunds and restored product stock will be reviewed.',
+      itemName: `${ret.id} - ${ret.customer} (${ret.amount})`,
+      confirmText: 'Delete Return',
+      variant: 'danger',
+      onConfirm: async () => {
+        if (ret.id) {
+          await deleteReturn.mutateAsync(ret.id);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<SalesReturn>[] = [
     {
@@ -66,9 +90,15 @@ export default function SalesReturnList() {
       header: () => <div className="text-center">Action</div>,
       cell: ({ row }) => (
         <div className="flex items-center justify-center gap-2">
-          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors"><Eye className="w-4 h-4" /></button>
-          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors"><Edit className="w-4 h-4" /></button>
-          <button className="p-1.5 text-gray-400 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors" title="View details"><Eye className="w-4 h-4" /></button>
+          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors" title="Edit return"><Edit className="w-4 h-4" /></button>
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 text-gray-400 hover:text-red-500 transition-colors cursor-pointer" 
+            title="Delete return"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
         </div>
       ),
     },
@@ -76,6 +106,7 @@ export default function SalesReturnList() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
       <PageHeader 
         title="Sales Returns" 
         breadcrumbs={[

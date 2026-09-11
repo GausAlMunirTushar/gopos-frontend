@@ -10,8 +10,11 @@ import { useLiveRows } from '@/hooks/api/useLiveRows';
 import { apiEndpoints } from '@/lib/api/endpoints';
 import { stockBalanceRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
 
 interface Stock {
+  id?: string;
   warehouse: string;
   store: string;
   product: string;
@@ -22,24 +25,45 @@ interface Stock {
 }
 
 const stockData: Stock[] = [
-  { warehouse: 'Lavish Warehouse', store: 'Electro Mart', product: 'Lenovo IdeaPad 3', date: '24 Dec 2024', person: 'James Kirwin', qty: 100, img: 'laptop' },
-  { warehouse: 'Quaint Warehouse', store: 'Quantum Gadgets', product: 'Beats Pro', date: '10 Dec 2024', person: 'Francis Chang', qty: 140, img: 'headphones' },
-  { warehouse: 'Traditional Warehouse', store: 'Prime Bazaar', product: 'Nike Jordan', date: '27 Nov 2024', person: 'Antonio Engle', qty: 300, img: 'shoe' },
-  { warehouse: 'Cool Warehouse', store: 'Gadget World', product: 'Apple Series 5 Watch', date: '18 Nov 2024', person: 'Leo Kelly', qty: 450, img: 'watch' },
-  { warehouse: 'Overflow Warehouse', store: 'Volt Vault', product: 'Amazon Echo Dot', date: '06 Nov 2024', person: 'Annette Walker', qty: 320, img: 'speaker' },
-  { warehouse: 'Nova Storage Hub', store: 'Elite Retail', product: 'Sanford Chair Sofa', date: '25 Oct 2024', person: 'John Weaver', qty: 650, img: 'sofa' },
-  { warehouse: 'Retail Supply Hub', store: 'Prime Mart', product: 'Red Premium Satchel', date: '14 Oct 2024', person: 'Gary Hennessy', qty: 700, img: 'bag' },
-  { warehouse: 'EdgeWare Solutions', store: 'NeoTech Store', product: 'Iphone 14 Pro', date: '03 Oct 2024', person: 'Eleanor Panek', qty: 630, img: 'phone' },
-  { warehouse: 'North Zone Warehouse', store: 'Urban Mart', product: 'Gaming Chair', date: '20 Sep 2024', person: 'William Levy', qty: 410, img: 'chair' },
-  { warehouse: 'Fulfillment Hub', store: 'Travel Mart', product: 'Borealis Backpack', date: '10 Sep 2024', person: 'Charlotte Klotz', qty: 550, img: 'backpack' },
+  { id: '1', warehouse: 'Lavish Warehouse', store: 'Electro Mart', product: 'Lenovo IdeaPad 3', date: '24 Dec 2024', person: 'James Kirwin', qty: 100, img: 'laptop' },
+  { id: '2', warehouse: 'Quaint Warehouse', store: 'Quantum Gadgets', product: 'Beats Pro', date: '10 Dec 2024', person: 'Francis Chang', qty: 140, img: 'headphones' },
+  { id: '3', warehouse: 'Traditional Warehouse', store: 'Prime Bazaar', product: 'Nike Jordan', date: '27 Nov 2024', person: 'Antonio Engle', qty: 300, img: 'shoe' },
+  { id: '4', warehouse: 'Cool Warehouse', store: 'Gadget World', product: 'Apple Series 5 Watch', date: '18 Nov 2024', person: 'Leo Kelly', qty: 450, img: 'watch' },
+  { id: '5', warehouse: 'Overflow Warehouse', store: 'Volt Vault', product: 'Amazon Echo Dot', date: '06 Nov 2024', person: 'Annette Walker', qty: 320, img: 'speaker' },
+  { id: '6', warehouse: 'Nova Storage Hub', store: 'Elite Retail', product: 'Sanford Chair Sofa', date: '25 Oct 2024', person: 'John Weaver', qty: 650, img: 'sofa' },
+  { id: '7', warehouse: 'Retail Supply Hub', store: 'Prime Mart', product: 'Red Premium Satchel', date: '14 Oct 2024', person: 'Gary Hennessy', qty: 700, img: 'bag' },
+  { id: '8', warehouse: 'EdgeWare Solutions', store: 'NeoTech Store', product: 'Iphone 14 Pro', date: '03 Oct 2024', person: 'Eleanor Panek', qty: 630, img: 'phone' },
+  { id: '9', warehouse: 'North Zone Warehouse', store: 'Urban Mart', product: 'Gaming Chair', date: '20 Sep 2024', person: 'William Levy', qty: 410, img: 'chair' },
+  { id: '10', warehouse: 'Fulfillment Hub', store: 'Travel Mart', product: 'Borealis Backpack', date: '10 Sep 2024', person: 'Charlotte Klotz', qty: 550, img: 'backpack' },
 ];
 
 export default function ManageStock() {
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deleteStock = useDeleteApiResource(apiEndpoints.inventory.balances);
+
   const { data: stock } = useLiveRows<ApiRecord, Stock>({
     resource: apiEndpoints.inventory.balances,
     fallbackData: stockData,
-    mapRow: stockBalanceRow,
+    mapRow: (row, idx) => ({
+      ...stockBalanceRow(row, idx),
+      id: String(row.id || ''),
+    }),
   });
+
+  const handleDelete = (item: Stock) => {
+    confirm({
+      title: 'Remove Stock Record',
+      description: 'Are you sure you want to remove this stock allocation entry? Location balance will be reset to zero.',
+      itemName: `${item.product} at ${item.warehouse !== '—' ? item.warehouse : item.store} (${item.qty} units)`,
+      confirmText: 'Remove Stock',
+      variant: 'danger',
+      onConfirm: async () => {
+        if (item.id) {
+          await deleteStock.mutateAsync(item.id);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<Stock>[] = [
     { accessorKey: 'warehouse', header: 'Warehouse' },
@@ -71,8 +95,14 @@ export default function ManageStock() {
       header: () => <div className="text-right">Action</div>,
       cell: ({ row }) => (
         <div className="flex gap-2 justify-end">
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-orange-500 transition-colors"><Edit className="w-4 h-4" /></button>
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-orange-500 transition-colors" title="Edit stock"><Edit className="w-4 h-4" /></button>
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-colors cursor-pointer" 
+            title="Remove stock"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
         </div>
       ),
     },
@@ -80,6 +110,7 @@ export default function ManageStock() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
       <PageHeader 
         title="Manage Stock" 
         breadcrumbs={[

@@ -12,6 +12,9 @@ import { apiEndpoints } from '@/lib/api/endpoints';
 import { purchaseReturnRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
+
 interface PurchaseReturn {
   id: string;
   purchaseId: string;
@@ -28,11 +31,32 @@ const returnData: PurchaseReturn[] = [
 ];
 
 export default function PurchaseReturnList() {
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deleteReturn = useDeleteApiResource(apiEndpoints.purchasing.purchaseReturns);
+
   const { data: returns } = useLiveRows<ApiRecord, PurchaseReturn>({
     resource: apiEndpoints.purchasing.purchaseReturns,
     fallbackData: returnData,
-    mapRow: purchaseReturnRow,
+    mapRow: (row, idx) => ({
+      ...purchaseReturnRow(row, idx),
+      id: String(row.id || `PR-${String(idx + 1).padStart(3, '0')}`),
+    }),
   });
+
+  const handleDelete = (ret: PurchaseReturn) => {
+    confirm({
+      title: 'Delete Purchase Return',
+      description: 'Are you sure you want to delete this purchase return note? Stock returns and supplier credit notes will be reversed.',
+      itemName: `${ret.id} - ${ret.supplier} (${ret.amount})`,
+      confirmText: 'Delete Return',
+      variant: 'danger',
+      onConfirm: async () => {
+        if (ret.id) {
+          await deleteReturn.mutateAsync(ret.id);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<PurchaseReturn>[] = [
     {
@@ -66,9 +90,15 @@ export default function PurchaseReturnList() {
       header: () => <div className="text-center">Action</div>,
       cell: ({ row }) => (
         <div className="flex items-center justify-center gap-2">
-          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors"><Eye className="w-4 h-4" /></button>
-          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors"><Edit className="w-4 h-4" /></button>
-          <button className="p-1.5 text-gray-400 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors" title="View details"><Eye className="w-4 h-4" /></button>
+          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors" title="Edit return"><Edit className="w-4 h-4" /></button>
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 text-gray-400 hover:text-red-500 transition-colors cursor-pointer" 
+            title="Delete return"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
         </div>
       ),
     },
@@ -76,6 +106,7 @@ export default function PurchaseReturnList() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
       <PageHeader 
         title="Purchase Returns" 
         breadcrumbs={[

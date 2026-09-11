@@ -11,6 +11,8 @@ import { useLiveRows } from '@/hooks/api/useLiveRows';
 import { apiEndpoints } from '@/lib/api/endpoints';
 import { giftCardRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
 
 interface GiftCard {
   id: string;
@@ -28,11 +30,32 @@ const giftCardData: GiftCard[] = [
 ];
 
 export default function GiftCardList() {
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deleteGiftCard = useDeleteApiResource(apiEndpoints.promo.giftCards);
+
   const { data: giftCards } = useLiveRows<ApiRecord, GiftCard>({
     resource: apiEndpoints.promo.giftCards,
     fallbackData: giftCardData,
-    mapRow: giftCardRow,
+    mapRow: (row, idx) => ({
+      ...giftCardRow(row, idx),
+      id: String(row.id || `GC${String(idx + 1).padStart(3, '0')}`),
+    }),
   });
+
+  const handleDelete = (card: GiftCard) => {
+    confirm({
+      title: 'Delete Gift Card',
+      description: 'Are you sure you want to delete this gift card? Its remaining balance will become unusable.',
+      itemName: `${card.id} - ${card.customer} (${card.balance} remaining)`,
+      confirmText: 'Delete Card',
+      variant: 'danger',
+      onConfirm: async () => {
+        if (card.id) {
+          await deleteGiftCard.mutateAsync(card.id);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<GiftCard>[] = [
     {
@@ -75,15 +98,19 @@ export default function GiftCardList() {
     {
       id: 'actions',
       header: () => <div className="text-center">Action</div>,
-      cell: () => (
+      cell: ({ row }) => (
         <div className="flex items-center justify-center gap-2">
-          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors">
+          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors" title="View details">
             <Eye className="w-4 h-4" />
           </button>
-          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors">
+          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors" title="Edit gift card">
             <Edit className="w-4 h-4" />
           </button>
-          <button className="p-1.5 text-gray-400 hover:text-red-500 transition-colors">
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 text-gray-400 hover:text-red-500 transition-colors cursor-pointer" 
+            title="Delete gift card"
+          >
             <Trash2 className="w-4 h-4" />
           </button>
         </div>
@@ -93,6 +120,7 @@ export default function GiftCardList() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
       <PageHeader 
         title="Gift Cards" 
         breadcrumbs={[

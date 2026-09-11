@@ -10,8 +10,11 @@ import { useLiveRows } from '@/hooks/api/useLiveRows';
 import { apiEndpoints } from '@/lib/api/endpoints';
 import { lowStockRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
 
 interface LowStock {
+  id?: string;
   warehouse: string;
   store: string;
   img: string;
@@ -23,24 +26,45 @@ interface LowStock {
 }
 
 const lowStockData: LowStock[] = [
-  { warehouse: 'Lavish Warehouse', store: 'Electro Mart', img: 'laptop', name: 'Lenovo IdeaPad 3', category: 'Computers', sku: 'PT001', qty: 20, qtyAlert: 15 },
-  { warehouse: 'Quaint Warehouse', store: 'Quantum Gadgets', img: 'headphones', name: 'Beats Pro', category: 'Electronics', sku: 'PT002', qty: 25, qtyAlert: 20 },
-  { warehouse: 'Traditional Warehouse', store: 'Prime Bazaar', img: 'shoe', name: 'Nike Jordan', category: 'Shoe', sku: 'PT003', qty: 40, qtyAlert: 35 },
-  { warehouse: 'Cool Warehouse', store: 'Gadget World', img: 'watch', name: 'Apple Series 5 Watch', category: 'Electronics', sku: 'PT004', qty: 50, qtyAlert: 45 },
-  { warehouse: 'Overflow Warehouse', store: 'Volt Vault', img: 'speaker', name: 'Amazon Echo Dot', category: 'Electronics', sku: 'PT005', qty: 30, qtyAlert: 25 },
-  { warehouse: 'Nova Storage Hub', store: 'Elite Retail', img: 'sofa', name: 'Sanford Chair Sofa', category: 'Furniture', sku: 'PT006', qty: 10, qtyAlert: 8 },
-  { warehouse: 'Retail Supply Hub', store: 'Prime Mart', img: 'bag', name: 'Red Premium Satchel', category: 'Bags', sku: 'PT007', qty: 70, qtyAlert: 60 },
-  { warehouse: 'EdgeWare Solutions', store: 'NeoTech Store', img: 'phone', name: 'Iphone 14 Pro', category: 'Phone', sku: 'PT008', qty: 35, qtyAlert: 30 },
-  { warehouse: 'North Zone Warehouse', store: 'Urban Mart', img: 'chair', name: 'Gaming Chair', category: 'Furniture', sku: 'PT009', qty: 15, qtyAlert: 10 },
-  { warehouse: 'Fulfillment Hub', store: 'Travel Mart', img: 'backpack', name: 'Borealis Backpack', category: 'Bags', sku: 'PT010', qty: 45, qtyAlert: 40 },
+  { id: '1', warehouse: 'Lavish Warehouse', store: 'Electro Mart', img: 'laptop', name: 'Lenovo IdeaPad 3', category: 'Computers', sku: 'PT001', qty: 20, qtyAlert: 15 },
+  { id: '2', warehouse: 'Quaint Warehouse', store: 'Quantum Gadgets', img: 'headphones', name: 'Beats Pro', category: 'Electronics', sku: 'PT002', qty: 25, qtyAlert: 20 },
+  { id: '3', warehouse: 'Traditional Warehouse', store: 'Prime Bazaar', img: 'shoe', name: 'Nike Jordan', category: 'Shoe', sku: 'PT003', qty: 40, qtyAlert: 35 },
+  { id: '4', warehouse: 'Cool Warehouse', store: 'Gadget World', img: 'watch', name: 'Apple Series 5 Watch', category: 'Electronics', sku: 'PT004', qty: 50, qtyAlert: 45 },
+  { id: '5', warehouse: 'Overflow Warehouse', store: 'Volt Vault', img: 'speaker', name: 'Amazon Echo Dot', category: 'Electronics', sku: 'PT005', qty: 30, qtyAlert: 25 },
+  { id: '6', warehouse: 'Nova Storage Hub', store: 'Elite Retail', img: 'sofa', name: 'Sanford Chair Sofa', category: 'Furniture', sku: 'PT006', qty: 10, qtyAlert: 8 },
+  { id: '7', warehouse: 'Retail Supply Hub', store: 'Prime Mart', img: 'bag', name: 'Red Premium Satchel', category: 'Bags', sku: 'PT007', qty: 70, qtyAlert: 60 },
+  { id: '8', warehouse: 'EdgeWare Solutions', store: 'NeoTech Store', img: 'phone', name: 'Iphone 14 Pro', category: 'Phone', sku: 'PT008', qty: 35, qtyAlert: 30 },
+  { id: '9', warehouse: 'North Zone Warehouse', store: 'Urban Mart', img: 'chair', name: 'Gaming Chair', category: 'Furniture', sku: 'PT009', qty: 15, qtyAlert: 10 },
+  { id: '10', warehouse: 'Fulfillment Hub', store: 'Travel Mart', img: 'backpack', name: 'Borealis Backpack', category: 'Bags', sku: 'PT010', qty: 45, qtyAlert: 40 },
 ];
 
 export default function LowStocksPage() {
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deleteLowStockAlert = useDeleteApiResource(apiEndpoints.inventory.lowStock);
+
   const { data: lowStock } = useLiveRows<ApiRecord, LowStock>({
     resource: apiEndpoints.inventory.lowStock,
     fallbackData: lowStockData,
-    mapRow: lowStockRow,
+    mapRow: (row, idx) => ({
+      ...lowStockRow(row, idx),
+      id: String(row.id || ''),
+    }),
   });
+
+  const handleDelete = (item: LowStock) => {
+    confirm({
+      title: 'Dismiss Low Stock Alert',
+      description: 'Are you sure you want to dismiss this low stock alert? Threshold monitoring for this item will remain enabled.',
+      itemName: `${item.name} (${item.sku} - ${item.qty} left)`,
+      confirmText: 'Dismiss Alert',
+      variant: 'warning',
+      onConfirm: async () => {
+        if (item.id) {
+          await deleteLowStockAlert.mutateAsync(item.id);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<LowStock>[] = [
     { accessorKey: 'warehouse', header: 'Warehouse' },
@@ -64,8 +88,14 @@ export default function LowStocksPage() {
       header: () => <div className="text-right">Action</div>,
       cell: ({ row }) => (
         <div className="flex gap-2 justify-end">
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-orange-500 transition-colors"><Edit className="w-4 h-4" /></button>
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-orange-500 transition-colors" title="Edit alert threshold"><Edit className="w-4 h-4" /></button>
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-colors cursor-pointer" 
+            title="Dismiss alert"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
         </div>
       ),
     },
@@ -73,6 +103,7 @@ export default function LowStocksPage() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
       <PageHeader 
         title="Low Stocks" 
         breadcrumbs={[

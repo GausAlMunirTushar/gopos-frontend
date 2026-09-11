@@ -46,7 +46,7 @@ export const contactRow = (row: ApiRecord, index: number) => ({
   img: asString(row.name, 'supplier').toLowerCase().replaceAll(' ', '-'),
 });
 
-export const locationRow = (row: ApiRecord) => ({
+export const locationRow = (row: ApiRecord, _index?: number) => ({
   store: asString(row.name, 'Unnamed store'),
   warehouse: asString(row.name, 'Unnamed warehouse'),
   user: asString(row.contactPerson, '—'),
@@ -116,7 +116,7 @@ export const variantAttributeRow = (row: ApiRecord) => ({
   status: asStatus(row.status),
 });
 
-export const warrantyRow = (row: ApiRecord) => ({
+export const warrantyRow = (row: ApiRecord, _index?: number) => ({
   name: asString(row.name, 'Unnamed warranty'),
   desc: asString(row.description, '—'),
   duration: `${asNumber(row.duration)} ${asString(row.durationUnit, 'Days').toLowerCase()}`,

@@ -11,7 +11,11 @@ import { apiEndpoints } from '@/lib/api/endpoints';
 import { subCategoryRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
+
 interface SubCategory {
+  id?: string;
   img: string;
   name: string;
   cat: string;
@@ -21,24 +25,45 @@ interface SubCategory {
 }
 
 const subCategoryData: SubCategory[] = [
-  { img: 'laptop', name: 'Laptop', cat: 'Computers', code: 'CT001', desc: 'Efficient Productivity', status: 'Active' },
-  { img: 'desktop', name: 'Desktop', cat: 'Computers', code: 'CT002', desc: 'Compact Design', status: 'Active' },
-  { img: 'shoe', name: 'Sneakers', cat: 'Shoe', code: 'CT003', desc: 'Dynamic Grip', status: 'Active' },
-  { img: 'formals', name: 'Formals', cat: 'Shoe', code: 'CT004', desc: 'Stylish Comfort', status: 'Active' },
-  { img: 'headphones', name: 'Wearables', cat: 'Electronics', code: 'CT005', desc: 'Seamless Connectivity', status: 'Active' },
-  { img: 'speaker', name: 'Speakers', cat: 'Electronics', code: 'CT006', desc: 'Reliable Sound', status: 'Active' },
-  { img: 'bag', name: 'Handbags', cat: 'Bags', code: 'CT007', desc: 'Compact Carry', status: 'Active' },
-  { img: 'travel', name: 'Travel', cat: 'Bags', code: 'CT008', desc: 'Travel Ready', status: 'Active' },
-  { img: 'sofa', name: 'Sofa', cat: 'Furniture', code: 'CT009', desc: 'Cozy Comfort', status: 'Active' },
-  { img: 'chair', name: 'Chair', cat: 'Furniture', code: 'CT010', desc: 'Stylish Comfort', status: 'Active' },
+  { id: '1', img: 'laptop', name: 'Laptop', cat: 'Computers', code: 'CT001', desc: 'Efficient Productivity', status: 'Active' },
+  { id: '2', img: 'desktop', name: 'Desktop', cat: 'Computers', code: 'CT002', desc: 'Compact Design', status: 'Active' },
+  { id: '3', img: 'shoe', name: 'Sneakers', cat: 'Shoe', code: 'CT003', desc: 'Dynamic Grip', status: 'Active' },
+  { id: '4', img: 'formals', name: 'Formals', cat: 'Shoe', code: 'CT004', desc: 'Stylish Comfort', status: 'Active' },
+  { id: '5', img: 'headphones', name: 'Wearables', cat: 'Electronics', code: 'CT005', desc: 'Seamless Connectivity', status: 'Active' },
+  { id: '6', img: 'speaker', name: 'Speakers', cat: 'Electronics', code: 'CT006', desc: 'Reliable Sound', status: 'Active' },
+  { id: '7', img: 'bag', name: 'Handbags', cat: 'Bags', code: 'CT007', desc: 'Compact Carry', status: 'Active' },
+  { id: '8', img: 'travel', name: 'Travel', cat: 'Bags', code: 'CT008', desc: 'Travel Ready', status: 'Active' },
+  { id: '9', img: 'sofa', name: 'Sofa', cat: 'Furniture', code: 'CT009', desc: 'Cozy Comfort', status: 'Active' },
+  { id: '10', img: 'chair', name: 'Chair', cat: 'Furniture', code: 'CT010', desc: 'Stylish Comfort', status: 'Active' },
 ];
 
 export default function SubCategoryPage() {
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deleteSubCategory = useDeleteApiResource(apiEndpoints.inventory.subCategories);
+
   const { data: subCategories } = useLiveRows<ApiRecord, SubCategory>({
     resource: apiEndpoints.inventory.subCategories,
     fallbackData: subCategoryData,
-    mapRow: subCategoryRow,
+    mapRow: (row, idx) => ({
+      ...subCategoryRow(row, idx),
+      id: String(row.id || ''),
+    }),
   });
+
+  const handleDelete = (sub: SubCategory) => {
+    confirm({
+      title: 'Delete Sub Category',
+      description: 'Are you sure you want to delete this sub category? Items under this sub category will be detached.',
+      itemName: `${sub.name} (${sub.code})`,
+      confirmText: 'Delete Sub Category',
+      variant: 'danger',
+      onConfirm: async () => {
+        if (sub.id) {
+          await deleteSubCategory.mutateAsync(sub.id);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<SubCategory>[] = [
     {
@@ -66,8 +91,14 @@ export default function SubCategoryPage() {
       header: () => <div className="text-right">Action</div>,
       cell: ({ row }) => (
         <div className="flex gap-2 justify-end">
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-orange-500 transition-colors"><Edit className="w-4 h-4" /></button>
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-orange-500 transition-colors" title="Edit sub category"><Edit className="w-4 h-4" /></button>
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-colors cursor-pointer" 
+            title="Delete sub category"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
         </div>
       ),
     },
@@ -75,6 +106,7 @@ export default function SubCategoryPage() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
       <PageHeader 
         title="Sub Category" 
         breadcrumbs={[

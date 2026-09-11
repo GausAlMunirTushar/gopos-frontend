@@ -10,6 +10,8 @@ import { apiEndpoints } from '@/lib/api/endpoints';
 import { financeEntryRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 import { FinanceEntryModal } from '@/components/finance/FinanceEntryModal';
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
 
 interface Income {
   id: string;
@@ -26,11 +28,32 @@ const incomeData: Income[] = [
 ];
 
 export default function IncomeList() {
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deleteIncome = useDeleteApiResource(apiEndpoints.finance.income);
+
   const { data: income } = useLiveRows<ApiRecord, Income>({
     resource: apiEndpoints.finance.income,
     fallbackData: incomeData,
-    mapRow: financeEntryRow,
+    mapRow: (row, idx) => ({
+      ...financeEntryRow(row, idx),
+      id: String(row.id || `INC${String(idx + 1).padStart(3, '0')}`),
+    }),
   });
+
+  const handleDelete = (item: Income) => {
+    confirm({
+      title: 'Delete Income Entry',
+      description: 'Are you sure you want to delete this income entry? Financial reports, profit & loss statements, and bank account balances will be updated.',
+      itemName: `${item.id} - ${item.source} (${item.amount})`,
+      confirmText: 'Delete Income',
+      variant: 'danger',
+      onConfirm: async () => {
+        if (item.id) {
+          await deleteIncome.mutateAsync(item.id);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<Income>[] = [
     {
@@ -68,15 +91,19 @@ export default function IncomeList() {
     {
       id: 'actions',
       header: () => <div className="text-center">Action</div>,
-      cell: () => (
+      cell: ({ row }) => (
         <div className="flex items-center justify-center gap-2">
-          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors">
+          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors" title="View details">
             <Eye className="w-4 h-4" />
           </button>
-          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors">
+          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors" title="Edit income">
             <Edit className="w-4 h-4" />
           </button>
-          <button className="p-1.5 text-gray-400 hover:text-red-500 transition-colors">
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 text-gray-400 hover:text-red-500 transition-colors cursor-pointer" 
+            title="Delete income"
+          >
             <Trash2 className="w-4 h-4" />
           </button>
         </div>
@@ -86,6 +113,7 @@ export default function IncomeList() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
       <PageHeader 
         title="Income" 
         breadcrumbs={[

@@ -12,8 +12,11 @@ import { apiEndpoints } from '@/lib/api/endpoints';
 import { actionButtonClassName, contactFields } from '@/lib/api/resource-fields';
 import { contactRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
 
 interface Customer {
+  id?: string;
   code: string;
   name: string;
   email: string;
@@ -29,19 +32,35 @@ const customerData: Customer[] = [
   { code: 'CU003', name: 'Robert Lamon', email: 'robert@example.com', phone: '+15362789414', country: 'USA', status: 'Active', avatar: 'https://i.pravatar.cc/100?img=3' },
   { code: 'CU004', name: 'Patricia Lewis', email: 'patricia@example.com', phone: '+18513094627', country: 'Austria', status: 'Active', avatar: 'https://i.pravatar.cc/100?img=4' },
   { code: 'CU005', name: 'Mark Joslyn', email: 'markjoslyn@example.com', phone: '+14678219025', country: 'Turkey', status: 'Active', avatar: 'https://i.pravatar.cc/100?img=5' },
-  { code: 'CU006', name: 'Marsha Betts', email: 'marshabetts@example.com', phone: '+10913278319', country: 'Mexico', status: 'Active', avatar: 'https://i.pravatar.cc/100?img=6' },
-  { code: 'CU007', name: 'Daniel Jude', email: 'danieljude@example.com', phone: '+19125852947', country: 'France', status: 'Active', avatar: 'https://i.pravatar.cc/100?img=7' },
-  { code: 'CU008', name: 'Emma Bates', email: 'emmabates@example.com', phone: '+13671835209', country: 'Greece', status: 'Active', avatar: 'https://i.pravatar.cc/100?img=8' },
-  { code: 'CU009', name: 'Richard Fralick', email: 'richard@example.com', phone: '+19756194733', country: 'Italy', status: 'Active', avatar: 'https://i.pravatar.cc/100?img=9' },
-  { code: 'CU010', name: 'Michelle Robison', email: 'robinson@example.com', phone: '+19167850925', country: 'China', status: 'Active', avatar: 'https://i.pravatar.cc/100?img=10' },
 ];
 
 export default function CustomerList() {
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deleteCustomer = useDeleteApiResource(apiEndpoints.people.customers);
+
   const { data: customers } = useLiveRows<ApiRecord, Customer>({
     resource: apiEndpoints.people.customers,
     fallbackData: customerData,
-    mapRow: contactRow,
+    mapRow: (row, idx) => ({
+      ...contactRow(row, idx),
+      id: String(row.id || ''),
+    }),
   });
+
+  const handleDelete = (customer: Customer) => {
+    confirm({
+      title: 'Delete Customer',
+      description: 'Are you sure you want to delete this customer? Outstanding balances and transaction history will be preserved in archived records.',
+      itemName: `${customer.name} (${customer.code})`,
+      confirmText: 'Yes, Delete Customer',
+      variant: 'danger',
+      onConfirm: async () => {
+        if (customer.id) {
+          await deleteCustomer.mutateAsync(customer.id);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<Customer>[] = [
     {
@@ -85,9 +104,19 @@ export default function CustomerList() {
       header: () => <div className="text-right">Action</div>,
       cell: ({ row }) => (
         <div className="flex gap-2 justify-end">
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-blue-500 transition-colors"><Eye className="w-4 h-4" /></button>
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-orange-500 transition-colors"><Edit className="w-4 h-4" /></button>
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+          <button className="p-1.5 border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-50 hover:text-blue-500 transition-colors" title="View details">
+            <Eye className="w-4 h-4" />
+          </button>
+          <button className="p-1.5 border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-50 hover:text-orange-500 transition-colors" title="Edit customer">
+            <Edit className="w-4 h-4" />
+          </button>
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 border border-gray-200 rounded-lg text-gray-500 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-colors cursor-pointer" 
+            title="Delete customer"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
         </div>
       ),
     },
@@ -95,6 +124,8 @@ export default function CustomerList() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
+
       <PageHeader 
         title="Customers" 
         breadcrumbs={[
@@ -103,13 +134,13 @@ export default function CustomerList() {
         ]}
         actions={
           <div className="flex flex-wrap items-center gap-2">
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-red-500 hover:bg-gray-50 bg-white">
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-red-500 hover:bg-gray-50 bg-white shadow-2xs">
                <FileText className="w-5 h-5" />
             </button>
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-green-600 hover:bg-gray-50 bg-white">
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-green-600 hover:bg-gray-50 bg-white shadow-2xs">
                <FileSpreadsheet className="w-5 h-5" />
             </button>
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white shadow-2xs">
                <RefreshCcw className="w-5 h-5" />
             </button>
             <ResourceCreateModal

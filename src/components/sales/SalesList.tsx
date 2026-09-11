@@ -2,9 +2,8 @@
 
 import React from 'react';
 import { 
-  Search, FileText, RefreshCcw, ChevronUp, ChevronDown,
-  FileSpreadsheet, Calendar, TrendingUp, Users, Package,
-  ShoppingCart, Eye, Edit, Trash2, Plus
+  FileText, RefreshCcw, Eye, Edit, Trash2, Plus,
+  FileSpreadsheet, ShoppingCart, Package
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { StatsCard } from '@/components/shared/StatsCard';
@@ -13,6 +12,8 @@ import { useLiveRows } from '@/hooks/api/useLiveRows';
 import { apiEndpoints } from '@/lib/api/endpoints';
 import { saleRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
 
 interface Sale {
   id: string;
@@ -23,6 +24,7 @@ interface Sale {
   total: string;
   baddr: string;
   color: string;
+  rawId?: string;
 }
 
 const salesData: Sale[] = [
@@ -34,11 +36,32 @@ const salesData: Sale[] = [
 ];
 
 export default function SalesList() {
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deleteSale = useDeleteApiResource(apiEndpoints.sales.sales);
+
   const { data: sales } = useLiveRows<ApiRecord, Sale>({
     resource: apiEndpoints.sales.sales,
     fallbackData: salesData,
-    mapRow: saleRow,
+    mapRow: (row, idx) => ({
+      ...saleRow(row, idx),
+      rawId: String(row.id || ''),
+    }),
   });
+
+  const handleDelete = (sale: Sale) => {
+    confirm({
+      title: 'Cancel / Delete Sale',
+      description: 'Are you sure you want to delete this sale record? Payment invoices and inventory lot movements linked to this order will be reconciled.',
+      itemName: `${sale.id} - ${sale.customer} (${sale.total})`,
+      confirmText: 'Yes, Delete Sale',
+      variant: 'danger',
+      onConfirm: async () => {
+        if (sale.rawId) {
+          await deleteSale.mutateAsync(sale.rawId);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<Sale>[] = [
     {
@@ -98,13 +121,17 @@ export default function SalesList() {
       header: () => <div className="text-center">Action</div>,
       cell: ({ row }) => (
         <div className="flex items-center justify-center gap-2">
-          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors">
+          <button className="p-1.5 text-gray-400 hover:text-blue-500 transition-colors" title="View details">
             <Eye className="w-4 h-4" />
           </button>
-          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors">
+          <button className="p-1.5 text-gray-400 hover:text-green-500 transition-colors" title="Edit sale">
             <Edit className="w-4 h-4" />
           </button>
-          <button className="p-1.5 text-gray-400 hover:text-red-500 transition-colors">
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 text-gray-400 hover:text-red-500 transition-colors cursor-pointer" 
+            title="Delete sale"
+          >
             <Trash2 className="w-4 h-4" />
           </button>
         </div>
@@ -114,6 +141,8 @@ export default function SalesList() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
+
       <PageHeader 
         title="Sales List" 
         breadcrumbs={[
@@ -122,10 +151,10 @@ export default function SalesList() {
         ]}
         actions={
           <>
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white transition-colors">
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white transition-colors shadow-2xs">
               <RefreshCcw className="w-5 h-5" />
             </button>
-            <button className="px-4 py-2 bg-[#FF9F43] hover:bg-orange-500 text-white rounded-lg text-sm font-medium flex items-center gap-2 transition-colors">
+            <button className="px-4 py-2 bg-[#FF9F43] hover:bg-orange-500 text-white rounded-xl text-sm font-medium flex items-center gap-2 transition-colors shadow-xs">
               <Plus className="w-4 h-4" /> Add Sale
             </button>
           </>
@@ -175,13 +204,14 @@ export default function SalesList() {
       <DataTable 
         columns={columns} 
         data={sales} 
+        searchKey="customer"
         searchPlaceholder="Search customer..."
         actions={
           <>
-            <button className="w-10 h-10 flex items-center justify-center rounded border border-gray-200 text-red-500 hover:bg-gray-50 bg-white transition-colors">
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-red-500 hover:bg-gray-50 bg-white transition-colors shadow-2xs">
               <FileText className="w-4 h-4" />
             </button>
-            <button className="w-10 h-10 flex items-center justify-center rounded border border-gray-200 text-green-600 hover:bg-gray-50 bg-white transition-colors">
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-green-600 hover:bg-gray-50 bg-white transition-colors shadow-2xs">
               <FileSpreadsheet className="w-4 h-4" />
             </button>
           </>

@@ -13,7 +13,11 @@ import { actionButtonClassName, contactFields } from '@/lib/api/resource-fields'
 import { contactRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
+
 interface Supplier {
+  id?: string;
   code: string;
   name: string;
   email: string;
@@ -24,24 +28,45 @@ interface Supplier {
 }
 
 const supplierData: Supplier[] = [
-  { code: 'SU001', name: 'Apex Computers', email: 'apexcomputers@example.com', phone: '+15964712634', country: 'Germany', status: 'Active', img: 'computer' },
-  { code: 'SU002', name: 'Beats Headphones', email: 'beatsheadphone@example.com', phone: '+16372895190', country: 'Japan', status: 'Active', img: 'headphones' },
-  { code: 'SU003', name: 'Dazzle Shoes', email: 'dazzleshoes@example.com', phone: '+17589201739', country: 'USA', status: 'Active', img: 'shoes' },
-  { code: 'SU004', name: 'Best Accessories', email: 'bestaccessories@example.com', phone: '+18934092467', country: 'Austria', status: 'Active', img: 'accessories' },
-  { code: 'SU005', name: 'A-Z Store', email: 'a2zstore@example.com', phone: '+12568749035', country: 'Turkey', status: 'Active', img: 'store' },
-  { code: 'SU006', name: 'Hatimi Hardwares', email: 'hatimihardware@example.com', phone: '+19054674627', country: 'Mexico', status: 'Active', img: 'hardware' },
-  { code: 'SU007', name: 'Aesthetic Bags', email: 'aestheticbags@example.com', phone: '+18943670365', country: 'France', status: 'Active', img: 'bag' },
-  { code: 'SU008', name: 'Alpha Mobiles', email: 'alphamobiles@example.com', phone: '+16473894103', country: 'Greece', status: 'Active', img: 'mobile' },
-  { code: 'SU009', name: 'Sigma Chairs', email: 'sigmachair@example.com', phone: '+17590274536', country: 'Italy', status: 'Active', img: 'chair' },
-  { code: 'SU010', name: 'Zenith Bags', email: 'zenithbags@example.com', phone: '+12564098473', country: 'China', status: 'Active', img: 'backpack' },
+  { id: '1', code: 'SU001', name: 'Apex Computers', email: 'apexcomputers@example.com', phone: '+15964712634', country: 'Germany', status: 'Active', img: 'computer' },
+  { id: '2', code: 'SU002', name: 'Beats Headphones', email: 'beatsheadphone@example.com', phone: '+16372895190', country: 'Japan', status: 'Active', img: 'headphones' },
+  { id: '3', code: 'SU003', name: 'Dazzle Shoes', email: 'dazzleshoes@example.com', phone: '+17589201739', country: 'USA', status: 'Active', img: 'shoes' },
+  { id: '4', code: 'SU004', name: 'Best Accessories', email: 'bestaccessories@example.com', phone: '+18934092467', country: 'Austria', status: 'Active', img: 'accessories' },
+  { id: '5', code: 'SU005', name: 'A-Z Store', email: 'a2zstore@example.com', phone: '+12568749035', country: 'Turkey', status: 'Active', img: 'store' },
+  { id: '6', code: 'SU006', name: 'Hatimi Hardwares', email: 'hatimihardware@example.com', phone: '+19054674627', country: 'Mexico', status: 'Active', img: 'hardware' },
+  { id: '7', code: 'SU007', name: 'Aesthetic Bags', email: 'aestheticbags@example.com', phone: '+18943670365', country: 'France', status: 'Active', img: 'bag' },
+  { id: '8', code: 'SU008', name: 'Alpha Mobiles', email: 'alphamobiles@example.com', phone: '+16473894103', country: 'Greece', status: 'Active', img: 'mobile' },
+  { id: '9', code: 'SU009', name: 'Sigma Chairs', email: 'sigmachair@example.com', phone: '+17590274536', country: 'Italy', status: 'Active', img: 'chair' },
+  { id: '10', code: 'SU010', name: 'Zenith Bags', email: 'zenithbags@example.com', phone: '+12564098473', country: 'China', status: 'Active', img: 'backpack' },
 ];
 
 export default function SupplierList() {
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deleteSupplier = useDeleteApiResource(apiEndpoints.people.suppliers);
+
   const { data: suppliers } = useLiveRows<ApiRecord, Supplier>({
     resource: apiEndpoints.people.suppliers,
     fallbackData: supplierData,
-    mapRow: contactRow,
+    mapRow: (row, idx) => ({
+      ...contactRow(row, idx),
+      id: String(row.id || ''),
+    }),
   });
+
+  const handleDelete = (supplier: Supplier) => {
+    confirm({
+      title: 'Delete Supplier',
+      description: 'Are you sure you want to delete this supplier? Their contact information, outstanding balances, and purchase orders history will be archived.',
+      itemName: `${supplier.name} (${supplier.code})`,
+      confirmLabel: 'Delete Supplier',
+      variant: 'danger',
+      onConfirm: async () => {
+        if (supplier.id) {
+          await deleteSupplier.mutateAsync(supplier.id);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<Supplier>[] = [
     { accessorKey: 'code', header: 'Code' },
@@ -73,9 +98,15 @@ export default function SupplierList() {
       header: () => <div className="text-right">Action</div>,
       cell: ({ row }) => (
         <div className="flex gap-2 justify-end">
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-blue-500 transition-colors"><Eye className="w-4 h-4" /></button>
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-orange-500 transition-colors"><Edit className="w-4 h-4" /></button>
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-blue-500 transition-colors" title="View details"><Eye className="w-4 h-4" /></button>
+          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-orange-500 transition-colors" title="Edit supplier"><Edit className="w-4 h-4" /></button>
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-colors cursor-pointer" 
+            title="Delete supplier"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
         </div>
       ),
     },
@@ -83,6 +114,7 @@ export default function SupplierList() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
       <PageHeader 
         title="Suppliers" 
         breadcrumbs={[

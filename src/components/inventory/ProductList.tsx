@@ -11,8 +11,11 @@ import { useLiveRows } from '@/hooks/api/useLiveRows';
 import { apiEndpoints } from '@/lib/api/endpoints';
 import { productRow, type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
+import { useConfirmModal } from '@/hooks/useConfirmModal';
+import { useDeleteApiResource } from '@/hooks/api/useApiResource';
 
 interface Product {
+  id?: string;
   sku: string;
   name: string;
   cat: string;
@@ -38,11 +41,32 @@ const productsData: Product[] = [
 ];
 
 export default function ProductsPage() {
+  const { confirm, ConfirmDialogComponent } = useConfirmModal();
+  const deleteProduct = useDeleteApiResource(apiEndpoints.inventory.products);
+
   const { data: products } = useLiveRows<ApiRecord, Product>({
     resource: apiEndpoints.inventory.products,
     fallbackData: productsData,
-    mapRow: productRow,
+    mapRow: (row, idx) => ({
+      ...productRow(row, idx),
+      id: String(row.id || ''),
+    }),
   });
+
+  const handleDelete = (product: Product) => {
+    confirm({
+      title: 'Delete Product',
+      description: 'Are you sure you want to delete this product? All inventory balances, barcodes, and pricing tiers associated with it will be archived.',
+      itemName: `${product.name} (${product.sku})`,
+      confirmText: 'Yes, Delete Product',
+      variant: 'danger',
+      onConfirm: async () => {
+        if (product.id) {
+          await deleteProduct.mutateAsync(product.id);
+        }
+      },
+    });
+  };
 
   const columns: ColumnDef<Product>[] = [
     {
@@ -95,9 +119,19 @@ export default function ProductsPage() {
       header: 'Action',
       cell: ({ row }) => (
         <div className="flex gap-2">
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-blue-500 transition-colors"><Eye className="w-4 h-4" /></button>
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-orange-500 transition-colors"><Edit className="w-4 h-4" /></button>
-          <button className="p-1.5 border border-gray-200 rounded-md text-gray-500 hover:bg-gray-50 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+          <button className="p-1.5 border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-50 hover:text-blue-500 transition-colors" title="View details">
+            <Eye className="w-4 h-4" />
+          </button>
+          <button className="p-1.5 border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-50 hover:text-orange-500 transition-colors" title="Edit product">
+            <Edit className="w-4 h-4" />
+          </button>
+          <button 
+            onClick={() => handleDelete(row.original)}
+            className="p-1.5 border border-gray-200 rounded-lg text-gray-500 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-colors cursor-pointer" 
+            title="Delete product"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
         </div>
       ),
     },
@@ -105,6 +139,8 @@ export default function ProductsPage() {
 
   return (
     <div className="space-y-6">
+      <ConfirmDialogComponent />
+
       <PageHeader 
         title="Products" 
         breadcrumbs={[
@@ -113,22 +149,22 @@ export default function ProductsPage() {
         ]}
         actions={
           <div className="flex flex-wrap items-center gap-2">
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-red-500 hover:bg-gray-50 bg-white">
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-red-500 hover:bg-gray-50 bg-white shadow-2xs">
                <FileText className="w-5 h-5" />
             </button>
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-green-600 hover:bg-gray-50 bg-white">
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-green-600 hover:bg-gray-50 bg-white shadow-2xs">
                <FileSpreadsheet className="w-5 h-5" />
             </button>
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white">
+            <button className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 bg-white shadow-2xs">
                <RefreshCcw className="w-5 h-5" />
             </button>
             
             <NextLink href="/inventory/products/create">
-              <button className="flex items-center gap-2 px-4 py-2 bg-[#FF9F43] hover:bg-[#ff9021] text-white rounded-lg font-medium transition-colors">
+              <button className="flex items-center gap-2 px-4 py-2 bg-[#FF9F43] hover:bg-[#ff9021] text-white rounded-xl font-medium transition-colors shadow-xs">
                 <Plus className="w-4 h-4" /> Add Product
               </button>
             </NextLink>
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#092C4C] hover:bg-[#061d33] text-white rounded-lg font-medium transition-colors">
+            <button className="flex items-center gap-2 px-4 py-2 bg-[#092C4C] hover:bg-[#061d33] text-white rounded-xl font-medium transition-colors shadow-xs">
               <Download className="w-4 h-4" /> Import Product
             </button>
           </div>
