@@ -55,6 +55,11 @@ export const apiEndpoints = {
     categories: '/finance-categories',
     income: '/income',
     expenses: '/expenses',
+    transfers: '/finance/transfers',
+    balanceSheet: '/finance/balance-sheet',
+    trialBalance: '/finance/trial-balance',
+    cashFlow: '/finance/cash-flow',
+    statement: '/finance/statement',
   },
   hrm: {
     departments: '/departments',

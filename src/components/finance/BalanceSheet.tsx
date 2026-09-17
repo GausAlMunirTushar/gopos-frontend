@@ -1,32 +1,58 @@
 'use client';
 
 import React from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { 
   Building, DollarSign, PieChart, ShieldCheck, Download, Printer
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { StatsCard } from '@/components/shared/StatsCard';
+import { apiClient } from '@/lib/api/client';
+import { apiEndpoints } from '@/lib/api/endpoints';
+
+interface BalanceItem {
+  name: string;
+  amount: number;
+  type: string;
+}
+
+interface BalanceSheetResponse {
+  assets: BalanceItem[];
+  liabilities: BalanceItem[];
+  equity: BalanceItem[];
+  totals: {
+    totalAssets: number;
+    totalLiabilities: number;
+    totalEquity: number;
+  };
+}
 
 export default function BalanceSheet() {
-  const assets = [
-    { name: 'Cash and Bank Balances', amount: '৳4,580,200', type: 'Current Asset' },
-    { name: 'Accounts Receivable (Customers)', amount: '৳1,245,600', type: 'Current Asset' },
-    { name: 'Inventory Stock Valuation', amount: '৳8,920,400', type: 'Current Asset' },
-    { name: 'Store Fixtures & POS Equipment', amount: '৳1,500,000', type: 'Fixed Asset' },
-    { name: 'Vehicles & Transport', amount: '৳950,000', type: 'Fixed Asset' },
+  const { data: response } = useQuery({
+    queryKey: [apiEndpoints.finance.balanceSheet],
+    queryFn: async () => apiClient.get<BalanceSheetResponse>(apiEndpoints.finance.balanceSheet),
+  });
+
+  const sheet = response?.data;
+
+  const assets = sheet?.assets ?? [
+    { name: 'Cash and Bank Balances', amount: 4580200, type: 'Current Asset' },
+    { name: 'Accounts Receivable (Customers)', amount: 1245600, type: 'Current Asset' },
+    { name: 'Inventory Stock Valuation', amount: 8920400, type: 'Current Asset' },
   ];
 
-  const liabilities = [
-    { name: 'Accounts Payable (Suppliers)', amount: '৳2,850,000', type: 'Current Liability' },
-    { name: 'Short-term Operating Loans', amount: '৳1,200,000', type: 'Current Liability' },
-    { name: 'Accrued Taxes & VAT Due', amount: '৳450,200', type: 'Current Liability' },
-    { name: 'Long-term Bank Financing', amount: '৳3,500,000', type: 'Long-term Liability' },
+  const liabilities = sheet?.liabilities ?? [
+    { name: 'Accounts Payable (Suppliers)', amount: 2850000, type: 'Current Liability' },
   ];
 
-  const equity = [
-    { name: 'Owner Capital & Reserves', amount: '৳6,000,000', type: 'Equity' },
-    { name: 'Retained Earnings (YTD)', amount: '৳3,196,000', type: 'Equity' },
+  const equity = sheet?.equity ?? [
+    { name: 'Owner Capital & Reserves', amount: 6000000, type: 'Equity' },
+    { name: 'Retained Earnings (YTD)', amount: 3196000, type: 'Equity' },
   ];
+
+  const totalAssets = sheet?.totals?.totalAssets ?? 17196200;
+  const totalLiabilities = sheet?.totals?.totalLiabilities ?? 8000200;
+  const totalEquity = sheet?.totals?.totalEquity ?? 9196000;
 
   return (
     <div className="space-y-6">
@@ -52,21 +78,21 @@ export default function BalanceSheet() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatsCard 
           label="Total Assets" 
-          value="৳17,196,200" 
+          value={`৳${totalAssets.toLocaleString()}`} 
           icon={Building}
           iconColor="text-teal-600"
           iconBg="bg-teal-50"
         />
         <StatsCard 
           label="Total Liabilities" 
-          value="৳8,000,200" 
+          value={`৳${totalLiabilities.toLocaleString()}`} 
           icon={DollarSign}
           iconColor="text-red-600"
           iconBg="bg-red-50"
         />
         <StatsCard 
           label="Total Equity" 
-          value="৳9,196,000" 
+          value={`৳${totalEquity.toLocaleString()}`} 
           icon={PieChart}
           iconColor="text-blue-600"
           iconBg="bg-blue-50"
@@ -81,7 +107,7 @@ export default function BalanceSheet() {
               <ShieldCheck className="w-5 h-5 text-teal-600" />
               <h3 className="font-bold text-lg text-gray-900">Assets</h3>
             </div>
-            <span className="text-sm font-bold text-teal-600">৳17,196,200</span>
+            <span className="text-sm font-bold text-teal-600">৳{totalAssets.toLocaleString()}</span>
           </div>
 
           <div className="divide-y divide-gray-100 mt-4">
@@ -91,7 +117,7 @@ export default function BalanceSheet() {
                   <p className="text-sm font-semibold text-gray-800">{item.name}</p>
                   <p className="text-xs text-gray-400">{item.type}</p>
                 </div>
-                <span className="text-sm font-bold text-gray-900">{item.amount}</span>
+                <span className="text-sm font-bold text-gray-900">৳{item.amount.toLocaleString()}</span>
               </div>
             ))}
           </div>
@@ -102,7 +128,7 @@ export default function BalanceSheet() {
           <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
             <div className="flex items-center justify-between pb-4 border-b border-gray-100">
               <h3 className="font-bold text-lg text-gray-900">Liabilities</h3>
-              <span className="text-sm font-bold text-red-600">৳8,000,200</span>
+              <span className="text-sm font-bold text-red-600">৳{totalLiabilities.toLocaleString()}</span>
             </div>
 
             <div className="divide-y divide-gray-100 mt-4">
@@ -112,7 +138,7 @@ export default function BalanceSheet() {
                     <p className="text-sm font-semibold text-gray-800">{item.name}</p>
                     <p className="text-xs text-gray-400">{item.type}</p>
                   </div>
-                  <span className="text-sm font-bold text-gray-900">{item.amount}</span>
+                  <span className="text-sm font-bold text-gray-900">৳{item.amount.toLocaleString()}</span>
                 </div>
               ))}
             </div>
@@ -121,7 +147,7 @@ export default function BalanceSheet() {
           <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
             <div className="flex items-center justify-between pb-4 border-b border-gray-100">
               <h3 className="font-bold text-lg text-gray-900">Equity</h3>
-              <span className="text-sm font-bold text-blue-600">৳9,196,000</span>
+              <span className="text-sm font-bold text-blue-600">৳{totalEquity.toLocaleString()}</span>
             </div>
 
             <div className="divide-y divide-gray-100 mt-4">
@@ -131,7 +157,7 @@ export default function BalanceSheet() {
                     <p className="text-sm font-semibold text-gray-800">{item.name}</p>
                     <p className="text-xs text-gray-400">{item.type}</p>
                   </div>
-                  <span className="text-sm font-bold text-gray-900">{item.amount}</span>
+                  <span className="text-sm font-bold text-gray-900">৳{item.amount.toLocaleString()}</span>
                 </div>
               ))}
             </div>

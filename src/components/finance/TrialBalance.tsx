@@ -1,29 +1,51 @@
 'use client';
 
 import React from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { 
   FileSpreadsheet, Scale, Printer, Download, CheckCircle2
 } from 'lucide-react';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { StatsCard } from '@/components/shared/StatsCard';
+import { apiClient } from '@/lib/api/client';
+import { apiEndpoints } from '@/lib/api/endpoints';
+
+interface TrialBalanceAccount {
+  code: string;
+  name: string;
+  debit: number | null;
+  credit: number | null;
+}
+
+interface TrialBalanceResponse {
+  accounts: TrialBalanceAccount[];
+  totalDebit: number;
+  totalCredit: number;
+  isBalanced: boolean;
+}
+
+const fallbackAccounts: TrialBalanceAccount[] = [
+  { code: '1010', name: 'Cash in Hand (Store Counter)', debit: 150000, credit: null },
+  { code: '1020', name: 'City Bank Ltd. (Main Operating)', debit: 3240500, credit: null },
+  { code: '1030', name: 'BRAC Bank (Branch Collection)', debit: 1189700, credit: null },
+  { code: '1110', name: 'Accounts Receivable (Trade Debtors)', debit: 1245600, credit: null },
+  { code: '1210', name: 'Merchandise Inventory', debit: 8920400, credit: null },
+  { code: '2010', name: 'Accounts Payable (Suppliers)', debit: null, credit: 2850000 },
+  { code: '4010', name: 'Sales Revenue', debit: null, credit: 18540000 },
+  { code: '5010', name: 'Cost of Goods Sold (COGS)', debit: 11200000, credit: null },
+];
 
 export default function TrialBalance() {
-  const accounts = [
-    { code: '1010', name: 'Cash in Hand (Store Counter)', debit: '৳150,000', credit: '—' },
-    { code: '1020', name: 'City Bank Ltd. (Main Operating)', debit: '৳3,240,500', credit: '—' },
-    { code: '1030', name: 'BRAC Bank (Branch Collection)', debit: '৳1,189,700', credit: '—' },
-    { code: '1110', name: 'Accounts Receivable (Trade Debtors)', debit: '৳1,245,600', credit: '—' },
-    { code: '1210', name: 'Merchandise Inventory', debit: '৳8,920,400', credit: '—' },
-    { code: '1510', name: 'Store Fixtures & Equipment', debit: '৳1,500,000', credit: '—' },
-    { code: '2010', name: 'Accounts Payable (Suppliers)', debit: '—', credit: '৳2,850,000' },
-    { code: '2020', name: 'Short-term Borrowings', debit: '—', credit: '৳1,200,000' },
-    { code: '2030', name: 'VAT & Tax Payable', debit: '—', credit: '৳450,200' },
-    { code: '3010', name: 'Owner Capital & Reserves', debit: '—', credit: '৳6,000,000' },
-    { code: '4010', name: 'Sales Revenue', debit: '—', credit: '৳18,540,000' },
-    { code: '5010', name: 'Cost of Goods Sold (COGS)', debit: '৳11,200,000', credit: '—' },
-    { code: '6010', name: 'Store Staff Salaries', debit: '৳840,000', credit: '—' },
-    { code: '6020', name: 'Store Utility & Rent', debit: '৳754,000', credit: '—' },
-  ];
+  const { data: response } = useQuery({
+    queryKey: [apiEndpoints.finance.trialBalance],
+    queryFn: async () => apiClient.get<TrialBalanceResponse>(apiEndpoints.finance.trialBalance),
+  });
+
+  const tb = response?.data;
+  const accounts = tb?.accounts ?? fallbackAccounts;
+  const totalDebit = tb?.totalDebit ?? 29040200;
+  const totalCredit = tb?.totalCredit ?? 29040200;
+  const isBalanced = tb?.isBalanced ?? true;
 
   return (
     <div className="space-y-6">
@@ -49,24 +71,24 @@ export default function TrialBalance() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatsCard 
           label="Total Debit" 
-          value="৳29,040,200" 
+          value={`৳${totalDebit.toLocaleString()}`} 
           icon={Scale}
           iconColor="text-teal-600"
           iconBg="bg-teal-50"
         />
         <StatsCard 
           label="Total Credit" 
-          value="৳29,040,200" 
+          value={`৳${totalCredit.toLocaleString()}`} 
           icon={Scale}
           iconColor="text-blue-600"
           iconBg="bg-blue-50"
         />
         <StatsCard 
           label="Balance Variance" 
-          value="৳0.00 (Balanced)" 
+          value={isBalanced ? '৳0.00 (Balanced)' : `৳${Math.abs(totalDebit - totalCredit).toLocaleString()}`} 
           icon={CheckCircle2}
-          iconColor="text-green-600"
-          iconBg="bg-green-50"
+          iconColor={isBalanced ? 'text-green-600' : 'text-red-600'}
+          iconBg={isBalanced ? 'bg-green-50' : 'bg-red-50'}
         />
       </div>
 
@@ -86,16 +108,20 @@ export default function TrialBalance() {
                 <tr key={idx} className="hover:bg-gray-50/70 transition-colors">
                   <td className="px-6 py-3.5 font-mono text-xs text-gray-500">{acc.code}</td>
                   <td className="px-6 py-3.5 font-semibold text-gray-900">{acc.name}</td>
-                  <td className="px-6 py-3.5 text-right font-medium text-gray-900">{acc.debit}</td>
-                  <td className="px-6 py-3.5 text-right font-medium text-gray-900">{acc.credit}</td>
+                  <td className="px-6 py-3.5 text-right font-medium text-teal-700">
+                    {acc.debit !== null ? `৳${acc.debit.toLocaleString()}` : '—'}
+                  </td>
+                  <td className="px-6 py-3.5 text-right font-medium text-blue-700">
+                    {acc.credit !== null ? `৳${acc.credit.toLocaleString()}` : '—'}
+                  </td>
                 </tr>
               ))}
             </tbody>
             <tfoot className="bg-gray-50 font-bold border-t-2 border-gray-300 text-gray-900">
               <tr>
                 <td colSpan={2} className="px-6 py-4 text-right uppercase tracking-wider">Total:</td>
-                <td className="px-6 py-4 text-right text-teal-600">৳29,040,200</td>
-                <td className="px-6 py-4 text-right text-blue-600">৳29,040,200</td>
+                <td className="px-6 py-4 text-right text-teal-600">৳{totalDebit.toLocaleString()}</td>
+                <td className="px-6 py-4 text-right text-blue-600">৳{totalCredit.toLocaleString()}</td>
               </tr>
             </tfoot>
           </table>
@@ -104,3 +130,4 @@ export default function TrialBalance() {
     </div>
   );
 }
+

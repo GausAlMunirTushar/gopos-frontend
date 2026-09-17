@@ -12,6 +12,8 @@ import { apiEndpoints } from '@/lib/api/endpoints';
 import { type ApiRecord } from '@/lib/api/row-mappers';
 import { ColumnDef } from '@tanstack/react-table';
 
+import { TransferMoneyModal } from '@/components/finance/TransferMoneyModal';
+
 interface TransferRecord {
   id: string;
   fromAccount: string;
@@ -30,14 +32,14 @@ const transferData: TransferRecord[] = [
 
 export default function MoneyTransfer() {
   const { data: transfers } = useLiveRows<ApiRecord, TransferRecord>({
-    resource: apiEndpoints.finance.banks,
+    resource: apiEndpoints.finance.transfers,
     fallbackData: transferData,
     mapRow: (row: ApiRecord, index: number) => ({
       id: String(row.id || `TRF${String(index + 1).padStart(3, '0')}`),
       fromAccount: String(row.fromAccount || 'City Bank'),
       toAccount: String(row.toAccount || 'BRAC Bank'),
-      date: String(row.date || '25 May 2025'),
-      amount: `৳${Number(row.amount || 250000).toLocaleString()}`,
+      date: row.date ? new Date(String(row.date)).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '25 May 2025',
+      amount: `৳${Number(row.amount || 0).toLocaleString()}`,
       reference: String(row.reference || `REF-${index + 100}`),
       status: String(row.status || 'Completed'),
     }),
@@ -118,11 +120,7 @@ export default function MoneyTransfer() {
           { label: 'Finance & Accounts' },
           { label: 'Money Transfer' }
         ]}
-        actions={
-          <button className="px-4 py-2 bg-[#FF9F43] hover:bg-orange-500 text-white rounded-lg text-sm font-medium flex items-center gap-2 transition-colors shadow-sm">
-            <Plus className="w-4 h-4" /> New Transfer
-          </button>
-        }
+        actions={<TransferMoneyModal />}
       />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
