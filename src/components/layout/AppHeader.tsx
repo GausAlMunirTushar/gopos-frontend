@@ -1,7 +1,8 @@
 'use client';
 
 import NextLink from 'next/link';
-import { Search, Plus, Globe, Maximize, Mail, Bell, Settings, Monitor } from 'lucide-react';
+import { Search, Plus, Maximize, Mail, Bell, Settings, Monitor } from 'lucide-react';
+import { LanguageSwitcher } from '@/components/shared/LanguageSwitcher';
 
 interface AppHeaderProps {
   sidebarOpen: boolean;
@@ -51,6 +52,9 @@ export function AppHeader({ sidebarOpen, setSidebarOpen }: AppHeaderProps) {
       {/* Right Area: Action Buttons, Quick Tools & Profile */}
       <div className="hidden md:flex items-center gap-2.5 lg:gap-3 shrink-0">
         
+        {/* Language Switcher */}
+        <LanguageSwitcher variant="pill" />
+
         <NextLink href="/inventory/products/create">
           <button className="flex items-center gap-1.5 px-3.5 py-2 bg-[#FF9F43] hover:bg-[#ff942a] text-white rounded-xl text-sm font-medium transition-all shadow-xs hover:shadow-sm cursor-pointer">
             <Plus className="w-4 h-4" strokeWidth={2.5} /> 
@@ -69,9 +73,6 @@ export function AppHeader({ sidebarOpen, setSidebarOpen }: AppHeaderProps) {
 
         {/* Action Icons */}
         <div className="flex items-center gap-1">
-          <button className="hidden xl:flex w-9 h-9 items-center justify-center rounded-xl hover:bg-gray-100 text-gray-500 hover:text-gray-800 transition-colors cursor-pointer">
-            <Globe className="w-4.5 h-4.5" />
-          </button>
           <button className="hidden xl:flex w-9 h-9 items-center justify-center rounded-xl hover:bg-gray-100 text-gray-500 hover:text-gray-800 transition-colors cursor-pointer">
             <Maximize className="w-4.5 h-4.5" />
           </button>
@@ -102,6 +103,7 @@ export function AppHeader({ sidebarOpen, setSidebarOpen }: AppHeaderProps) {
 
       {/* Mobile Right Side */}
       <div className="flex md:hidden items-center gap-2">
+        <LanguageSwitcher variant="compact" />
         <NextLink href="/pos">
           <button className="flex items-center justify-center w-8.5 h-8.5 bg-[#092C4C] hover:bg-[#061d33] text-white rounded-xl transition-colors shadow-xs">
             <Monitor className="w-4 h-4 text-orange-400" />

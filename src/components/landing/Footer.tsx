@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { Store, ShieldCheck, Heart, ArrowUpRight } from 'lucide-react';
+import { Store, ArrowUpRight, PhoneCall } from 'lucide-react';
+import { LanguageSwitcher } from '@/components/shared/LanguageSwitcher';
 
 export function Footer() {
   return (
@@ -30,9 +31,13 @@ export function Footer() {
               The modern point of sale and cloud inventory management system built to empower retail stores, supermarkets, restaurants, and multi-location chains worldwide.
             </p>
 
-            <div className="pt-2 flex items-center gap-2 text-[11px] text-emerald-400 font-medium">
+            <div className="pt-1 flex items-center gap-2 text-[11px] text-emerald-400 font-medium">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>All Systems Operational &bull; 99.99% Uptime</span>
+            </div>
+
+            <div className="pt-2">
+              <LanguageSwitcher variant="footer" />
             </div>
           </div>
 
@@ -42,11 +47,11 @@ export function Footer() {
               Product &amp; Features
             </div>
             <ul className="space-y-2">
-              <li><a href="#features" className="hover:text-white transition-colors">Touch POS Terminal</a></li>
-              <li><a href="#features" className="hover:text-white transition-colors">Inventory &amp; Stock Sync</a></li>
-              <li><a href="#features" className="hover:text-white transition-colors">Offline-First Engine</a></li>
-              <li><a href="#features" className="hover:text-white transition-colors">Finance &amp; Ledgers</a></li>
-              <li><a href="#features" className="hover:text-white transition-colors">Promos &amp; Gift Cards</a></li>
+              <li><Link href="/#features" className="hover:text-white transition-colors">Touch POS Terminal</Link></li>
+              <li><Link href="/#features" className="hover:text-white transition-colors">Inventory &amp; Stock Sync</Link></li>
+              <li><Link href="/#features" className="hover:text-white transition-colors">Offline-First Engine</Link></li>
+              <li><Link href="/#features" className="hover:text-white transition-colors">Finance &amp; Ledgers</Link></li>
+              <li><Link href="/#features" className="hover:text-white transition-colors">Promos &amp; Gift Cards</Link></li>
               <li><Link href="/pos" className="text-orange-400 hover:text-orange-300 transition-colors flex items-center gap-1">Live POS App <ArrowUpRight className="w-3 h-3" /></Link></li>
             </ul>
           </div>
@@ -57,12 +62,12 @@ export function Footer() {
               Solutions
             </div>
             <ul className="space-y-2">
-              <li><a href="#solutions" className="hover:text-white transition-colors">Supermarkets &amp; Grocery</a></li>
-              <li><a href="#solutions" className="hover:text-white transition-colors">Cafes &amp; Restaurants</a></li>
-              <li><a href="#solutions" className="hover:text-white transition-colors">Fashion &amp; Boutiques</a></li>
-              <li><a href="#solutions" className="hover:text-white transition-colors">Pharmacies &amp; Clinics</a></li>
-              <li><a href="#solutions" className="hover:text-white transition-colors">Wholesale &amp; Distributors</a></li>
-              <li><a href="#hardware" className="hover:text-white transition-colors">Hardware Compatibility</a></li>
+              <li><Link href="/#solutions" className="hover:text-white transition-colors">Supermarkets &amp; Grocery</Link></li>
+              <li><Link href="/#solutions" className="hover:text-white transition-colors">Cafes &amp; Restaurants</Link></li>
+              <li><Link href="/#solutions" className="hover:text-white transition-colors">Fashion &amp; Boutiques</Link></li>
+              <li><Link href="/#solutions" className="hover:text-white transition-colors">Pharmacies &amp; Clinics</Link></li>
+              <li><Link href="/#solutions" className="hover:text-white transition-colors">Wholesale &amp; Distributors</Link></li>
+              <li><Link href="/#hardware" className="hover:text-white transition-colors">Hardware Compatibility</Link></li>
             </ul>
           </div>
 
@@ -74,8 +79,9 @@ export function Footer() {
             <ul className="space-y-2">
               <li><Link href="/login" className="hover:text-white transition-colors">Sign In to Store</Link></li>
               <li><Link href="/register" className="hover:text-white transition-colors">Start 14-Day Free Trial</Link></li>
-              <li><a href="#pricing" className="hover:text-white transition-colors">Pricing Plans</a></li>
-              <li><a href="#faq" className="hover:text-white transition-colors">Frequently Asked Questions</a></li>
+              <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing Plans</Link></li>
+              <li><Link href="/contact" className="hover:text-white transition-colors flex items-center gap-1">Contact &amp; Support</Link></li>
+              <li><Link href="/#faq" className="hover:text-white transition-colors">Frequently Asked Questions</Link></li>
               <li><Link href="/dashboard" className="hover:text-white transition-colors">Admin Dashboard</Link></li>
             </ul>
           </div>
@@ -88,9 +94,9 @@ export function Footer() {
             &copy; {new Date().getFullYear()} goPOS Technologies Inc. All rights reserved.
           </div>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-slate-400 transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-slate-400 transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-slate-400 transition-colors">Security &amp; Compliance</a>
+            <Link href="/privacy" className="hover:text-slate-400 transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-slate-400 transition-colors">Terms of Service</Link>
+            <Link href="/contact" className="hover:text-slate-400 transition-colors">Security &amp; Support</Link>
           </div>
         </div>
 
@@ -98,3 +104,4 @@ export function Footer() {
     </footer>
   );
 }
+
