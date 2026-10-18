@@ -4,128 +4,8 @@ import React, { useState, useEffect } from 'react';
 import NextLink from 'next/link';
 import { AppHeader } from './AppHeader';
 import { usePathname } from 'next/navigation';
-import { 
-  LayoutDashboard, ShoppingBag, Package, Box, ShoppingCart,
-  Percent, ShoppingBasket, DollarSign, FileBarChart, Users,
-  Briefcase, Settings, ChevronDown
-} from 'lucide-react';
-
-// Menu definition matching the mockups
-const MENU_ITEMS = [
-  {
-    title: 'Dashboard',
-    icon: LayoutDashboard,
-    href: '/dashboard',
-  },
-  {
-    title: 'Inventory',
-    icon: Package,
-    items: [
-      { name: 'Products', href: '/inventory/products' },
-      { name: 'Create Product', href: '/inventory/products/create' },
-      { name: 'Expired Products', href: '/inventory/expired' },
-      { name: 'Low Stocks', href: '/inventory/low-stock' },
-      { name: 'Category', href: '/inventory/category' },
-      { name: 'Sub Category', href: '/inventory/sub-category' },
-      { name: 'Brands', href: '/inventory/brands' },
-      { name: 'Units', href: '/inventory/units' },
-      { name: 'Variant Attributes', href: '/inventory/variants' },
-      { name: 'Warranties', href: '/inventory/warranties' },
-      { name: 'Print Barcode', href: '/inventory/barcode' },
-      { name: 'Print QR Code', href: '/inventory/qrcode' },
-    ]
-  },
-  {
-    title: 'Stock',
-    icon: Box,
-    items: [
-      { name: 'Manage Stock', href: '/stock/manage' },
-      { name: 'Stock Adjustment', href: '/stock/adjustment' },
-      { name: 'Stock Transfer', href: '/stock/transfer' },
-    ]
-  },
-  {
-    title: 'Sales',
-    icon: ShoppingCart,
-    items: [
-      { name: 'Sales', href: '/sales' },
-      { name: 'Invoices', href: '/sales/invoices' },
-      { name: 'Sales Return', href: '/sales/returns' },
-      { name: 'Quotation', href: '/sales/quotation' },
-      { name: 'POS', href: '/pos' },
-    ]
-  },
-  {
-    title: 'Promo',
-    icon: Percent,
-    items: [
-      { name: 'Coupons', href: '/promo/coupons' },
-      { name: 'Gift Card', href: '/promo/gift-cards' },
-      { name: 'Discount', href: '/promo/discount' },
-    ]
-  },
-  {
-    title: 'Purchases',
-    icon: ShoppingBasket,
-    items: [
-      { name: 'Purchases', href: '/purchases' },
-      { name: 'Purchase Order', href: '/purchases/orders' },
-      { name: 'Purchase Return', href: '/purchases/returns' },
-    ]
-  },
-  {
-    title: 'Finance & Accounts',
-    icon: DollarSign,
-    items: [
-      { name: 'Expenses', href: '/finance/expenses' },
-      { name: 'Income', href: '/finance/income' },
-      { name: 'Bank Accounts', href: '/finance/banks' },
-      { name: 'Money Transfer', href: '/finance/transfer' },
-      { name: 'Balance Sheet', href: '/finance/balance-sheet' },
-      { name: 'Trial Balance', href: '/finance/trial-balance' },
-      { name: 'Cash Flow', href: '/finance/cash-flow' },
-      { name: 'Account Statement', href: '/finance/statement' },
-    ]
-  },
-  {
-    title: 'Reports',
-    icon: FileBarChart,
-    items: [
-      { name: 'Sales Report', href: '/reports/sales' },
-      { name: 'Inventory Report', href: '/reports/inventory' },
-      { name: 'Customer Report', href: '/reports/customer' },
-      { name: 'Invoice Report', href: '/reports/invoice' },
-      { name: 'Product Report', href: '/reports/product' },
-      { name: 'Purchase Report', href: '/reports/purchase' },
-      { name: 'Supplier Report', href: '/reports/supplier' },
-    ]
-  },
-  {
-    title: 'Peoples',
-    icon: Users,
-    items: [
-      { name: 'Customers', href: '/customers' },
-      { name: 'Billers', href: '/peoples/billers' },
-      { name: 'Suppliers', href: '/peoples/suppliers' },
-      { name: 'Stores', href: '/peoples/stores' },
-      { name: 'Warehouses', href: '/peoples/warehouses' },
-    ]
-  },
-  {
-    title: 'HRM',
-    icon: Briefcase,
-    items: [
-      { name: 'Employees', href: '/hrm/employees' },
-      { name: 'Departments', href: '/hrm/departments' },
-      { name: 'Designation', href: '/hrm/designation' },
-    ]
-  },
-  {
-    title: 'Settings',
-    icon: Settings,
-    href: '/settings',
-  }
-];
+import { ShoppingBag, ChevronDown } from 'lucide-react';
+import { MENU_ITEMS } from '@/data/menu-list';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -149,7 +29,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   // Auto-expand menu section if the current path matches any of its children
   useEffect(() => {
     MENU_ITEMS.forEach((section) => {
-      if (section.items?.some(item => pathname === item.href || pathname.startsWith(item.href))) {
+      if (section.items?.some(item => pathname === item.href || (item.href !== '/sales' && item.href !== '/purchases' && pathname.startsWith(item.href)))) {
         setOpenMenus(prev => ({ ...prev, [section.title]: true }));
       }
     });
@@ -179,7 +59,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         
         {/* Logo Area */}
         <div className="h-18 flex items-center px-5 border-b border-gray-100 shrink-0">
-          <div className="flex items-center gap-3">
+          <NextLink href="/dashboard" className="flex items-center gap-3">
             <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-orange-50 text-[#FF9F43] shadow-xs">
               <ShoppingBag className="w-5 h-5 text-[#FF9F43]" strokeWidth={2.5} />
               <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-[#092C4C] rounded-full border-2 border-white"></div>
@@ -192,7 +72,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 <span className="text-[10px] font-medium text-gray-400 tracking-wider uppercase mt-0.5">Inventory & POS</span>
               </div>
             )}
-          </div>
+          </NextLink>
         </div>
         
         {/* Navigation */}
@@ -204,12 +84,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             
             // Check if any child item is active
             const isChildActive = hasItems 
-              ? section.items!.some(item => pathname === item.href || pathname.startsWith(item.href))
+              ? section.items!.some(item => pathname === item.href || (item.href !== '/sales' && item.href !== '/purchases' && pathname.startsWith(item.href)))
               : false;
             
             const isActiveParent = hasItems 
               ? isChildActive 
-              : pathname === section.href || pathname.startsWith(section.href || '/_none');
+              : pathname === section.href || (section.href !== '/dashboard' && pathname.startsWith(section.href || '/_none'));
 
             return (
               <div key={section.title} className="relative group mb-1">
@@ -276,8 +156,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <div className="mt-1 pl-6 space-y-0.5">
+                      <div className="mt-1 pl-4 space-y-0.5">
                         {section.items!.map((item) => {
+                          const SubIcon = item.icon;
                           const isActive = pathname === item.href || (item.href !== '/sales' && item.href !== '/purchases' && pathname.startsWith(item.href));
                           return (
                             <NextLink 
@@ -290,13 +171,22 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                               }`}
                             >
                               <div className="flex items-center gap-2.5 min-w-0">
-                                <span 
-                                  className={`shrink-0 rounded-full transition-all duration-200 ${
-                                    isActive 
-                                      ? 'w-2 h-2 bg-[#FF9F43] shadow-[0_0_6px_rgba(255,159,67,0.8)] ring-2 ring-orange-200' 
-                                      : 'w-1.5 h-1.5 bg-gray-300 group-hover/sub:bg-[#FF9F43] group-hover/sub:scale-125'
-                                  }`} 
-                                />
+                                {SubIcon ? (
+                                  <SubIcon 
+                                    className={`w-3.5 h-3.5 shrink-0 transition-colors ${
+                                      isActive ? 'text-[#FF9F43]' : 'text-gray-400 group-hover/sub:text-gray-600'
+                                    }`} 
+                                    strokeWidth={isActive ? 2.2 : 1.8} 
+                                  />
+                                ) : (
+                                  <span 
+                                    className={`shrink-0 rounded-full transition-all duration-200 ${
+                                      isActive 
+                                        ? 'w-2 h-2 bg-[#FF9F43] shadow-[0_0_6px_rgba(255,159,67,0.8)] ring-2 ring-orange-200' 
+                                        : 'w-1.5 h-1.5 bg-gray-300 group-hover/sub:bg-[#FF9F43] group-hover/sub:scale-125'
+                                    }`} 
+                                  />
+                                )}
                                 <span className="truncate">{item.name}</span>
                               </div>
                               {isActive && (
@@ -319,6 +209,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                     </div>
                     <div className="space-y-0.5 max-h-72 overflow-y-auto custom-scrollbar">
                       {section.items!.map((item) => {
+                        const SubIcon = item.icon;
                         const isActive = pathname === item.href || (item.href !== '/sales' && item.href !== '/purchases' && pathname.startsWith(item.href));
                         return (
                           <NextLink
@@ -330,7 +221,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                                 : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                             }`}
                           >
-                            <span className={`w-1.5 h-1.5 rounded-full shrink-0 transition-all ${isActive ? 'bg-[#FF9F43] ring-2 ring-orange-200' : 'bg-gray-300'}`} />
+                            {SubIcon ? (
+                              <SubIcon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-[#FF9F43]' : 'text-gray-400'}`} />
+                            ) : (
+                              <span className={`w-1.5 h-1.5 rounded-full shrink-0 transition-all ${isActive ? 'bg-[#FF9F43] ring-2 ring-orange-200' : 'bg-gray-300'}`} />
+                            )}
                             <span className="truncate">{item.name}</span>
                           </NextLink>
                         );
@@ -346,7 +241,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col h-full overflow-hidden w-full relative">
-        
         <AppHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
         {/* Page Content */}
@@ -375,4 +269,3 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-
