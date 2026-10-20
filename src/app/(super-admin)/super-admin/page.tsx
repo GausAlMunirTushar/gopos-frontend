@@ -52,10 +52,10 @@ export default function SuperAdminDashboard() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-black text-gray-900 tracking-tight">Super Admin Platform</h1>
+            <h1 className="text-2xl font-black text-gray-900 tracking-tight">BikriPOS Super Admin</h1>
             <span className="px-2 py-0.5 rounded-full bg-orange-100 text-[#FF9F43] text-xs font-bold">Cloud SaaS</span>
           </div>
-          <p className="text-gray-500 text-sm mt-0.5">Global overview of multi-tenant companies, revenue, and subscriptions.</p>
+          <p className="text-gray-500 text-sm mt-0.5">Global overview of multi-tenant businesses, retail outlets, revenue, and subscriptions.</p>
         </div>
         
         <div className="flex items-center gap-2.5">

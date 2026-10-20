@@ -15,7 +15,7 @@ export const useSettingsStore = create<SettingsState>()(
       setCurrency: (currency) => set({ currency }),
     }),
     {
-      name: 'gopos-settings',
+      name: 'bikripos-settings',
     }
   )
 );

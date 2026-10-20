@@ -72,7 +72,7 @@ export function LoginForm() {
       
       if (message.includes('Failed to fetch') || message.includes('NetworkError') || caught?.name === 'TypeError') {
         setIsServerOffline(true);
-        setError('Cannot connect to backend server at http://localhost:5000. Start backend with "pnpm run dev" in gopos-backend or continue with Demo Mode.');
+        setError('Cannot connect to backend server at http://localhost:5000. Start backend with "pnpm run dev" or continue with Demo Mode.');
       } else {
         setError(message || 'Unable to sign in. Please check your credentials.');
       }

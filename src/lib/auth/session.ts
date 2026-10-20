@@ -12,7 +12,7 @@ export interface AuthSession {
   };
 }
 
-const SESSION_KEY = 'gopos.session';
+const SESSION_KEY = 'bikripos.session';
 
 export const authSession = {
   get(): AuthSession | null {

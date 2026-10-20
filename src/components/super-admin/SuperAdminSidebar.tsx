@@ -44,14 +44,14 @@ export function SuperAdminSidebar({ sidebarOpen, setSidebarOpen }: SuperAdminSid
               <div className="flex flex-col">
                 <div className="flex items-center gap-1.5">
                   <h1 className="text-xl font-black text-[#092C4C] tracking-tight leading-none">
-                    go<span className="text-[#FF9F43]">pos</span>
+                    Bikri<span className="text-[#FF9F43]">POS</span>
                   </h1>
                   <span className="text-[10px] font-bold bg-orange-50 text-orange-600 px-1.5 py-0.2 rounded border border-orange-200 uppercase">
                     Admin
                   </span>
                 </div>
                 <span className="text-[10px] font-medium text-gray-400 tracking-wider uppercase mt-0.5">
-                  Super Admin Panel
+                  BikriPOS Super Admin
                 </span>
               </div>
             )}
