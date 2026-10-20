@@ -55,4 +55,13 @@ body {
   color: var(--foreground);
 }
 
+/* Eliminate all shadows across the entire application */
+*,
+*::before,
+*::after {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  text-shadow: none !important;
+}
+
 

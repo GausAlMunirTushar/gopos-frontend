@@ -483,24 +483,24 @@ export default function ResourcesPage() {
       )}
 
       {/* Bottom CTA */}
-      <section className="py-16 bg-slate-900 text-white">
+      <section className="py-16 bg-slate-50 border-t border-slate-200 text-slate-900">
         <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
             Need on-site training for your retail staff in Dhaka?
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
+          <p className="text-slate-600 text-sm sm:text-base max-w-xl mx-auto">
             Our retail specialists provide hands-on cashier training, printer calibration, and warehouse inventory migration.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
             <Link
               href="/contact"
-              className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold text-sm shadow-lg shadow-orange-500/25 hover:shadow-xl transition-all"
+              className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold text-sm hover:from-orange-600 hover:to-amber-600 transition-all"
             >
               Book Staff Training Session
             </Link>
             <Link
               href="/pricing"
-              className="px-7 py-3.5 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/15 transition-all"
+              className="px-7 py-3.5 rounded-2xl bg-white hover:bg-slate-100 text-slate-800 font-semibold text-sm border border-slate-200 transition-all"
             >
               View Subscription Plans
             </Link>
