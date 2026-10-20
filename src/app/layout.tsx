@@ -14,8 +14,8 @@ const hindSiliguri = Hind_Siliguri({
 });
 
 export const metadata: Metadata = {
-  title: "goPOS - Inventory & POS",
-  description: "Modern mobile-first SaaS product for POS and Inventory",
+  title: "BikriPOS - Inventory & POS",
+  description: "Modern cloud-first SaaS product for POS and Multi-Branch Inventory",
 };
 
 export default async function RootLayout({

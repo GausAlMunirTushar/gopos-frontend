@@ -21,8 +21,8 @@ import {
 import { Navbar, Footer } from '@/components/landing';
 
 export const metadata = {
-  title: 'About goPOS - Next-Gen Retail & Inventory ERP',
-  description: 'Learn about goPOS by ZivoTech: our mission, technology, Dhaka headquarters, and vision for empowering 50,000+ retail merchants.',
+  title: 'About BikriPOS - Next-Gen Retail & Inventory ERP',
+  description: 'Learn about BikriPOS by ZivoTech: our mission, technology, Dhaka headquarters, and vision for empowering 50,000+ retail merchants.',
 };
 
 export default function AboutPage() {
@@ -101,7 +101,7 @@ export default function AboutPage() {
           </h1>
 
           <p className="mt-6 text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            Headquartered in Dhaka, goPOS by <strong>ZivoTech</strong> is designed to solve the real challenges of retail: queue congestion, offline interruptions, stock shrinkage, and fragmented multi-branch reporting.
+            Headquartered in Dhaka, BikriPOS by <strong>ZivoTech</strong> is designed to solve the real challenges of retail: queue congestion, offline interruptions, stock shrinkage, and fragmented multi-branch reporting.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
@@ -153,7 +153,7 @@ export default function AboutPage() {
               Traditional ERP systems are clunky, expensive, and fragile when internet connections drop. On the other hand, simple cash registers lack inventory tracking, purchase management, and multi-branch insights.
             </p>
             <p className="text-slate-600 leading-relaxed text-base">
-              goPOS combines the tactile speed of an ultra-fast desktop cash register with the limitless scalability of a modern cloud inventory platform.
+              BikriPOS combines the tactile speed of an ultra-fast desktop cash register with the limitless scalability of a modern cloud inventory platform.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
@@ -182,7 +182,7 @@ export default function AboutPage() {
             
             <div className="relative z-10 space-y-6">
               <div className="w-12 h-12 rounded-2xl bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold text-xl">
-                G
+                B
               </div>
               <div>
                 <h3 className="text-2xl font-black">Engineering Headquarters</h3>
@@ -226,7 +226,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl font-black text-slate-900 tracking-tight">
-              Why 1,200+ Stores Rely on goPOS Every Single Day
+              Why 1,200+ Stores Rely on BikriPOS Every Single Day
             </h2>
             <p className="text-slate-600 text-sm mt-2">
               Architected with cutting-edge engineering principles for high-throughput retail checkout.
@@ -290,7 +290,7 @@ export default function AboutPage() {
       <section className="py-16 bg-slate-50 border-t border-slate-200 text-slate-900">
         <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
-            Ready to upgrade your store with goPOS?
+            Ready to upgrade your store with BikriPOS?
           </h2>
           <p className="text-slate-600 text-sm sm:text-base max-w-xl mx-auto">
             Get started in 10 minutes with our 14-day free trial, or book a live on-site demo with our Dhaka retail consultants.

@@ -19,7 +19,7 @@ export function Footer() {
               </div>
               <div className="flex flex-col">
                 <span className="text-xl font-black tracking-tight text-slate-900 leading-none">
-                  go<span className="text-orange-500">POS</span>
+                  Bikri<span className="text-orange-500">POS</span>
                 </span>
                 <span className="text-[9px] font-semibold tracking-wider text-slate-500 uppercase">
                   Enterprise Cloud
@@ -49,7 +49,7 @@ export function Footer() {
             <ul className="space-y-2">
               <li><Link href="/" className="hover:text-orange-600 transition-colors">Home</Link></li>
               <li><Link href="/pricing" className="hover:text-orange-600 transition-colors">Pricing Plans</Link></li>
-              <li><Link href="/about" className="hover:text-orange-600 transition-colors">About goPOS</Link></li>
+              <li><Link href="/about" className="hover:text-orange-600 transition-colors">About BikriPOS</Link></li>
               <li><Link href="/resources" className="hover:text-orange-600 transition-colors">Resources &amp; Tutorials</Link></li>
               <li><Link href="/contact" className="hover:text-orange-600 transition-colors">Contact Sales</Link></li>
               <li><Link href="/pos" className="text-orange-600 hover:text-orange-700 transition-colors flex items-center gap-1 font-semibold">Live POS Terminal <ArrowUpRight className="w-3 h-3" /></Link></li>
@@ -89,7 +89,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500">
           <div>
-            &copy; {new Date().getFullYear()} goPOS Technologies Inc. All rights reserved.
+            &copy; {new Date().getFullYear()} BikriPOS Technologies Inc. All rights reserved.
           </div>
           <div className="flex items-center gap-6">
             <Link href="/privacy" className="hover:text-slate-700 transition-colors">Privacy Policy</Link>

@@ -10,12 +10,12 @@ interface FaqItem {
 
 const FAQS: FaqItem[] = [
   {
-    question: 'Does goPOS really work 100% offline when the internet drops?',
+    question: 'Does BikriPOS really work 100% offline when the internet drops?',
     answer: 'Yes! Our offline-first architecture allows cashiers to continue scanning barcodes, adding discounts, taking cash or local card payments, and printing receipts even if the internet goes down. When your internet connection is restored, all offline sales and stock edits automatically sync back to the cloud in the background with zero data loss.',
   },
   {
     question: 'Can I use my existing receipt printer, cash drawer, and barcode scanner?',
-    answer: 'Absolutely. goPOS supports standard ESC/POS 80mm and 58mm thermal printers (USB, Bluetooth, LAN/Ethernet), standard 1D/2D USB/Bluetooth barcode scanners, and RJ11 automatic kick-out cash drawers. You do not need to purchase expensive proprietary hardware.',
+    answer: 'Absolutely. BikriPOS supports standard ESC/POS 80mm and 58mm thermal printers (USB, Bluetooth, LAN/Ethernet), standard 1D/2D USB/Bluetooth barcode scanners, and RJ11 automatic kick-out cash drawers. You do not need to purchase expensive proprietary hardware.',
   },
   {
     question: 'How easy is it to import my products and customer database from Excel or another POS?',
@@ -27,7 +27,7 @@ const FAQS: FaqItem[] = [
   },
   {
     question: 'Can I restrict cashier permissions and track cash drawer openings?',
-    answer: 'Yes. goPOS features comprehensive Role-Based Access Control (RBAC). You can define whether a cashier is allowed to view cost prices, issue refunds, or apply manual discounts. Shift open/close reconciliation ensures cash drawer balances match physical counts with blind drawer audit options.',
+    answer: 'Yes. BikriPOS features comprehensive Role-Based Access Control (RBAC). You can define whether a cashier is allowed to view cost prices, issue refunds, or apply manual discounts. Shift open/close reconciliation ensures cash drawer balances match physical counts with blind drawer audit options.',
   },
   {
     question: 'Is there any lock-in contract or cancellation fee?',
@@ -56,7 +56,7 @@ export function FaqSection() {
             Frequently Asked Questions
           </h2>
           <p className="text-slate-600 text-base sm:text-lg">
-            Everything you need to know about setting up, hardware compatibility, and running goPOS.
+            Everything you need to know about setting up, hardware compatibility, and running BikriPOS.
           </p>
         </div>
 
@@ -102,7 +102,7 @@ export function FaqSection() {
           </p>
           <div className="pt-2">
             <a
-              href="mailto:support@gopos.com"
+              href="mailto:support@bikripos.com"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition-colors"
             >
               <span>Contact Dedicated Support Team</span>

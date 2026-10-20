@@ -142,7 +142,7 @@
     "customQuote": "Need a tailored plan with custom on-premise hardware setup?"
   },
   "contact": {
-    "title": "Get in Touch with goPOS",
+    "title": "Get in Touch with BikriPOS",
     "subtitle": "Have questions or need a personalized demo for your enterprise retail chain? Our Dhaka-based specialist team is here to assist 24/7.",
     "formTitle": "Send us a Message",
     "formSubtitle": "Fill in the details below and an industry consultant will contact you within 30 minutes.",
@@ -167,8 +167,8 @@
     "phone1": "+880 9612-467670",
     "phone2": "+880 1700-123456",
     "emailTitle": "Email Inquiries",
-    "email1": "sales@gopos.com.bd",
-    "email2": "support@gopos.com.bd",
+    "email1": "sales@bikripos.com.bd",
+    "email2": "support@bikripos.com.bd",
     "hoursTitle": "Business Hours",
     "hoursWeek": "Saturday – Thursday: 9:00 AM – 8:00 PM",
     "hoursEmergency": "24/7 Emergency Support for Live Outlets"
@@ -176,7 +176,7 @@
   "terms": {
     "title": "Terms & Conditions",
     "lastUpdated": "Last updated: September 2026",
-    "subtitle": "Please read these terms carefully before utilizing goPOS cloud ERP and point of sale services."
+    "subtitle": "Please read these terms carefully before utilizing BikriPOS cloud ERP and point of sale services."
   },
   "privacy": {
     "title": "Privacy Policy",
@@ -186,7 +186,7 @@
   "footer": {
     "tagline": "The modern point of sale and cloud inventory management system built to empower retail stores, supermarkets, restaurants, and multi-location chains worldwide.",
     "status": "All Systems Operational • 99.99% Uptime",
-    "rights": "goPOS Technologies Inc. All rights reserved.",
+    "rights": "BikriPOS Technologies Inc. All rights reserved.",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "security": "Security & Compliance",

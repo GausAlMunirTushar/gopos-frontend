@@ -8,7 +8,7 @@ export function TestimonialsSection() {
       role: 'Owner & Founder',
       company: 'Vance Artisanal Coffee (4 Outlets)',
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=250&auto=format&fit=crop',
-      content: 'goPOS completely eliminated our morning peak rush queues. The speed is unbelievable—our baristas process orders and send receipts to WhatsApp in 3 seconds. Managing 4 branches in real time from my phone is effortless.',
+      content: 'BikriPOS completely eliminated our morning peak rush queues. The speed is unbelievable—our baristas process orders and send receipts to WhatsApp in 3 seconds. Managing 4 branches in real time from my phone is effortless.',
       metric: '65% Faster Morning Queues',
       rating: 5,
     },
@@ -26,7 +26,7 @@ export function TestimonialsSection() {
       role: 'Managing Pharmacist',
       company: 'CarePlus Supermarket & Pharmacy',
       avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=250&auto=format&fit=crop',
-      content: 'The automated batch expiration alerts and digital weighing scale compatibility made goPOS the only logical choice for our hybrid grocery and healthcare setup. Offline mode gave us true peace of mind.',
+      content: 'The automated batch expiration alerts and digital weighing scale compatibility made BikriPOS the only logical choice for our hybrid grocery and healthcare setup. Offline mode gave us true peace of mind.',
       metric: 'Zero Downtime in 2 Years',
       rating: 5,
     },
@@ -46,7 +46,7 @@ export function TestimonialsSection() {
             Loved by Fast-Growing Store Owners
           </h2>
           <p className="text-slate-600 text-base sm:text-lg">
-            See how retailers, cafes, and multi-branch chains use goPOS to simplify daily store operations and boost bottom-line profits.
+            See how retailers, cafes, and multi-branch chains use BikriPOS to simplify daily store operations and boost bottom-line profits.
           </p>
         </div>
 

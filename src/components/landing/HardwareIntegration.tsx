@@ -70,7 +70,7 @@ export function HardwareIntegration() {
             Works with the Hardware You Already Own
           </h2>
           <p className="text-slate-400 text-base sm:text-lg">
-            No expensive proprietary locked-in hardware required. Run goPOS on any browser, tablet, PC, or Android terminal, and connect your existing peripherals seamlessly.
+            No expensive proprietary locked-in hardware required. Run BikriPOS on any browser, tablet, PC, or Android terminal, and connect your existing peripherals seamlessly.
           </p>
         </div>
 

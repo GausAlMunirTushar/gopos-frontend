@@ -12,7 +12,7 @@ import {
 } from '@/components/landing';
 
 export const metadata = {
-  title: 'goPOS - Next-Gen Cloud POS & Multi-Store Inventory ERP',
+  title: 'BikriPOS - Next-Gen Cloud POS & Multi-Store Inventory ERP',
   description: 'Ultra-fast checkout, real-time stock sync, offline resilience, and built-in accounting for retail stores, supermarkets, and restaurants.',
 };
 

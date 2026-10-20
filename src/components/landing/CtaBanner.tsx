@@ -23,7 +23,7 @@ export function CtaBanner() {
             </h2>
 
             <p className="text-orange-50 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-              Join thousands of retail stores, supermarkets, and cafes running their day-to-day operations seamlessly on goPOS.
+              Join thousands of retail stores, supermarkets, and cafes running their day-to-day operations seamlessly on BikriPOS.
             </p>
 
             {/* Action Buttons */}

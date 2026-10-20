@@ -131,7 +131,7 @@ export function HeroSection() {
                   <div className="w-3 h-3 rounded-full bg-amber-500/90" />
                   <div className="w-3 h-3 rounded-full bg-emerald-500/90" />
                   <span className="text-xs text-slate-400 font-mono ml-2 hidden sm:inline">
-                    goPOS Enterprise Terminal v4.2 &bull; Main Branch
+                    BikriPOS Enterprise Terminal v4.2 &bull; Main Branch
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
