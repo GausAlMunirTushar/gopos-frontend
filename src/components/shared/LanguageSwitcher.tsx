@@ -11,35 +11,53 @@ interface LanguageSwitcherProps {
 }
 
 export function LanguageSwitcher({ variant = 'pill', className = '' }: LanguageSwitcherProps) {
-  const currentLocale = useLocale() as Locale;
+  const currentLocale = (useLocale() as Locale) || 'en';
   const [isPending, startTransition] = useTransition();
 
   const handleLanguageChange = (newLocale: Locale) => {
     if (newLocale === currentLocale || isPending) return;
+    
+    // 1. Immediately set cookie synchronously on client
+    if (typeof document !== 'undefined') {
+      document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
+    }
+
     startTransition(async () => {
-      await setUserLocale(newLocale);
-      // Soft refresh router to re-fetch translations from server
+      try {
+        await setUserLocale(newLocale);
+      } catch (err) {
+        console.warn('setUserLocale action error (handled):', err);
+      }
+      // Force reload page with new locale
       window.location.reload();
     });
   };
 
-  if (variant === 'compact') {
+  const toggleLanguage = () => {
+    handleLanguageChange(currentLocale === 'en' ? 'bn' : 'en');
+  };
+
+  // Flag Badge Pill matching the user's uploaded header screenshot: [ 🇺🇸 EN ] or [ 🇧🇩 বাংলা ]
+  if (variant === 'compact' || variant === 'dropdown') {
     return (
-      <div className={`relative inline-flex items-center ${className}`}>
-        <button
-          disabled={isPending}
-          onClick={() => handleLanguageChange(currentLocale === 'en' ? 'bn' : 'en')}
-          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-all cursor-pointer disabled:opacity-60"
-          title="Switch Language"
-        >
-          {isPending ? (
-            <Loader2 className="w-3.5 h-3.5 animate-spin text-orange-500" />
-          ) : (
-            <Globe className="w-3.5 h-3.5 text-orange-500" />
-          )}
-          <span className="font-bold">{currentLocale === 'en' ? 'বাংলা' : 'EN'}</span>
-        </button>
-      </div>
+      <button
+        type="button"
+        disabled={isPending}
+        onClick={toggleLanguage}
+        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200/80 border border-slate-200/90 transition-all cursor-pointer shadow-2xs ${className}`}
+        title={currentLocale === 'en' ? 'বাংলা ভাষায় পরিবর্তন করুন' : 'Switch to English'}
+      >
+        {isPending ? (
+          <Loader2 className="w-3.5 h-3.5 animate-spin text-emerald-600" />
+        ) : (
+          <span className="text-sm leading-none">
+            {currentLocale === 'en' ? '🇺🇸' : '🇧🇩'}
+          </span>
+        )}
+        <span className="font-bold tracking-wide">
+          {currentLocale === 'en' ? 'EN' : 'বাংলা'}
+        </span>
+      </button>
     );
   }
 

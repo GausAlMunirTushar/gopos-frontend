@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useLocale } from 'next-intl';
 import { 
   ArrowRight, 
   Sparkles, 
@@ -18,8 +19,11 @@ import {
 } from 'lucide-react';
 
 export function HeroSection() {
+  const locale = useLocale();
+  const isBn = locale === 'bn';
+
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-radial from-orange-50/70 via-slate-50 to-white">
+    <section className="relative pt-36 pb-20 md:pt-44 md:pb-28 overflow-hidden bg-radial from-orange-50/70 via-slate-50 to-white">
       {/* Background Decorative Glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-orange-400/15 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute top-1/3 right-10 w-96 h-96 bg-amber-300/20 rounded-full blur-3xl pointer-events-none" />
@@ -32,71 +36,84 @@ export function HeroSection() {
         <div className="text-center max-w-4xl mx-auto space-y-6">
           
           {/* Badge Pill */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100/80 border border-orange-200/80 shadow-xs text-orange-800 text-xs sm:text-sm font-medium hover:bg-orange-100 transition-colors animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100/80 border border-orange-200/80 shadow-xs text-orange-800 text-xs sm:text-sm font-semibold hover:bg-orange-100 transition-colors animate-fade-in">
             <span className="flex h-2 w-2 rounded-full bg-orange-500 animate-ping" />
-            <span className="font-semibold text-orange-600">NEW:</span>
-            <span>Multi-Branch Stock Sync & WhatsApp Receipts 2.0</span>
+            <span className="font-bold text-orange-600">{isBn ? 'নতুন ভার্সন:' : 'NEW:'}</span>
+            <span>{isBn ? 'মাল্টি-ব্রাঞ্চ স্টক সিঙ্ক ও হোয়াটসঅ্যাপ রিসিট ২.০' : 'Multi-Branch Stock Sync & WhatsApp Receipts 2.0'}</span>
             <ArrowRight className="w-3.5 h-3.5 text-orange-600" />
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1.1]">
-            Sell Faster, Sync Everywhere, &amp; <br className="hidden sm:inline" />
-            <span className="bg-gradient-to-r from-orange-600 via-amber-500 to-orange-500 bg-clip-text text-transparent">
-              Grow Your Retail Business
-            </span>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.15]">
+            {isBn ? (
+              <>
+                দ্রুত বিক্রয় করুন, সিঙ্ক রাখুন এবং <br className="hidden sm:inline" />
+                <span className="bg-gradient-to-r from-orange-600 via-amber-500 to-orange-500 bg-clip-text text-transparent">
+                  আপনার রিটেইল ব্যবসা বৃদ্ধি করুন
+                </span>
+              </>
+            ) : (
+              <>
+                Sell Faster, Sync Everywhere, &amp; <br className="hidden sm:inline" />
+                <span className="bg-gradient-to-r from-orange-600 via-amber-500 to-orange-500 bg-clip-text text-transparent">
+                  Grow Your Retail Business
+                </span>
+              </>
+            )}
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            The all-in-one cloud POS &amp; Inventory management system. Lightning-fast checkout, real-time stock sync across branches, offline resilience, and built-in accounting.
+          <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed font-medium">
+            {isBn
+              ? 'অল-ইন-ওয়ান ক্লাউড পিওএস ও ইনভেন্টরি ইআরপি সিস্টেম। দ্রুততম চেকআউট, একাধিক ব্রাঞ্চে রিয়েল-টাইম স্টক সিঙ্ক, অফলাইন সুবিধা এবং স্বয়ংক্রিয় হিসাব-নিকাশ।'
+              : 'The all-in-one cloud POS & Inventory management system. Lightning-fast checkout, real-time stock sync across branches, offline resilience, and built-in accounting.'}
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2">
             <Link
               href="/register"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 text-base font-bold text-white bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 rounded-2xl shadow-xl shadow-orange-500/25 hover:shadow-2xl hover:shadow-orange-500/35 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 text-base font-bold text-white bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 rounded-full shadow-lg shadow-orange-500/25 hover:shadow-xl hover:shadow-orange-500/35 transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
             >
               <Sparkles className="w-5 h-5 text-amber-200" />
-              <span>Start Free 14-Day Trial</span>
+              <span>{isBn ? '১৪ দিনের ফ্রি ট্রায়াল শুরু করুন' : 'Start Free 14-Day Trial'}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
 
             <Link
               href="/resources"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 text-base font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-200 rounded-2xl shadow-xs hover:border-slate-300 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 text-base font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-200 rounded-full shadow-xs hover:border-slate-300 transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
             >
               <Play className="w-4 h-4 text-orange-500 fill-orange-500" />
-              <span>Watch Tutorials &amp; Demos</span>
+              <span>{isBn ? 'টিউটোরিয়াল ও ডেমো দেখুন' : 'Watch Tutorials & Demos'}</span>
             </Link>
 
             <Link
               href="/pos"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 text-base font-medium text-slate-600 hover:text-orange-600 transition-colors"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 text-base font-semibold text-slate-600 hover:text-orange-600 transition-colors"
             >
-              <span>Launch POS App</span>
+              <span>{isBn ? 'পিওএস টার্মিনাল খুলুন' : 'Launch POS App'}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
           {/* Trust Guarantees */}
-          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 pt-4 text-xs sm:text-sm font-medium text-slate-500">
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 pt-4 text-xs sm:text-sm font-semibold text-slate-500">
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-              <span>No Credit Card Required</span>
+              <span>{isBn ? 'কোনো ক্রেডিট কার্ডের প্রয়োজন নেই' : 'No Credit Card Required'}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-              <span>10-Minute Setup</span>
+              <span>{isBn ? '১০ মিনিটে সেটআপ ও রেডি' : '10-Minute Setup'}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-              <span>100% Offline Capable</span>
+              <span>{isBn ? '১০০% অফলাইনে বিক্রয় সক্ষম' : '100% Offline Capable'}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-              <span>Cancel Anytime</span>
+              <span>{isBn ? 'যেকোনো সময় বাতিলযোগ্য' : 'Cancel Anytime'}</span>
             </div>
           </div>
         </div>
