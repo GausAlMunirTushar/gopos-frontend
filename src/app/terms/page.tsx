@@ -37,7 +37,7 @@ export default function TermsPage() {
         </h1>
 
         <p className="mt-3 text-slate-600 text-sm max-w-2xl mx-auto">
-          Please read these terms carefully before creating an account or operating goPOS software at your retail outlets.
+          Please read these terms carefully before creating an account or operating BikriPOS software at your retail outlets.
         </p>
       </section>
 
@@ -72,21 +72,21 @@ export default function TermsPage() {
             <section id="acceptance" className="scroll-mt-28 space-y-3">
               <h2 className="text-xl font-bold text-slate-900">1. Acceptance of Terms</h2>
               <p>
-                By registering for an account, accessing, or utilizing the <strong>goPOS</strong> Point of Sale, ERP, Inventory, and Accounting platform (collectively the &quot;Service&quot;), provided by <strong>goPOS Technologies Inc. / ZivoTech</strong> (&quot;goPOS&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;), you (&quot;Merchant&quot;, &quot;Subscriber&quot;, or &quot;User&quot;) agree to be bound by these Terms and Conditions. If you are entering into this agreement on behalf of a company, retail business, or partnership, you represent that you have the authority to bind such entity.
+                By registering for an account, accessing, or utilizing the <strong>BikriPOS</strong> Point of Sale, ERP, Inventory, and Accounting platform (collectively the &quot;Service&quot;), provided by <strong>BikriPOS Technologies Inc. / ZivoTech</strong> (&quot;BikriPOS&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;), you (&quot;Merchant&quot;, &quot;Subscriber&quot;, or &quot;User&quot;) agree to be bound by these Terms and Conditions. If you are entering into this agreement on behalf of a company, retail business, or partnership, you represent that you have the authority to bind such entity.
               </p>
             </section>
 
             <section id="services" className="scroll-mt-28 space-y-3">
               <h2 className="text-xl font-bold text-slate-900">2. Description of Cloud POS &amp; ERP Services</h2>
               <p>
-                goPOS is a Software-as-a-Service (SaaS) platform providing digital point of sale checkout, inventory control, purchase order tracking, HRM/payroll, double-entry financial reporting, and customer loyalty management. We reserve the right to improve, update, or modify features of the platform to deliver higher speed, security, and stability.
+                BikriPOS is a Software-as-a-Service (SaaS) platform providing digital point of sale checkout, inventory control, purchase order tracking, HRM/payroll, double-entry financial reporting, and customer loyalty management. We reserve the right to improve, update, or modify features of the platform to deliver higher speed, security, and stability.
               </p>
             </section>
 
             <section id="accounts" className="scroll-mt-28 space-y-3">
               <h2 className="text-xl font-bold text-slate-900">3. Merchant Accounts &amp; Security</h2>
               <p>
-                Merchants are responsible for maintaining the confidentiality of login credentials, employee PIN codes, and API keys. Any action taken under your tenant workspace shall be considered authorized by your organization. You agree to notify goPOS immediately of any unauthorized access or breach of security.
+                Merchants are responsible for maintaining the confidentiality of login credentials, employee PIN codes, and API keys. Any action taken under your tenant workspace shall be considered authorized by your organization. You agree to notify BikriPOS immediately of any unauthorized access or breach of security.
               </p>
             </section>
 
@@ -105,14 +105,14 @@ export default function TermsPage() {
             <section id="data" className="scroll-mt-28 space-y-3">
               <h2 className="text-xl font-bold text-slate-900">5. Data Ownership &amp; Privacy</h2>
               <p>
-                <strong>You retain 100% full ownership</strong> of all business data, customer lists, inventory balances, pricing, and sales transactions entered into your goPOS store. goPOS will never sell, rent, or commercialize your transactional data to third parties. We enforce strict database isolation, tenant-level security keys, and encrypted backups.
+                <strong>You retain 100% full ownership</strong> of all business data, customer lists, inventory balances, pricing, and sales transactions entered into your BikriPOS store. BikriPOS will never sell, rent, or commercialize your transactional data to third parties. We enforce strict database isolation, tenant-level security keys, and encrypted backups.
               </p>
             </section>
 
             <section id="offline" className="scroll-mt-28 space-y-3">
               <h2 className="text-xl font-bold text-slate-900">6. Offline Synchronization &amp; Hardware</h2>
               <p>
-                goPOS includes offline caching technology enabling local sales processing during temporary internet disruptions. The Merchant acknowledges that offline transactions must be synchronized with the cloud server as soon as connectivity resumes to ensure accurate centralized stock counts across multi-store branches.
+                BikriPOS includes offline caching technology enabling local sales processing during temporary internet disruptions. The Merchant acknowledges that offline transactions must be synchronized with the cloud server as soon as connectivity resumes to ensure accurate centralized stock counts across multi-store branches.
               </p>
             </section>
 
@@ -133,7 +133,7 @@ export default function TermsPage() {
             <section id="liability" className="scroll-mt-28 space-y-3">
               <h2 className="text-xl font-bold text-slate-900">9. Limitation of Liability</h2>
               <p>
-                To the maximum extent permitted by applicable law, goPOS Technologies shall not be liable for indirect, incidental, or consequential damages resulting from store hardware malfunctions, power surges, or local internet outages.
+                To the maximum extent permitted by applicable law, BikriPOS Technologies shall not be liable for indirect, incidental, or consequential damages resulting from store hardware malfunctions, power surges, or local internet outages.
               </p>
             </section>
 

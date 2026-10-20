@@ -156,15 +156,15 @@ export default function PricingPage() {
   const pricingFaqs = [
     {
       q: 'Can I start with a free trial without adding a credit card?',
-      a: 'Yes! You can try goPOS completely free for 14 days with full features. No credit card or advance payment is required.'
+      a: 'Yes! You can try BikriPOS completely free for 14 days with full features. No credit card or advance payment is required.'
     },
     {
       q: 'Which payment methods do you accept for subscription billing in Bangladesh?',
       a: 'We accept bKash Merchant, Nagad, Rocket, Bank Transfer (City Bank, BRAC Bank, Eastern Bank, Dutch-Bangla), Visa, MasterCard, and AMEX.'
     },
     {
-      q: 'Does goPOS work when the internet is disconnected?',
-      a: 'Absolutely. goPOS includes an offline-first POS engine that lets you scan barcodes, process customer checkouts, and print receipts without internet. When connection restores, all sales sync instantly.'
+      q: 'Does BikriPOS work when the internet is disconnected?',
+      a: 'Absolutely. BikriPOS includes an offline-first POS engine that lets you scan barcodes, process customer checkouts, and print receipts without internet. When connection restores, all sales sync instantly.'
     },
     {
       q: 'Can I upgrade or downgrade my plan at any time?',
@@ -172,7 +172,7 @@ export default function PricingPage() {
     },
     {
       q: 'Do you provide hardware like thermal printers, barcode scanners, and cash drawers?',
-      a: 'goPOS is compatible with standard POS hardware (Epson, Xprinter, Sunmi, Honeywell, TSC). We also partner with local hardware distributors to provide plug-and-play complete bundles.'
+      a: 'BikriPOS is compatible with standard POS hardware (Epson, Xprinter, Sunmi, Honeywell, TSC). We also partner with local hardware distributors to provide plug-and-play complete bundles.'
     }
   ];
 

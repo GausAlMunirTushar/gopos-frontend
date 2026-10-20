@@ -24,11 +24,11 @@ interface Company {
 }
 
 const mockCompanies: Company[] = [
-  { id: '1', name: 'Bengal Super Shop', owner: 'Rafiqul Islam', email: 'rafiq@bengalshop.com', phone: '+880 1711-234567', subdomain: 'bengal.gopos.com', customDomain: 'bengalshop.com.bd', plan: 'Enterprise', storesCount: 5, status: 'Active', joinedDate: '12 Jan 2026' },
-  { id: '2', name: 'Dhaka Cafe & Bakery', owner: 'Tasnim Ahmed', email: 'tasnim@dhakacafe.com', phone: '+880 1819-876543', subdomain: 'dhakacafe.gopos.com', plan: 'Pro', storesCount: 2, status: 'Active', joinedDate: '04 Feb 2026' },
-  { id: '3', name: 'Apex Retailers Ltd', owner: 'Mahmudul Hasan', email: 'hasan@apexretail.com', phone: '+880 1912-345678', subdomain: 'apex.gopos.com', customDomain: 'pos.apexretail.com', plan: 'Enterprise', storesCount: 12, status: 'Active', joinedDate: '18 Mar 2026' },
-  { id: '4', name: 'Quick Pharmacy Plus', owner: 'Farhana Kabir', email: 'farhana@quickrx.com', phone: '+880 1610-987654', subdomain: 'quickrx.gopos.com', plan: 'Basic', storesCount: 1, status: 'Trial', joinedDate: '10 Oct 2026' },
-  { id: '5', name: 'Chittagong Agro Tech', owner: 'Zubair Hossain', email: 'zubair@ctgagro.com', phone: '+880 1515-112233', subdomain: 'ctgagro.gopos.com', plan: 'Pro', storesCount: 3, status: 'Suspended', joinedDate: '22 Aug 2025' },
+  { id: '1', name: 'Bengal Super Shop', owner: 'Rafiqul Islam', email: 'rafiq@bengalshop.com', phone: '+880 1711-234567', subdomain: 'bengal.bikripos.com', customDomain: 'bengalshop.com.bd', plan: 'Enterprise', storesCount: 5, status: 'Active', joinedDate: '12 Jan 2026' },
+  { id: '2', name: 'Dhaka Cafe & Bakery', owner: 'Tasnim Ahmed', email: 'tasnim@dhakacafe.com', phone: '+880 1819-876543', subdomain: 'dhakacafe.bikripos.com', plan: 'Pro', storesCount: 2, status: 'Active', joinedDate: '04 Feb 2026' },
+  { id: '3', name: 'Apex Retailers Ltd', owner: 'Mahmudul Hasan', email: 'hasan@apexretail.com', phone: '+880 1912-345678', subdomain: 'apex.bikripos.com', customDomain: 'pos.apexretail.com', plan: 'Enterprise', storesCount: 12, status: 'Active', joinedDate: '18 Mar 2026' },
+  { id: '4', name: 'Quick Pharmacy Plus', owner: 'Farhana Kabir', email: 'farhana@quickrx.com', phone: '+880 1610-987654', subdomain: 'quickrx.bikripos.com', plan: 'Basic', storesCount: 1, status: 'Trial', joinedDate: '10 Oct 2026' },
+  { id: '5', name: 'Chittagong Agro Tech', owner: 'Zubair Hossain', email: 'zubair@ctgagro.com', phone: '+880 1515-112233', subdomain: 'ctgagro.bikripos.com', plan: 'Pro', storesCount: 3, status: 'Suspended', joinedDate: '22 Aug 2025' },
 ];
 
 export default function CompaniesPage() {

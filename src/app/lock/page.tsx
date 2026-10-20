@@ -37,7 +37,7 @@ export default function LockScreenPage() {
           </button>
         </div>
         <p className="text-xs text-gray-400">
-          Copyrights © 2025 - goPOS
+          Copyrights © 2026 - BikriPOS
         </p>
       </div>
     </div>

@@ -19,9 +19,9 @@ interface DomainRequest {
 }
 
 const mockDomains: DomainRequest[] = [
-  { id: 'DOM-01', companyName: 'Bengal Super Shop', subdomain: 'bengal.gopos.com', customDomain: 'bengalshop.com.bd', cnameTarget: 'cname.gopos.com', sslStatus: 'Issued', status: 'Active', requestedDate: '14 Feb 2026' },
-  { id: 'DOM-02', companyName: 'Apex Retailers Ltd', subdomain: 'apex.gopos.com', customDomain: 'pos.apexretail.com', cnameTarget: 'cname.gopos.com', sslStatus: 'Issued', status: 'Active', requestedDate: '20 Mar 2026' },
-  { id: 'DOM-03', companyName: 'Dhaka Cafe & Bakery', subdomain: 'dhakacafe.gopos.com', customDomain: 'pos.dhakacafe.com', cnameTarget: 'cname.gopos.com', sslStatus: 'Pending', status: 'Pending Verification', requestedDate: '16 Oct 2026' },
+  { id: 'DOM-01', companyName: 'Bengal Super Shop', subdomain: 'bengal.bikripos.com', customDomain: 'bengalshop.com.bd', cnameTarget: 'cname.bikripos.com', sslStatus: 'Issued', status: 'Active', requestedDate: '14 Feb 2026' },
+  { id: 'DOM-02', companyName: 'Apex Retailers Ltd', subdomain: 'apex.bikripos.com', customDomain: 'pos.apexretail.com', cnameTarget: 'cname.bikripos.com', sslStatus: 'Issued', status: 'Active', requestedDate: '20 Mar 2026' },
+  { id: 'DOM-03', companyName: 'Dhaka Cafe & Bakery', subdomain: 'dhakacafe.bikripos.com', customDomain: 'pos.dhakacafe.com', cnameTarget: 'cname.bikripos.com', sslStatus: 'Pending', status: 'Pending Verification', requestedDate: '16 Oct 2026' },
 ];
 
 export default function DomainRequestsPage() {
@@ -42,7 +42,7 @@ export default function DomainRequestsPage() {
             <h3 className="font-bold text-base">DNS Target Server</h3>
           </div>
           <p className="text-slate-300 text-xs">
-            Tenants must create a CNAME record pointing to <span className="font-mono bg-white/10 px-2 py-0.5 rounded text-blue-200">cname.gopos.com</span> or A Record pointing to <span className="font-mono bg-white/10 px-2 py-0.5 rounded text-blue-200">104.21.45.18</span>.
+            Tenants must create a CNAME record pointing to <span className="font-mono bg-white/10 px-2 py-0.5 rounded text-blue-200">cname.bikripos.com</span> or A Record pointing to <span className="font-mono bg-white/10 px-2 py-0.5 rounded text-blue-200">104.21.45.18</span>.
           </p>
         </div>
 

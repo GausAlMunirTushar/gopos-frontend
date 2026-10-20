@@ -28,8 +28,8 @@ interface Bank {
 }
 
 const bankData: Bank[] = [
-  { id: 'BNK001', name: 'Dutch Bangla Bank', accountName: 'goPOS Main Account', accountNo: '****1234', balance: '৳450,000', status: 'Active', color: 'bg-green-100 text-green-600' },
-  { id: 'BNK002', name: 'BRAC Bank', accountName: 'goPOS Savings Account', accountNo: '****5678', balance: '৳124,500', status: 'Active', color: 'bg-green-100 text-green-600' },
+  { id: 'BNK001', name: 'Dutch Bangla Bank', accountName: 'BikriPOS Main Account', accountNo: '****1234', balance: '৳450,000', status: 'Active', color: 'bg-green-100 text-green-600' },
+  { id: 'BNK002', name: 'BRAC Bank', accountName: 'BikriPOS Savings Account', accountNo: '****5678', balance: '৳124,500', status: 'Active', color: 'bg-green-100 text-green-600' },
 ];
 
 export default function BankList() {

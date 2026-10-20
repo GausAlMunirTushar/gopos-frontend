@@ -82,15 +82,15 @@ export default function PlatformSettingsPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-gray-700">Platform SaaS Name</label>
-                    <Input defaultValue="goPOS Cloud Suite" />
+                    <Input defaultValue="BikriPOS Cloud Suite" />
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-gray-700">Master Root Domain</label>
-                    <Input defaultValue="gopos.com" />
+                    <Input defaultValue="bikripos.com" />
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-gray-700">Support / Billing Email</label>
-                    <Input defaultValue="support@gopos.com" />
+                    <Input defaultValue="support@bikripos.com" />
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-gray-700">Default Currency</label>
@@ -141,7 +141,7 @@ export default function PlatformSettingsPage() {
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-gray-700">Sender Email</label>
-                    <Input defaultValue="no-reply@gopos.com" />
+                    <Input defaultValue="no-reply@bikripos.com" />
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-gray-700">SMTP Password</label>
@@ -161,7 +161,7 @@ export default function PlatformSettingsPage() {
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-gray-700">Sender ID</label>
-                    <Input defaultValue="GOPOS" />
+                    <Input defaultValue="BIKRIPOS" />
                   </div>
                   <div className="sm:col-span-2 space-y-1.5">
                     <label className="text-xs font-bold text-gray-700">API Key / Token</label>

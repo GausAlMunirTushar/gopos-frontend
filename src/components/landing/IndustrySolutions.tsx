@@ -136,7 +136,7 @@ export function IndustrySolutions() {
             Built for Your Specific Industry Workflow
           </h2>
           <p className="text-slate-600 text-base sm:text-lg">
-            Choose your business type to see how goPOS customizes menus, barcode logic, and inventory for your day-to-day operations.
+            Choose your business type to see how BikriPOS customizes menus, barcode logic, and inventory for your day-to-day operations.
           </p>
         </div>
 
@@ -240,7 +240,7 @@ export function IndustrySolutions() {
                   Pre-Configured Setup Wizard Included
                 </div>
                 <div className="text-[11px] text-slate-400">
-                  Select "{activeIndustry.name}" during onboarding and goPOS will automatically preload relevant tax rates, units of measurement, and sample categories.
+                  Select "{activeIndustry.name}" during onboarding and BikriPOS will automatically preload relevant tax rates, units of measurement, and sample categories.
                 </div>
               </div>
             </div>

@@ -405,7 +405,7 @@ export function InteractivePOSSimulator() {
               {/* Mini Receipt Body */}
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-xs space-y-2">
                 <div className="text-center font-bold pb-2 border-b border-dashed border-slate-300">
-                  goPOS Demo Store
+                  BikriPOS Demo Store
                   <div className="text-[10px] font-normal text-slate-500">Paid with {completedOrder.method} at {completedOrder.time}</div>
                 </div>
 

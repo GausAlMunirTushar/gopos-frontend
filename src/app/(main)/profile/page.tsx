@@ -73,7 +73,7 @@ export default function ProfilePage() {
           </div>
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-gray-700">Email Address</label>
-            <Input defaultValue="admin@gopos.com" type="email" className="rounded-xl h-10" />
+            <Input defaultValue="admin@bikripos.com" type="email" className="rounded-xl h-10" />
           </div>
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-gray-700">Phone Number</label>

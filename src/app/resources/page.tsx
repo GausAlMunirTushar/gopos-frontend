@@ -164,7 +164,7 @@ export default function ResourcesPage() {
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto">
             Everything You Need to Master{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-amber-500 to-orange-500">
-              goPOS in Minutes
+              BikriPOS in Minutes
             </span>
           </h1>
 
@@ -306,7 +306,7 @@ export default function ResourcesPage() {
               Plug-and-Play Hardware Integration
             </h2>
             <p className="text-slate-600 text-sm mt-2">
-              goPOS connects directly to industry-standard thermal printers, cash drawers, and barcode scanners without expensive proprietary hardware.
+              BikriPOS connects directly to industry-standard thermal printers, cash drawers, and barcode scanners without expensive proprietary hardware.
             </p>
           </div>
 

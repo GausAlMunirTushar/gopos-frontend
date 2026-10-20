@@ -37,7 +37,7 @@ export function FeaturesBentoGrid() {
             Everything You Need to Run &amp; Scale Your Store
           </h2>
           <p className="text-slate-600 text-base sm:text-lg">
-            Say goodbye to clunky legacy systems. goPOS connects your front checkout, back office stock, employee shifts, and financials into one cohesive cloud suite.
+            Say goodbye to clunky legacy systems. BikriPOS connects your front checkout, back office stock, employee shifts, and financials into one cohesive cloud suite.
           </p>
         </div>
 

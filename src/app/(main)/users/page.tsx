@@ -22,11 +22,11 @@ interface StoreUser {
 }
 
 const mockUsers: StoreUser[] = [
-  { id: 'USR-01', name: 'John Peterson', email: 'john@gopos.com', phone: '+1 555-0199', role: 'Store Admin', branch: 'Main Branch (Dhanmondi)', status: 'Active' },
-  { id: 'USR-02', name: 'Janet Clerk', email: 'janet@gopos.com', phone: '+1 555-0182', role: 'Store Manager', branch: 'Gulshan Outlet', status: 'Active' },
-  { id: 'USR-03', name: 'Sarah Jenkins', email: 'sarah@gopos.com', phone: '+1 555-0144', role: 'Cashier', branch: 'Main Branch (Dhanmondi)', status: 'Active' },
-  { id: 'USR-04', name: 'Robert Vance', email: 'robert@gopos.com', phone: '+1 555-0163', role: 'Stock Keeper', branch: 'Central Warehouse', status: 'Active' },
-  { id: 'USR-05', name: 'Kevin Malone', email: 'kevin@gopos.com', phone: '+1 555-0128', role: 'Cashier', branch: 'Uttara Branch', status: 'Inactive' },
+  { id: 'USR-01', name: 'John Peterson', email: 'john@bikripos.com', phone: '+1 555-0199', role: 'Store Admin', branch: 'Main Branch (Dhanmondi)', status: 'Active' },
+  { id: 'USR-02', name: 'Janet Clerk', email: 'janet@bikripos.com', phone: '+1 555-0182', role: 'Store Manager', branch: 'Gulshan Outlet', status: 'Active' },
+  { id: 'USR-03', name: 'Sarah Jenkins', email: 'sarah@bikripos.com', phone: '+1 555-0144', role: 'Cashier', branch: 'Main Branch (Dhanmondi)', status: 'Active' },
+  { id: 'USR-04', name: 'Robert Vance', email: 'robert@bikripos.com', phone: '+1 555-0163', role: 'Stock Keeper', branch: 'Central Warehouse', status: 'Active' },
+  { id: 'USR-05', name: 'Kevin Malone', email: 'kevin@bikripos.com', phone: '+1 555-0128', role: 'Cashier', branch: 'Uttara Branch', status: 'Inactive' },
 ];
 
 export default function UsersPage() {

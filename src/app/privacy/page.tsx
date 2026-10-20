@@ -35,7 +35,7 @@ export default function PrivacyPolicyPage() {
         </h1>
 
         <p className="mt-3 text-slate-600 text-sm max-w-2xl mx-auto">
-          We believe your commercial store data is strictly yours. Learn how goPOS protects and isolates your confidential business information.
+          We believe your commercial store data is strictly yours. Learn how BikriPOS protects and isolates your confidential business information.
         </p>
       </section>
 
@@ -70,7 +70,7 @@ export default function PrivacyPolicyPage() {
             <section id="collection" className="scroll-mt-28 space-y-3">
               <h2 className="text-xl font-bold text-slate-900">1. Information We Collect</h2>
               <p>
-                When you create an account, configure stores, and execute transactions using <strong>goPOS</strong>, we collect only the necessary information required to operate the ERP service:
+                When you create an account, configure stores, and execute transactions using <strong>BikriPOS</strong>, we collect only the necessary information required to operate the ERP service:
               </p>
               <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
                 <li><strong>Account Information:</strong> Merchant name, company name, trade license number, business email, phone numbers, and outlet physical addresses.</li>
@@ -83,7 +83,7 @@ export default function PrivacyPolicyPage() {
             <section id="usage" className="scroll-mt-28 space-y-3">
               <h2 className="text-xl font-bold text-slate-900">2. How We Use Your Information</h2>
               <p>
-                We use collected information exclusively to provide, maintain, and optimize goPOS cloud services:
+                We use collected information exclusively to provide, maintain, and optimize BikriPOS cloud services:
               </p>
               <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
                 <li>Generating real-time financial statements, trial balances, and inventory valuation reports.</li>
@@ -96,7 +96,7 @@ export default function PrivacyPolicyPage() {
             <section id="isolation" className="scroll-mt-28 space-y-3">
               <h2 className="text-xl font-bold text-slate-900">3. Multi-Tenant Isolation &amp; Encryption</h2>
               <p>
-                goPOS utilizes a robust multi-tenant cloud architecture where each Merchant&apos;s data is strictly partitioned by unique organizational identifiers (`organizationId`). 
+                BikriPOS utilizes a robust multi-tenant cloud architecture where each Merchant&apos;s data is strictly partitioned by unique organizational identifiers (`organizationId`). 
               </p>
               <p>
                 All data in transit is encrypted using <strong>TLS 1.3 / SSL</strong>, and all database volumes and automated backups are encrypted at rest using industry-standard <strong>AES-256</strong> protocols.
@@ -106,14 +106,14 @@ export default function PrivacyPolicyPage() {
             <section id="payments" className="scroll-mt-28 space-y-3">
               <h2 className="text-xl font-bold text-slate-900">4. Payment Security &amp; MFS Gateways</h2>
               <p>
-                For subscription billing and integrated POS payments (bKash, Nagad, Visa, MasterCard), goPOS never stores raw bank PINs, CVV codes, or credit card numbers. All electronic payment transactions are tokenized through Bangladesh Bank licensed, PCI-DSS compliant payment gateways.
+                For subscription billing and integrated POS payments (bKash, Nagad, Visa, MasterCard), BikriPOS never stores raw bank PINs, CVV codes, or credit card numbers. All electronic payment transactions are tokenized through Bangladesh Bank licensed, PCI-DSS compliant payment gateways.
               </p>
             </section>
 
             <section id="cookies" className="scroll-mt-28 space-y-3">
               <h2 className="text-xl font-bold text-slate-900">5. Cookies &amp; Local Storage Policy</h2>
               <p>
-                goPOS uses minimal first-party cookies and browser local storage for essential application operation:
+                BikriPOS uses minimal first-party cookies and browser local storage for essential application operation:
               </p>
               <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
                 <li><strong>`NEXT_LOCALE`:</strong> Remembers your chosen interface language preference (English 🇬🇧 or Bangla 🇧🇩).</li>
@@ -142,8 +142,8 @@ export default function PrivacyPolicyPage() {
                 If you have questions about this Privacy Policy or wish to make an inquiry regarding your store data, please reach out to our Data Protection Officer:
               </p>
               <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs space-y-1">
-                <p className="font-bold text-slate-900">Data Protection Office — goPOS / ZivoTech</p>
-                <p>Email: <a href="mailto:privacy@gopos.com.bd" className="text-emerald-600 underline">privacy@gopos.com.bd</a></p>
+                <p className="font-bold text-slate-900">Data Protection Office — BikriPOS / ZivoTech</p>
+                <p>Email: <a href="mailto:privacy@bikripos.com.bd" className="text-emerald-600 underline">privacy@bikripos.com.bd</a></p>
                 <p>Address: Level 7, ZivoTech Tower, Road 11, Banani, Dhaka-1213, Bangladesh</p>
               </div>
             </section>

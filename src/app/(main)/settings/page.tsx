@@ -52,7 +52,7 @@ export default function SettingsPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium text-gray-700">Store Name</label>
-                    <Input defaultValue="goPOS Coffee Shop" />
+                    <Input defaultValue="BikriPOS Coffee Shop" />
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium text-gray-700">Store Category</label>
@@ -72,7 +72,7 @@ export default function SettingsPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium text-gray-700">Contact Email</label>
-                    <Input type="email" defaultValue="hello@gopos.com" />
+                    <Input type="email" defaultValue="hello@bikripos.com" />
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium text-gray-700">Phone Number</label>

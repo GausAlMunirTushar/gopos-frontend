@@ -52,7 +52,7 @@ export default function ContactPage() {
         </div>
 
         <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight max-w-3xl mx-auto">
-          Let&apos;s Discuss How <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">goPOS</span> Can Power Your Outlets
+          Let&apos;s Discuss How <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">BikriPOS</span> Can Power Your Outlets
         </h1>
 
         <p className="mt-4 text-slate-600 text-base max-w-2xl mx-auto">
@@ -75,7 +75,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-black text-slate-900">Headquarters (Dhaka)</h3>
-                  <p className="text-xs text-slate-500">goPOS Technologies Inc. / ZivoTech</p>
+                  <p className="text-xs text-slate-500">BikriPOS Technologies Inc. / ZivoTech</p>
                 </div>
               </div>
 
@@ -101,8 +101,8 @@ export default function ContactPage() {
                   <Mail className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold text-slate-900 block">Email Inquiries:</span>
-                    <span>sales@gopos.com.bd (Enterprise Demos)</span>
-                    <span className="block text-slate-500">support@gopos.com.bd (Technical Help)</span>
+                    <span>sales@bikripos.com.bd (Enterprise Demos)</span>
+                    <span className="block text-slate-500">support@bikripos.com.bd (Technical Help)</span>
                   </div>
                 </div>
 

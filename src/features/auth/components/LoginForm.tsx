@@ -14,7 +14,7 @@ import type { AuthSession } from '@/lib/auth/session';
 export function LoginForm() {
   const t = useTranslations('auth');
   const router = useRouter();
-  const [email, setEmail] = useState('admin@gopos.com');
+  const [email, setEmail] = useState('admin@bikripos.com');
   const [password, setPassword] = useState('admin123');
   const [rememberMe, setRememberMe] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,9 +35,9 @@ export function LoginForm() {
       refreshToken: 'demo-mock-refresh-token',
       user: {
         id: 'demo-admin-id',
-        name: email === 'admin@gopos.com' ? 'Super Admin' : 'Demo Owner',
+        name: email === 'admin@bikripos.com' ? 'Super Admin' : 'Demo Owner',
         email: email,
-        role: email === 'admin@gopos.com' ? 'ADMIN' : 'OWNER',
+        role: email === 'admin@bikripos.com' ? 'ADMIN' : 'OWNER',
         organization: {
           id: 'demo-org-id',
           name: 'Demo Store',
@@ -84,9 +84,9 @@ export function LoginForm() {
   return (
     <>
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Sign In</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Login</h1>
         <p className="text-gray-500 text-sm mb-6">
-          Access the goPOS panel using your email and password.
+          Access the BikriPOS panel using your email and password.
         </p>
 
         {/* Quick Demo Credentials Switcher */}
@@ -101,27 +101,27 @@ export function LoginForm() {
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
-              onClick={() => fillCredentials('admin@gopos.com', 'admin123')}
+              onClick={() => fillCredentials('admin@bikripos.com', 'admin123')}
               className={`px-2.5 py-1.5 rounded-lg text-xs font-medium text-left border transition-all cursor-pointer ${
-                email === 'admin@gopos.com'
+                email === 'admin@bikripos.com'
                   ? 'bg-white text-orange-600 border-orange-300 shadow-xs ring-1 ring-orange-200 font-semibold'
                   : 'bg-white/80 text-gray-600 border-gray-200 hover:bg-white'
               }`}
             >
               <div className="font-semibold text-gray-800 text-[11px]">Super Admin</div>
-              <div className="text-[10px] text-gray-500 truncate">admin@gopos.com</div>
+              <div className="text-[10px] text-gray-500 truncate">admin@bikripos.com</div>
             </button>
             <button
               type="button"
-              onClick={() => fillCredentials('owner@gopos.local', 'ChangeMe123!')}
+              onClick={() => fillCredentials('owner@bikripos.local', 'ChangeMe123!')}
               className={`px-2.5 py-1.5 rounded-lg text-xs font-medium text-left border transition-all cursor-pointer ${
-                email === 'owner@gopos.local'
+                email === 'owner@bikripos.local'
                   ? 'bg-white text-orange-600 border-orange-300 shadow-xs ring-1 ring-orange-200 font-semibold'
                   : 'bg-white/80 text-gray-600 border-gray-200 hover:bg-white'
               }`}
             >
               <div className="font-semibold text-gray-800 text-[11px]">Store Owner</div>
-              <div className="text-[10px] text-gray-500 truncate">owner@gopos.local</div>
+              <div className="text-[10px] text-gray-500 truncate">owner@bikripos.local</div>
             </button>
           </div>
         </div>
@@ -162,7 +162,7 @@ export function LoginForm() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@gopos.com"
+              placeholder="admin@bikripos.com"
               className="pr-10 bg-white border-gray-200 text-black placeholder:text-gray-400 focus:border-orange-500"
             />
             <Mail className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
