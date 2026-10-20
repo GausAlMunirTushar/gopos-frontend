@@ -1,6 +1,6 @@
 import { 
   LayoutGrid, Building2, Layers, CreditCard, DollarSign,
-  Globe, Settings, LucideIcon
+  Globe, Settings, Users, LucideIcon
 } from 'lucide-react';
 
 export interface SuperAdminMenuItem {
@@ -23,6 +23,13 @@ export const SUPER_ADMIN_MENU_ITEMS: SuperAdminMenuItem[] = [
     href: '/super-admin/companies',
     badge: '14',
     badgeColor: 'bg-orange-50 text-[#FF9F43]',
+  },
+  {
+    title: 'CRM & Leads',
+    icon: Users,
+    href: '/super-admin/crm',
+    badge: 'New',
+    badgeColor: 'bg-emerald-50 text-emerald-600',
   },
   {
     title: 'Packages',

@@ -1,0 +1,279 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">BikriPOS retail management illustration</title>
+  <desc id="desc">A modern orange and charcoal point-of-sale system with a dashboard, sales cards, mobile app, barcode scanner, inventory boxes, and receipt printer.</desc>
+  <defs>
+    <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff8f3"/>
+    </linearGradient>
+    <linearGradient id="device" x1="0" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#343943"/><stop offset="1" stop-color="#171a20"/>
+    </linearGradient>
+    <linearGradient id="orange" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff8a35"/><stop offset="1" stop-color="#ff6900"/>
+    </linearGradient>
+    <linearGradient id="orangeSoft" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff0e6"/><stop offset="1" stop-color="#ffe0c9"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#252a33" flood-opacity=".14"/>
+    </filter>
+    <filter id="smallShadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#252a33" flood-opacity=".12"/>
+    </filter>
+    <style>
+      text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;fill:#202124}
+      .muted{fill:#78808b}.tiny{font-size:10px}.small{font-size:12px}.medium{font-size:14px}.bold{font-weight:700}.heavy{font-weight:800}
+      .float{animation:float 5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+      .float2{animation:float 5.5s ease-in-out -1.8s infinite;transform-box:fill-box;transform-origin:center}
+      .pulse{animation:pulse 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+      .dash{stroke-dasharray:8 10;animation:dash 18s linear infinite}
+      @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+      @keyframes pulse{0%,100%{opacity:.72;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
+      @keyframes dash{to{stroke-dashoffset:-180}}
+      @media(prefers-reduced-motion:reduce){.float,.float2,.pulse,.dash{animation:none}}
+    </style>
+  </defs>
+
+  <!-- clean transparent canvas; decorative orbit -->
+  <ellipse cx="602" cy="675" rx="470" ry="34" fill="#202124" opacity=".055"/>
+  <path class="dash" d="M154 305 C178 112 432 60 602 106 S1028 142 1070 316 S1004 588 890 612" fill="none" stroke="#ff9b55" stroke-width="2.5" opacity=".75"/>
+  <circle cx="180" cy="290" r="6" fill="#ff6900" opacity=".75"/>
+  <circle cx="1012" cy="210" r="5" fill="#ff6900" opacity=".55"/>
+  <circle cx="930" cy="590" r="7" fill="#ff6900" opacity=".45"/>
+
+  <!-- soft abstract shapes -->
+  <circle cx="220" cy="560" r="104" fill="#fff0e6" opacity=".8"/>
+  <circle cx="1000" cy="500" r="112" fill="#fff0e6" opacity=".7"/>
+  <path d="M104 614 C72 574 82 535 122 514 C126 558 123 586 104 614Z" fill="#b9df9d"/>
+  <path d="M105 615 C129 570 151 560 171 563 C159 594 138 611 105 615Z" fill="#8ecb70"/>
+  <path d="M105 615 L131 565" fill="none" stroke="#6da95b" stroke-width="2"/>
+  <path d="M1040 612 C1006 568 1019 528 1057 507 C1063 552 1059 584 1040 612Z" fill="#b9df9d"/>
+  <path d="M1040 612 C1064 569 1088 558 1107 562 C1094 592 1073 608 1040 612Z" fill="#8ecb70"/>
+  <path d="M1040 612 L1067 560" fill="none" stroke="#6da95b" stroke-width="2"/>
+
+  <!-- floating KPI cards -->
+  <g class="float" filter="url(#smallShadow)">
+    <rect x="70" y="132" width="222" height="88" rx="19" fill="#fff"/>
+    <rect x="88" y="150" width="51" height="51" rx="14" fill="url(#orangeSoft)"/>
+    <path d="M103 165 L113 159 L124 165 L124 180 L113 186 L103 180Z" fill="none" stroke="#ff6900" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M103 165 L113 171 L124 165 M113 171 V186" fill="none" stroke="#ff6900" stroke-width="2"/>
+    <text x="151" y="166" class="medium bold">Inventory</text>
+    <text x="151" y="187" class="small muted">1,245 products</text>
+    <circle cx="264" cy="190" r="10" fill="#e7f7ed"/><path d="M260 190 l3 3 5 -6" fill="none" stroke="#23a566" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <g class="float2" filter="url(#smallShadow)">
+    <rect x="420" y="43" width="218" height="83" rx="19" fill="#fff"/>
+    <rect x="439" y="64" width="9" height="28" rx="3" fill="#ffb37e"/>
+    <rect x="454" y="54" width="9" height="38" rx="3" fill="#ff8a35"/>
+    <rect x="469" y="46" width="9" height="46" rx="3" fill="#ff6900"/>
+    <text x="496" y="70" class="medium bold">Sales today</text>
+    <text x="496" y="91" font-size="17" font-weight="800">৳52,430</text>
+    <text x="574" y="108" font-size="10" fill="#20a566">↗ 12%</text>
+  </g>
+  <g class="float" filter="url(#smallShadow)">
+    <rect x="840" y="110" width="240" height="88" rx="19" fill="#fff"/>
+    <rect x="858" y="128" width="51" height="51" rx="14" fill="#fff0e6"/>
+    <circle cx="877" cy="146" r="7" fill="#ff6900"/><circle cx="893" cy="149" r="6" fill="#ff8a35"/>
+    <path d="M865 168 C865 155 889 155 889 168 V172 H865Z" fill="#ff6900"/>
+    <path d="M887 164 C887 155 903 155 903 165 V171 H887Z" fill="#ff8a35"/>
+    <text x="921" y="146" class="medium bold">Customers</text>
+    <text x="921" y="168" class="small muted">892 active</text>
+    <circle cx="1046" cy="170" r="10" fill="#e7f7ed"/><path d="M1042 170 l3 3 5 -6" fill="none" stroke="#23a566" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <g class="float2" filter="url(#smallShadow)">
+    <rect x="924" y="262" width="202" height="77" rx="18" fill="#fff"/>
+    <rect x="942" y="279" width="44" height="44" rx="12" fill="#fff0e6"/>
+    <path d="M953 290 H975 M953 298 H975 M953 306 H968" stroke="#ff6900" stroke-width="3" stroke-linecap="round"/>
+    <text x="998" y="292" class="medium bold">Reports</text>
+    <text x="998" y="312" class="small muted">View analytics</text>
+  </g>
+
+  <!-- central desktop monitor -->
+  <g filter="url(#shadow)">
+    <rect x="252" y="177" width="670" height="432" rx="28" fill="url(#device)" stroke="#5c6573" stroke-width="2"/>
+    <rect x="266" y="191" width="642" height="402" rx="18" fill="url(#screen)"/>
+    <circle cx="587" cy="185" r="3" fill="#6d7480"/>
+    <!-- app header -->
+    <rect x="266" y="191" width="642" height="62" rx="18" fill="#fff"/>
+    <path d="M266 235 H908" stroke="#eceef1"/>
+    <rect x="284" y="207" width="30" height="30" rx="9" fill="url(#orange)"/>
+    <path d="M292 215 L305 215 L299 228 L291 228 L296 221 L290 221Z" fill="#fff"/>
+    <text x="323" y="228" font-size="20" font-weight="800">Bikri<tspan fill="#ff6900">POS</tspan></text>
+    <rect x="816" y="207" width="30" height="30" rx="15" fill="#f1f3f6"/>
+    <circle cx="831" cy="218" r="5" fill="#a6aeba"/><path d="M822 231 C823 221 839 221 840 231" fill="#a6aeba"/>
+    <circle cx="788" cy="222" r="13" fill="#fff0e6"/><path d="M783 222 H793 M788 217 V227" stroke="#ff6900" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- sidebar -->
+    <rect x="266" y="253" width="112" height="340" fill="#fff"/>
+    <path d="M378 253 V593" stroke="#eceef1"/>
+    <rect x="278" y="269" width="88" height="34" rx="9" fill="#fff0e6"/>
+    <rect x="290" y="280" width="13" height="13" rx="3" fill="#ff6900"/>
+    <path d="M293 286 H300 M296 282 V290" stroke="#fff" stroke-width="1.5"/>
+    <text x="311" y="291" font-size="11" font-weight="700" fill="#d95700">POS</text>
+    <g class="small muted">
+      <rect x="290" y="321" width="13" height="13" rx="3" fill="#aeb5c0"/><text x="311" y="332">Products</text>
+      <path d="M292 354 l5 -3 5 3 v9 l-5 3 -5 -3Z" fill="none" stroke="#9ba3af" stroke-width="1.6"/><text x="311" y="363">Inventory</text>
+      <circle cx="296" cy="391" r="4" fill="#aeb5c0"/><circle cx="303" cy="393" r="3" fill="#aeb5c0"/><text x="311" y="397">Customers</text>
+      <rect x="291" y="415" width="11" height="13" rx="2" fill="none" stroke="#9ba3af" stroke-width="1.5"/><path d="M294 419 H299 M294 423 H299" stroke="#9ba3af"/><text x="311" y="426">Reports</text>
+      <circle cx="296" cy="455" r="5" fill="none" stroke="#9ba3af" stroke-width="1.5"/><path d="M296 447 V450 M296 460 V463 M288 455 H291 M301 455 H304" stroke="#9ba3af" stroke-width="1.5"/><text x="311" y="459">Settings</text>
+    </g>
+    <rect x="288" y="544" width="68" height="29" rx="8" fill="#f6f7f9"/>
+    <circle cx="302" cy="558" r="5" fill="#24a66a"/><text x="312" y="562" font-size="9" fill="#606875">Online</text>
+
+    <!-- content title/search -->
+    <text x="396" y="276" font-size="16" font-weight="800">New sale</text>
+    <text x="396" y="294" class="tiny muted">Find a product to add to this order</text>
+    <rect x="396" y="306" width="304" height="31" rx="8" fill="#fff" stroke="#e5e8ed"/>
+    <circle cx="410" cy="320" r="5" fill="none" stroke="#9ba3af" stroke-width="1.5"/><path d="M414 324 L418 328" stroke="#9ba3af" stroke-width="1.5"/>
+    <text x="425" y="324" font-size="10" fill="#9ba3af">Search by product or barcode...</text>
+    <g stroke="#202124" stroke-width="1.4">
+      <path d="M680 314 V328 M684 314 V328 M688 314 V328 M692 314 V328 M696 314 V328"/>
+    </g>
+
+    <!-- product cards row 1 -->
+    <g>
+      <rect x="396" y="348" width="70" height="99" rx="9" fill="#fff" stroke="#e8ebef"/>
+      <rect x="404" y="356" width="54" height="49" rx="7" fill="#f5f8fb"/>
+      <rect x="423" y="364" width="15" height="6" rx="2" fill="#1688c7"/><rect x="421" y="369" width="19" height="25" rx="5" fill="#9ce3f8" stroke="#42b7e4"/><path d="M424 378 H437" stroke="#fff" stroke-width="2"/>
+      <text x="405" y="418" font-size="9" font-weight="600">Water bottle</text><text x="405" y="435" font-size="11" font-weight="800">৳20</text>
+
+      <rect x="474" y="348" width="70" height="99" rx="9" fill="#fff" stroke="#e8ebef"/>
+      <rect x="482" y="356" width="54" height="49" rx="7" fill="#fff7ef"/>
+      <path d="M498 367 H520 L524 374 L520 394 H498 L494 374Z" fill="#ff9a38"/><path d="M501 367 L504 361 H515 L518 367" fill="#d95700"/><circle cx="509" cy="381" r="5" fill="#fff0e6"/>
+      <text x="483" y="418" font-size="9" font-weight="600">Snack pack</text><text x="483" y="435" font-size="11" font-weight="800">৳30</text>
+
+      <rect x="552" y="348" width="70" height="99" rx="9" fill="#fff" stroke="#e8ebef"/>
+      <rect x="560" y="356" width="54" height="49" rx="7" fill="#fff7ef"/>
+      <path d="M574 367 L582 362 H592 L600 367 L608 375 L600 381 L596 377 V395 H578 V377 L574 381 L566 375Z" fill="#ff9b26"/>
+      <text x="561" y="418" font-size="9" font-weight="600">T-shirt</text><text x="561" y="435" font-size="11" font-weight="800">৳350</text>
+
+      <rect x="630" y="348" width="70" height="99" rx="9" fill="#fff" stroke="#e8ebef"/>
+      <rect x="638" y="356" width="54" height="49" rx="7" fill="#f5f8fb"/>
+      <path d="M648 384 L658 369 L674 372 L685 386 L680 391 L665 386 L657 394 L647 391Z" fill="#202124"/><path d="M659 371 L674 375" stroke="#fff" stroke-width="2"/>
+      <text x="639" y="418" font-size="9" font-weight="600">Sneakers</text><text x="639" y="435" font-size="11" font-weight="800">৳1,200</text>
+    </g>
+    <!-- product cards row 2 -->
+    <g>
+      <rect x="396" y="456" width="70" height="99" rx="9" fill="#fff" stroke="#e8ebef"/>
+      <rect x="404" y="464" width="54" height="49" rx="7" fill="#f4f9f0"/>
+      <path d="M431 501 V481 M431 490 C418 490 417 479 418 475 C429 476 432 482 431 490 M431 495 C444 494 446 485 445 481 C435 482 430 487 431 495" fill="#77bb62"/>
+      <rect x="424" y="500" width="14" height="8" rx="2" fill="#d8b08c"/>
+      <text x="405" y="526" font-size="9" font-weight="600">Plant</text><text x="405" y="543" font-size="11" font-weight="800">৳180</text>
+
+      <rect x="474" y="456" width="70" height="99" rx="9" fill="#fff" stroke="#e8ebef"/>
+      <rect x="482" y="464" width="54" height="49" rx="7" fill="#fff7ef"/>
+      <rect x="498" y="475" width="22" height="29" rx="6" fill="#b96c35"/><rect x="501" y="470" width="16" height="7" rx="2" fill="#343943"/><circle cx="509" cy="488" r="5" fill="#ffca7a"/>
+      <text x="483" y="526" font-size="9" font-weight="600">Coffee</text><text x="483" y="543" font-size="11" font-weight="800">৳250</text>
+
+      <rect x="552" y="456" width="70" height="99" rx="9" fill="#fff" stroke="#e8ebef"/>
+      <rect x="560" y="464" width="54" height="49" rx="7" fill="#f2f9fc"/>
+      <rect x="580" y="477" width="14" height="26" rx="4" fill="#64c8df"/><rect x="583" y="471" width="8" height="8" rx="2" fill="#202124"/><path d="M582 488 H592" stroke="#dff8ff" stroke-width="2"/>
+      <text x="561" y="526" font-size="9" font-weight="600">Hand wash</text><text x="561" y="543" font-size="11" font-weight="800">৳120</text>
+
+      <rect x="630" y="456" width="70" height="99" rx="9" fill="#fff" stroke="#e8ebef"/>
+      <rect x="638" y="464" width="54" height="49" rx="7" fill="#fff7ef"/>
+      <path d="M649 480 L665 471 L681 480 L665 490Z" fill="#ffb55c"/><path d="M649 480 V499 L665 508 V490Z" fill="#e8892d"/><path d="M665 490 L681 480 V499 L665 508Z" fill="#ff9e3f"/>
+      <text x="639" y="526" font-size="9" font-weight="600">Shipping box</text><text x="639" y="543" font-size="11" font-weight="800">৳40</text>
+    </g>
+
+    <!-- cart panel -->
+    <rect x="713" y="267" width="179" height="288" rx="13" fill="#fff" stroke="#e8ebef"/>
+    <text x="729" y="289" font-size="14" font-weight="800">Current sale</text>
+    <rect x="846" y="275" width="32" height="19" rx="6" fill="#f5f6f8"/><text x="854" y="288" font-size="9" fill="#78808b">Clear</text>
+    <path d="M725 302 H880" stroke="#eceef1"/>
+    <circle cx="739" cy="321" r="9" fill="#e6f7fc"/><rect x="736" y="314" width="6" height="14" rx="2" fill="#45b9df"/>
+    <text x="754" y="319" font-size="10" font-weight="600">Water bottle</text><text x="754" y="332" font-size="9" fill="#78808b">1 × ৳20</text><text x="857" y="326" font-size="10" font-weight="700">৳20</text>
+    <path d="M725 343 H880" stroke="#f0f1f3"/>
+    <circle cx="739" cy="361" r="9" fill="#fff0e6"/><rect x="734" y="354" width="10" height="14" rx="2" fill="#ff9b38"/>
+    <text x="754" y="359" font-size="10" font-weight="600">Snack pack</text><text x="754" y="372" font-size="9" fill="#78808b">2 × ৳30</text><text x="851" y="366" font-size="10" font-weight="700">৳60</text>
+    <path d="M725 383 H880" stroke="#f0f1f3"/>
+    <circle cx="739" cy="401" r="9" fill="#fff7e7"/><path d="M733 397 L739 393 L745 397 L743 405 H735Z" fill="#ffb02e"/>
+    <text x="754" y="399" font-size="10" font-weight="600">T-shirt</text><text x="754" y="412" font-size="9" fill="#78808b">1 × ৳350</text><text x="846" y="406" font-size="10" font-weight="700">৳350</text>
+    <path d="M725 425 H880" stroke="#eceef1"/>
+    <text x="729" y="445" font-size="10" fill="#78808b">Subtotal</text><text x="851" y="445" font-size="10" font-weight="700">৳430</text>
+    <text x="729" y="465" font-size="10" fill="#78808b">Discount</text><text x="848" y="465" font-size="10" font-weight="700" fill="#22a66a">−৳20</text>
+    <path d="M725 476 H880" stroke="#eceef1"/>
+    <text x="729" y="497" font-size="12" font-weight="800">Total</text><text x="838" y="497" font-size="15" font-weight="800" fill="#ff6900">৳410</text>
+    <rect x="727" y="510" width="151" height="32" rx="9" fill="url(#orange)"/>
+    <path d="M741 520 H755 L753 531 H744Z M744 523 H756 M746 535 a1.5 1.5 0 1 0 0 .1 M753 535 a1.5 1.5 0 1 0 0 .1" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="765" y="530" font-size="11" font-weight="700" fill="#fff">Checkout sale</text>
+
+    <!-- monitor stand -->
+    <path d="M520 609 L510 654 Q508 662 519 662 H661 Q673 662 669 652 L656 609Z" fill="#292e37"/>
+    <path d="M473 661 Q469 657 480 655 H697 Q707 656 701 663 L681 676 H492Z" fill="url(#device)"/>
+    <path d="M480 661 H700" stroke="#6a717d" stroke-width="2"/>
+  </g>
+
+  <!-- mobile device -->
+  <g class="float2" filter="url(#shadow)">
+    <rect x="83" y="347" width="138" height="264" rx="25" fill="url(#device)" stroke="#59616e" stroke-width="2"/>
+    <rect x="91" y="360" width="122" height="237" rx="18" fill="#fff"/>
+    <rect x="130" y="353" width="42" height="5" rx="3" fill="#777f8c"/>
+    <rect x="104" y="379" width="24" height="24" rx="7" fill="url(#orange)"/><path d="M110 385 H121 L116 397 H109 L114 391 H109Z" fill="#fff"/>
+    <text x="134" y="395" font-size="14" font-weight="800">Bikri<tspan fill="#ff6900">POS</tspan></text>
+    <text x="105" y="425" font-size="10" fill="#78808b">Today's sales</text>
+    <text x="105" y="447" font-size="20" font-weight="800">৳12,430</text>
+    <rect x="105" y="461" width="12" height="30" rx="3" fill="#ffc08f"/><rect x="123" y="449" width="12" height="42" rx="3" fill="#ff9a52"/><rect x="141" y="438" width="12" height="53" rx="3" fill="#ff6900"/><rect x="159" y="452" width="12" height="39" rx="3" fill="#ff8a35"/><rect x="177" y="430" width="12" height="61" rx="3" fill="#ff6900"/>
+    <path d="M103 500 H192" stroke="#eceef1"/>
+    <text x="105" y="520" font-size="10" fill="#78808b">Total orders</text><text x="105" y="539" font-size="16" font-weight="800">235</text><text x="168" y="539" font-size="9" fill="#20a566">↗ 12%</text>
+    <path d="M103 550 H192" stroke="#eceef1"/>
+    <text x="105" y="570" font-size="10" fill="#78808b">Products</text><text x="105" y="585" font-size="14" font-weight="800">1,245</text>
+  </g>
+
+  <!-- boxes in foreground -->
+  <g filter="url(#smallShadow)">
+    <path d="M53 608 L146 572 L238 609 L145 648Z" fill="#ffbd76"/>
+    <path d="M53 608 L145 648 V704 L53 662Z" fill="#f39a43"/>
+    <path d="M145 648 L238 609 V664 L145 704Z" fill="#e8892d"/>
+    <path d="M113 585 L168 607 L147 616 L92 594Z" fill="#ffcf95"/>
+    <rect x="171" y="658" width="45" height="25" rx="3" fill="#fff"/>
+    <path d="M180 663 V677 M184 663 V677 M188 663 V677 M193 663 V677 M198 663 V677 M203 663 V677 M208 663 V677" stroke="#202124" stroke-width="2"/>
+
+    <path d="M205 625 L291 593 L378 625 L292 661Z" fill="#ffc98e"/>
+    <path d="M205 625 L292 661 V712 L205 675Z" fill="#f6a34e"/>
+    <path d="M292 661 L378 625 V676 L292 712Z" fill="#e88b31"/>
+    <path d="M267 605 L309 622 L292 629 L250 612Z" fill="#ffdda9"/>
+    <rect x="309" y="674" width="43" height="23" rx="3" fill="#fff"/>
+    <path d="M317 678 V692 M321 678 V692 M325 678 V692 M330 678 V692 M335 678 V692 M340 678 V692 M345 678 V692" stroke="#202124" stroke-width="2"/>
+  </g>
+
+  <!-- barcode scanner -->
+  <g class="pulse" filter="url(#smallShadow)">
+    <path d="M189 531 Q192 508 216 504 L270 507 Q291 509 299 531 L311 564 L276 582 L259 551 L237 557 L231 610 Q229 629 211 630 L191 626 Q175 622 179 603 L189 531Z" fill="url(#device)" stroke="#535b68" stroke-width="2"/>
+    <path d="M216 514 Q238 509 260 519 L277 538 L245 550 L215 541Z" fill="#454c57"/>
+    <path d="M264 522 L292 537 L281 560 L252 547Z" fill="#ff6900"/>
+    <path d="M270 529 L287 538 L280 552 L262 545Z" fill="#ff4055" opacity=".9"/>
+    <path d="M256 551 L274 561 L262 580 L247 571Z" fill="#ff6900"/>
+    <path d="M199 610 L218 616" stroke="#7a8390" stroke-width="3" stroke-linecap="round"/>
+    <path d="M298 551 L319 543 M304 562 L326 560 M294 574 L313 583" stroke="#ff6900" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- receipt printer and receipt -->
+  <g class="float" filter="url(#shadow)">
+    <path d="M919 537 L1082 537 Q1104 537 1111 558 L1122 629 L1122 680 Q1122 699 1102 699 H911 Q890 699 890 678 V569 Q890 537 919 537Z" fill="url(#device)" stroke="#555e6b" stroke-width="2"/>
+    <path d="M911 561 Q911 548 925 548 H1077 Q1091 548 1096 563 L1105 600 H902Z" fill="#414854"/>
+    <rect x="934" y="565" width="139" height="15" rx="5" fill="#16191e"/>
+    <path d="M943 571 H1064" stroke="#8a929f" stroke-width="2" stroke-dasharray="3 4"/>
+    <path d="M925 470 L1080 470 L1092 576 L916 576Z" fill="#fff" stroke="#e7e9ed" stroke-width="1.5"/>
+    <rect x="946" y="486" width="23" height="23" rx="7" fill="url(#orange)"/><path d="M951 492 H964 L958 503 H951 L956 497 H951Z" fill="#fff"/>
+    <text x="975" y="501" font-size="15" font-weight="800">Bikri<tspan fill="#ff6900">POS</tspan></text>
+    <text x="941" y="525" font-size="9" fill="#78808b">SALES RECEIPT</text>
+    <path d="M941 534 H1069" stroke="#d8dce2" stroke-dasharray="3 4"/>
+    <text x="941" y="549" font-size="9">Water bottle</text><text x="1050" y="549" font-size="9">৳20</text>
+    <text x="941" y="562" font-size="9">Snack pack</text><text x="1050" y="562" font-size="9">৳60</text>
+    <path d="M941 569 H1069" stroke="#d8dce2" stroke-dasharray="3 4"/>
+    <text x="941" y="588" font-size="10" font-weight="800">TOTAL</text><text x="1040" y="588" font-size="12" font-weight="800" fill="#ff6900">৳410</text>
+    <g stroke="#202124" stroke-width="2">
+      <path d="M942 600 V620 M947 600 V620 M952 600 V620 M958 600 V620 M965 600 V620 M969 600 V620 M976 600 V620 M982 600 V620 M986 600 V620 M993 600 V620 M1001 600 V620 M1006 600 V620 M1012 600 V620 M1019 600 V620 M1025 600 V620 M1032 600 V620 M1037 600 V620 M1044 600 V620 M1050 600 V620 M1057 600 V620 M1062 600 V620"/>
+    </g>
+    <text x="971" y="635" font-size="9" fill="#78808b">Thank you!</text>
+    <rect x="960" y="661" width="94" height="22" rx="7" fill="#242830"/>
+    <rect x="972" y="668" width="11" height="9" rx="2" fill="#ff6900"/><text x="988" y="676" font-size="10" font-weight="700" fill="#fff">BikriPOS</text>
+  </g>
+
+  <!-- subtle top-right paper plane / growth accent -->
+  <g class="float2">
+    <path d="M1090 53 L1152 31 L1126 91 L1114 68Z" fill="url(#orange)" opacity=".95"/>
+    <path d="M1090 53 L1114 68 L1152 31 M1114 68 L1126 91" fill="none" stroke="#ffd0a9" stroke-width="1.5"/>
+  </g>
+</svg>

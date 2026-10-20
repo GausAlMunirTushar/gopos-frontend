@@ -125,11 +125,11 @@ export function CompaniesTable({ initialData = DEFAULT_COMPANIES }: CompaniesTab
           const company = row.original;
           return (
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#092C4C] text-white flex items-center justify-center font-black text-sm shrink-0 border border-slate-700">
+              <div className="w-10 h-10 rounded-xl bg-orange-50 text-[#FF9F43] flex items-center justify-center font-semibold text-sm shrink-0 border border-orange-100">
                 {company.name.charAt(0)}
               </div>
               <div className="min-w-0">
-                <span className="font-bold text-gray-900 block leading-tight truncate">
+                <span className="font-medium text-gray-900 block leading-tight truncate">
                   {company.name}
                 </span>
                 <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
@@ -137,7 +137,7 @@ export function CompaniesTable({ initialData = DEFAULT_COMPANIES }: CompaniesTab
                     {company.subdomain}
                   </span>
                   {company.customDomain && (
-                    <span className="text-[10px] bg-slate-100 text-slate-700 font-semibold px-1.5 py-0.2 rounded border border-slate-200">
+                    <span className="text-[10px] bg-slate-100 text-slate-700 font-medium px-1.5 py-0.2 rounded border border-slate-200">
                       {company.customDomain}
                     </span>
                   )}
@@ -154,7 +154,7 @@ export function CompaniesTable({ initialData = DEFAULT_COMPANIES }: CompaniesTab
           const company = row.original;
           return (
             <div>
-              <span className="font-semibold text-gray-800 block text-xs leading-tight">
+              <span className="font-medium text-gray-800 block text-xs leading-tight">
                 {company.owner}
               </span>
               <span className="text-[11px] text-gray-500 block font-mono mt-0.5 truncate">
@@ -174,7 +174,7 @@ export function CompaniesTable({ initialData = DEFAULT_COMPANIES }: CompaniesTab
           const plan = row.getValue('plan') as string;
           return (
             <span
-              className={`text-xs font-bold px-2.5 py-1 rounded-full border inline-block ${
+              className={`text-xs font-medium px-2.5 py-0.5 rounded-full border inline-block ${
                 plan === 'Enterprise'
                   ? 'bg-purple-50 text-purple-700 border-purple-200'
                   : plan === 'Pro'
@@ -192,7 +192,7 @@ export function CompaniesTable({ initialData = DEFAULT_COMPANIES }: CompaniesTab
         header: () => <div className="text-center">Stores</div>,
         cell: ({ row }) => (
           <div className="text-center">
-            <span className="font-bold text-gray-800 bg-gray-100 px-2 py-0.5 rounded-md text-xs border border-gray-200">
+            <span className="font-medium text-gray-800 bg-gray-100 px-2 py-0.5 rounded-md text-xs border border-gray-200">
               {row.getValue('storesCount')}
             </span>
           </div>
@@ -205,7 +205,7 @@ export function CompaniesTable({ initialData = DEFAULT_COMPANIES }: CompaniesTab
           const status = row.getValue('status') as string;
           return (
             <span
-              className={`text-xs font-bold px-2.5 py-1 rounded-full inline-flex items-center gap-1.5 border ${
+              className={`text-xs font-medium px-2.5 py-0.5 rounded-full inline-flex items-center gap-1.5 border ${
                 status === 'Active'
                   ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                   : status === 'Trial'
@@ -389,7 +389,7 @@ export function CompaniesTable({ initialData = DEFAULT_COMPANIES }: CompaniesTab
           <div className="bg-white rounded-2xl max-w-lg w-full p-6 border border-gray-200">
             <div className="flex items-start justify-between border-b border-gray-100 pb-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-[#092C4C] text-white font-black text-lg flex items-center justify-center">
+                <div className="w-12 h-12 rounded-xl bg-orange-50 text-[#FF9F43] font-bold text-lg flex items-center justify-center border border-orange-200">
                   {selectedCompany.name.charAt(0)}
                 </div>
                 <div>

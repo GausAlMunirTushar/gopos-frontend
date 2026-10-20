@@ -60,7 +60,7 @@ export default function SuperAdminDashboard() {
         
         <div className="flex items-center gap-2.5">
           <NextLink href="/super-admin/companies">
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#092C4C] hover:bg-[#061d33] text-white rounded-xl text-sm font-semibold transition-colors cursor-pointer shadow-xs">
+            <button className="flex items-center gap-2 px-4 py-2 bg-[#FF9F43] hover:bg-[#ff942a] text-white rounded-xl text-sm font-semibold transition-colors cursor-pointer shadow-xs">
               <Plus className="w-4 h-4" /> Add Company
             </button>
           </NextLink>
@@ -71,33 +71,28 @@ export default function SuperAdminDashboard() {
         </div>
       </div>
 
-      {/* Welcome Banner */}
-      <div className="bg-gradient-to-r from-[#092C4C] via-[#0D3B66] to-[#144E85] rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between text-white relative overflow-hidden shadow-sm">
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-          <div className="absolute -top-10 -left-10 w-48 h-48 bg-orange-500/10 rounded-full blur-2xl"></div>
-          <div className="absolute top-10 right-20 w-40 h-40 bg-blue-400/10 rounded-full blur-xl"></div>
-        </div>
-        
+      {/* Welcome Banner (Clean Light Theme) */}
+      <div className="bg-white border border-gray-200/90 rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between text-gray-900 relative overflow-hidden">
         <div className="relative z-10 mb-6 md:mb-0 space-y-1">
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/10 text-orange-300 text-xs font-semibold backdrop-blur-xs mb-2">
-            <Sparkles className="w-3.5 h-3.5 text-orange-400" />
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-orange-50 text-orange-600 border border-orange-200 text-xs font-medium mb-2">
+            <Sparkles className="w-3.5 h-3.5 text-orange-500" />
             <span>SaaS Platform Control Engine</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">Welcome, Platform Administrator</h2>
-          <p className="text-slate-300 text-sm sm:text-base font-normal max-w-xl">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">Welcome, Platform Administrator</h2>
+          <p className="text-gray-500 text-sm sm:text-base font-normal max-w-xl">
             14 new companies registered this week. Total platform revenue is up by <span className="text-[#FF9F43] font-bold">+18.4%</span>.
           </p>
         </div>
         
         <div className="relative z-10 flex flex-wrap items-center gap-3">
           <NextLink href="/super-admin/companies">
-            <button className="px-5 py-2.5 bg-[#FF9F43] hover:bg-[#ff942a] text-white rounded-xl font-bold text-sm transition-all shadow-md cursor-pointer flex items-center gap-2">
+            <button className="px-5 py-2.5 bg-[#FF9F43] hover:bg-[#ff942a] text-white rounded-xl font-semibold text-sm transition-all cursor-pointer flex items-center gap-2">
               <span>Manage Stores</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </NextLink>
           <NextLink href="/super-admin/packages">
-            <button className="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-xl font-semibold text-sm transition-all cursor-pointer">
+            <button className="px-5 py-2.5 bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200 rounded-xl font-medium text-sm transition-all cursor-pointer">
               Packages & Pricing
             </button>
           </NextLink>
@@ -108,7 +103,7 @@ export default function SuperAdminDashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {[
           { label: 'Total Companies', value: '5,468', trend: '+19.01%', color: 'text-emerald-600', bg: 'bg-emerald-50', icon: Building2, chartColor: '#FF9F43', sub: 'Across 12 countries' },
-          { label: 'Active Subscriptions', value: '4,598', trend: '+12.4%', color: 'text-emerald-600', bg: 'bg-emerald-50', icon: CreditCard, chartColor: '#092C4C', sub: '84.1% renewal rate' },
+          { label: 'Active Subscriptions', value: '4,598', trend: '+12.4%', color: 'text-emerald-600', bg: 'bg-emerald-50', icon: CreditCard, chartColor: '#FF9F43', sub: '84.1% renewal rate' },
           { label: 'Total POS Terminals', value: '18,340', trend: '+8.2%', color: 'text-emerald-600', bg: 'bg-emerald-50', icon: Users, chartColor: '#10B981', sub: 'Live connected cashiers' },
           { label: 'Monthly Recurring (MRR)', value: '$89,878', trend: '+16.5%', color: 'text-emerald-600', bg: 'bg-emerald-50', icon: DollarSign, chartColor: '#6366F1', sub: 'Avg $19.5/tenant' },
         ].map((item, idx) => {
@@ -116,8 +111,8 @@ export default function SuperAdminDashboard() {
           return (
             <div key={idx} className="bg-white border border-gray-100 rounded-2xl p-5 flex flex-col justify-between shadow-xs hover:shadow-sm transition-shadow">
               <div className="flex justify-between items-start mb-4">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-slate-900 text-white shadow-xs">
-                  <Icon className="w-5 h-5 text-orange-400" />
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-orange-50 border border-orange-100 text-[#FF9F43] shadow-xs">
+                  <Icon className="w-5 h-5 text-[#FF9F43]" />
                 </div>
                 <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 ${item.color} ${item.bg}`}>
                   <ArrowUpRight className="w-3 h-3" />

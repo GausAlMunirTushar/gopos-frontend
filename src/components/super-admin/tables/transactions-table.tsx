@@ -364,7 +364,7 @@ export function TransactionsTable({ initialData = DEFAULT_TRANSACTIONS }: Transa
                 </Button>
                 <Button
                   onClick={() => window.print()}
-                  className="bg-[#092C4C] hover:bg-[#061d33] text-white text-xs font-bold h-9 rounded-xl flex items-center gap-1.5 cursor-pointer"
+                  className="bg-[#FF9F43] hover:bg-[#ff942a] text-white text-xs font-semibold h-9 rounded-xl flex items-center gap-1.5 cursor-pointer"
                 >
                   <Printer className="w-3.5 h-3.5" /> Print Receipt
                 </Button>

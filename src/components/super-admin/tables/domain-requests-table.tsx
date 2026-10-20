@@ -289,20 +289,20 @@ export function DomainRequestsTable({ initialData = DEFAULT_DOMAINS }: DomainReq
 
   return (
     <div className="space-y-6">
-      {/* DNS Instructions Banner */}
-      <div className="bg-[#092C4C] text-white rounded-2xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border border-slate-700">
+      {/* DNS Instructions Banner (Clean Light Theme) */}
+      <div className="bg-white border border-gray-200/90 rounded-2xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 text-gray-900">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <Globe className="w-5 h-5 text-orange-400" />
-            <h3 className="font-bold text-base">DNS Target Server Routing</h3>
+            <Globe className="w-5 h-5 text-[#FF9F43]" />
+            <h3 className="font-bold text-base text-gray-900">DNS Target Server Routing</h3>
           </div>
-          <p className="text-slate-300 text-xs max-w-2xl leading-relaxed">
+          <p className="text-gray-600 text-xs max-w-2xl leading-relaxed">
             Tenants must create a CNAME record pointing to{' '}
-            <span className="font-mono bg-white/10 px-2 py-0.5 rounded text-orange-300 font-bold">
+            <span className="font-mono bg-orange-50 text-orange-700 border border-orange-200 px-2 py-0.5 rounded font-semibold">
               cname.bikripos.com
             </span>{' '}
             or an A Record pointing to{' '}
-            <span className="font-mono bg-white/10 px-2 py-0.5 rounded text-orange-300 font-bold">
+            <span className="font-mono bg-orange-50 text-orange-700 border border-orange-200 px-2 py-0.5 rounded font-semibold">
               104.21.45.18
             </span>
             . SSL certificates are provisioned automatically via Let&apos;s Encrypt upon DNS propagation.
@@ -323,7 +323,7 @@ export function DomainRequestsTable({ initialData = DEFAULT_DOMAINS }: DomainReq
               setVerifyingId(null);
             }, 1000);
           }}
-          className="bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold border border-white/20 cursor-pointer h-10 px-4 shrink-0"
+          className="bg-orange-50 hover:bg-orange-100 text-[#FF9F43] rounded-xl text-xs font-semibold border border-orange-200 cursor-pointer h-10 px-4 shrink-0"
         >
           <RefreshCw className={`w-3.5 h-3.5 mr-1.5 ${verifyingId === 'ALL' ? 'animate-spin' : ''}`} />
           Re-check All DNS Records
