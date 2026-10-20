@@ -3,9 +3,6 @@ import {
   Navbar, 
   HeroSection, 
   StatsBar, 
-  FeaturesBentoGrid, 
-  InteractivePOSSimulator, 
-  IndustrySolutions, 
   HardwareIntegration, 
   PricingSection, 
   TestimonialsSection, 
@@ -30,15 +27,6 @@ export default function HomePage() {
 
       {/* Social Proof & Metrics Stats Bar */}
       <StatsBar />
-
-      {/* Bento Grid Feature Breakdown */}
-      <FeaturesBentoGrid />
-
-      {/* Interactive Live Mini POS Simulator */}
-      <InteractivePOSSimulator />
-
-      {/* Industry Verticals & Workflow Solutions */}
-      <IndustrySolutions />
 
       {/* Hardware & Peripherals Compatibility */}
       <HardwareIntegration />

@@ -63,13 +63,13 @@ export function HeroSection() {
               <ArrowRight className="w-4 h-4" />
             </Link>
 
-            <a
-              href="#demo"
+            <Link
+              href="/resources"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 text-base font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-200 rounded-2xl shadow-xs hover:border-slate-300 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
             >
               <Play className="w-4 h-4 text-orange-500 fill-orange-500" />
-              <span>Try Live Interactive POS</span>
-            </a>
+              <span>Watch Tutorials &amp; Demos</span>
+            </Link>
 
             <Link
               href="/pos"

@@ -78,41 +78,35 @@ export function LanguageSwitcher({ variant = 'pill', className = '' }: LanguageS
     );
   }
 
-  // Default Pill Switcher
+  // Default Pill Switcher matching uploaded design
   return (
-    <div className={`inline-flex items-center bg-slate-100/90 dark:bg-slate-800/80 p-0.5 rounded-xl border border-slate-200/80 dark:border-slate-700 shadow-inner ${className}`}>
+    <div
+      className={`inline-flex items-center p-1 rounded-full bg-[#F1F5F9] border border-slate-200/80 shadow-2xs ${className}`}
+    >
       <button
         type="button"
         disabled={isPending}
         onClick={() => handleLanguageChange('en')}
-        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer ${
+        className={`px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
           currentLocale === 'en'
-            ? 'bg-white text-orange-600 shadow-xs ring-1 ring-slate-200/60'
-            : 'text-slate-600 hover:text-slate-900'
+            ? 'bg-white text-slate-900 shadow-xs font-bold'
+            : 'text-slate-500 hover:text-slate-800 font-medium'
         }`}
       >
-        <span>🇬🇧</span>
-        <span>EN</span>
-        {currentLocale === 'en' && !isPending && (
-          <Check className="w-3 h-3 text-orange-500 stroke-[3]" />
-        )}
+        English
       </button>
 
       <button
         type="button"
         disabled={isPending}
         onClick={() => handleLanguageChange('bn')}
-        className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer ${
+        className={`px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
           currentLocale === 'bn'
-            ? 'bg-white text-orange-600 shadow-xs ring-1 ring-slate-200/60'
-            : 'text-slate-600 hover:text-slate-900'
+            ? 'bg-white text-slate-900 shadow-xs font-bold'
+            : 'text-slate-500 hover:text-slate-800 font-medium'
         }`}
       >
-        <span>🇧🇩</span>
-        <span>বাং</span>
-        {currentLocale === 'bn' && !isPending && (
-          <Check className="w-3 h-3 text-orange-500 stroke-[3]" />
-        )}
+        বাংলা
       </button>
     </div>
   );

@@ -41,33 +41,32 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Col 2: Product Features */}
+          {/* Col 2: Navigation & Company */}
           <div className="space-y-3">
             <div className="text-xs font-bold uppercase tracking-wider text-white">
-              Product &amp; Features
+              Navigation
             </div>
             <ul className="space-y-2">
-              <li><Link href="/#features" className="hover:text-white transition-colors">Touch POS Terminal</Link></li>
-              <li><Link href="/#features" className="hover:text-white transition-colors">Inventory &amp; Stock Sync</Link></li>
-              <li><Link href="/#features" className="hover:text-white transition-colors">Offline-First Engine</Link></li>
-              <li><Link href="/#features" className="hover:text-white transition-colors">Finance &amp; Ledgers</Link></li>
-              <li><Link href="/#features" className="hover:text-white transition-colors">Promos &amp; Gift Cards</Link></li>
-              <li><Link href="/pos" className="text-orange-400 hover:text-orange-300 transition-colors flex items-center gap-1">Live POS App <ArrowUpRight className="w-3 h-3" /></Link></li>
+              <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
+              <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing Plans</Link></li>
+              <li><Link href="/about" className="hover:text-white transition-colors">About goPOS</Link></li>
+              <li><Link href="/resources" className="hover:text-white transition-colors">Resources &amp; Tutorials</Link></li>
+              <li><Link href="/contact" className="hover:text-white transition-colors">Contact Sales</Link></li>
+              <li><Link href="/pos" className="text-orange-400 hover:text-orange-300 transition-colors flex items-center gap-1">Live POS Terminal <ArrowUpRight className="w-3 h-3" /></Link></li>
             </ul>
           </div>
 
-          {/* Col 3: Industry Solutions */}
+          {/* Col 3: Learning & Resources */}
           <div className="space-y-3">
             <div className="text-xs font-bold uppercase tracking-wider text-white">
-              Solutions
+              Resources &amp; Learn
             </div>
             <ul className="space-y-2">
-              <li><Link href="/#solutions" className="hover:text-white transition-colors">Supermarkets &amp; Grocery</Link></li>
-              <li><Link href="/#solutions" className="hover:text-white transition-colors">Cafes &amp; Restaurants</Link></li>
-              <li><Link href="/#solutions" className="hover:text-white transition-colors">Fashion &amp; Boutiques</Link></li>
-              <li><Link href="/#solutions" className="hover:text-white transition-colors">Pharmacies &amp; Clinics</Link></li>
-              <li><Link href="/#solutions" className="hover:text-white transition-colors">Wholesale &amp; Distributors</Link></li>
-              <li><Link href="/#hardware" className="hover:text-white transition-colors">Hardware Compatibility</Link></li>
+              <li><Link href="/resources#tutorials" className="hover:text-white transition-colors">Video Tutorials</Link></li>
+              <li><Link href="/resources#hardware" className="hover:text-white transition-colors">Hardware Setup (80mm ESC/POS)</Link></li>
+              <li><Link href="/resources#guides" className="hover:text-white transition-colors">Multi-Branch Inventory Guide</Link></li>
+              <li><Link href="/resources#faq" className="hover:text-white transition-colors">Frequently Asked Questions</Link></li>
+              <li><Link href="/contact" className="hover:text-white transition-colors">Book a Live Demo</Link></li>
             </ul>
           </div>
 
@@ -77,12 +76,11 @@ export function Footer() {
               Account &amp; Support
             </div>
             <ul className="space-y-2">
-              <li><Link href="/login" className="hover:text-white transition-colors">Sign In to Store</Link></li>
+              <li><Link href="/login" className="hover:text-white font-semibold transition-colors">Login to Store</Link></li>
               <li><Link href="/register" className="hover:text-white transition-colors">Start 14-Day Free Trial</Link></li>
-              <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing Plans</Link></li>
-              <li><Link href="/contact" className="hover:text-white transition-colors flex items-center gap-1">Contact &amp; Support</Link></li>
-              <li><Link href="/#faq" className="hover:text-white transition-colors">Frequently Asked Questions</Link></li>
-              <li><Link href="/dashboard" className="hover:text-white transition-colors">Admin Dashboard</Link></li>
+              <li><Link href="/pricing" className="hover:text-white transition-colors">Subscription Pricing</Link></li>
+              <li><Link href="/contact" className="hover:text-white transition-colors flex items-center gap-1">Contact &amp; 24/7 Support</Link></li>
+              <li><Link href="/dashboard" className="hover:text-white transition-colors">Merchant Portal</Link></li>
             </ul>
           </div>
 
