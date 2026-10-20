@@ -3,10 +3,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { Navbar, Footer } from '@/components/landing';
-import { FileText, Shield, Scale, Clock, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Scale, FileText, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
-export default function TermsPage() {
-  const lastUpdated = 'September 17, 2026';
+export default function TermsOfServicePage() {
+  const lastUpdated = 'October 20, 2026';
 
   const sections = [
     { id: 'acceptance', title: '1. Acceptance of Terms' },
@@ -27,17 +27,17 @@ export default function TermsPage() {
 
       {/* Header */}
       <section className="pt-32 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-200/80 text-slate-700 text-xs font-semibold mb-4">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 text-orange-700 text-xs font-semibold mb-4 border border-orange-200">
           <Scale className="w-3.5 h-3.5 text-orange-600" />
-          <span>Legal Agreement &bull; Effective {lastUpdated}</span>
+          <span>SaaS Service Agreement &bull; Effective {lastUpdated}</span>
         </div>
 
         <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight">
-          Terms &amp; Conditions of Service
+          Terms of Service
         </h1>
 
-        <p className="mt-3 text-slate-600 text-sm max-w-2xl mx-auto">
-          Please read these terms carefully before creating an account or operating BikriPOS software at your retail outlets.
+        <p className="mt-3 text-slate-600 text-sm max-w-2xl mx-auto leading-relaxed">
+          Please review these Terms of Service carefully before creating an account or deploying BikriPOS software across your retail store branches.
         </p>
       </section>
 
@@ -46,7 +46,7 @@ export default function TermsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
           {/* Left Table of Contents */}
-          <div className="hidden lg:block lg:col-span-4 sticky top-28 bg-white rounded-2xl p-6 border border-slate-200 shadow-xs">
+          <div className="hidden lg:block lg:col-span-4 sticky top-28 bg-white rounded-2xl p-6 border border-slate-200">
             <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
               Table of Contents
             </div>
@@ -55,57 +55,60 @@ export default function TermsPage() {
                 <a
                   key={sec.id}
                   href={`#${sec.id}`}
-                  className="block text-xs font-medium text-slate-600 hover:text-orange-600 hover:bg-orange-50/60 px-2.5 py-1.5 rounded-lg transition-colors"
+                  className="block text-xs font-medium text-slate-600 hover:text-orange-600 hover:bg-orange-50/70 px-2.5 py-1.5 rounded-lg transition-colors"
                 >
                   {sec.title}
                 </a>
               ))}
             </nav>
             <div className="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-500">
-              Need clarification? <Link href="/contact" className="text-orange-600 font-semibold hover:underline">Contact our legal team</Link>.
+              Need clarification?{' '}
+              <Link href="/contact" className="text-orange-600 font-semibold hover:underline">
+                Contact our legal team
+              </Link>.
             </div>
           </div>
 
           {/* Right Detailed Clauses */}
-          <div className="lg:col-span-8 bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm space-y-10 text-xs sm:text-sm text-slate-700 leading-relaxed">
+          <div className="lg:col-span-8 bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 space-y-10 text-xs sm:text-sm text-slate-700 leading-relaxed">
             
             <section id="acceptance" className="scroll-mt-28 space-y-3">
               <h2 className="text-xl font-bold text-slate-900">1. Acceptance of Terms</h2>
               <p>
-                By registering for an account, accessing, or utilizing the <strong>BikriPOS</strong> Point of Sale, ERP, Inventory, and Accounting platform (collectively the &quot;Service&quot;), provided by <strong>BikriPOS Technologies Inc. / ZivoTech</strong> (&quot;BikriPOS&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;), you (&quot;Merchant&quot;, &quot;Subscriber&quot;, or &quot;User&quot;) agree to be bound by these Terms and Conditions. If you are entering into this agreement on behalf of a company, retail business, or partnership, you represent that you have the authority to bind such entity.
+                By registering for an account, accessing, or utilizing the <strong>BikriPOS</strong> Point of Sale, ERP, Inventory, and Accounting cloud platform (collectively the &quot;Service&quot;), provided by <strong>BikriPOS Technologies Inc. / ZivoTech</strong> (&quot;BikriPOS&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;), you (&quot;Merchant&quot;, &quot;Subscriber&quot;, or &quot;User&quot;) agree to be bound by these Terms of Service. If you are entering into this agreement on behalf of a company, retail chain, or partnership, you represent that you have full legal authority to bind such entity.
               </p>
             </section>
 
             <section id="services" className="scroll-mt-28 space-y-3">
               <h2 className="text-xl font-bold text-slate-900">2. Description of Cloud POS &amp; ERP Services</h2>
               <p>
-                BikriPOS is a Software-as-a-Service (SaaS) platform providing digital point of sale checkout, inventory control, purchase order tracking, HRM/payroll, double-entry financial reporting, and customer loyalty management. We reserve the right to improve, update, or modify features of the platform to deliver higher speed, security, and stability.
+                BikriPOS is a Software-as-a-Service (SaaS) cloud platform providing digital checkout, real-time inventory synchronization, barcode generation, multi-warehouse transfers, cashier shift management, double-entry financial reporting, and customer loyalty management. We reserve the right to deploy updates, improvements, and performance patches to deliver maximum speed, security, and stability.
               </p>
             </section>
 
             <section id="accounts" className="scroll-mt-28 space-y-3">
               <h2 className="text-xl font-bold text-slate-900">3. Merchant Accounts &amp; Security</h2>
               <p>
-                Merchants are responsible for maintaining the confidentiality of login credentials, employee PIN codes, and API keys. Any action taken under your tenant workspace shall be considered authorized by your organization. You agree to notify BikriPOS immediately of any unauthorized access or breach of security.
+                Merchants are responsible for maintaining the confidentiality of administrative credentials, cashier PIN codes, and API tokens. Any transaction or operation conducted under your tenant workspace shall be considered authorized by your organization. You agree to notify BikriPOS immediately of any unauthorized access or breach of security.
               </p>
             </section>
 
             <section id="billing" className="scroll-mt-28 space-y-3">
               <h2 className="text-xl font-bold text-slate-900">4. Subscription Fees, BDT Billing &amp; Taxes</h2>
               <p>
-                All plan subscription prices are quoted in Bangladeshi Taka (BDT ৳) unless specified otherwise. Subscription fees are billed in advance on a monthly or annual basis via bKash, Nagad, bank transfer, or major credit cards.
+                All plan subscription prices are quoted in Bangladeshi Taka (BDT ৳) unless specified otherwise. Subscription fees are billed in advance on a monthly or annual basis via bKash Merchant, Nagad, direct bank transfer, or major credit cards.
               </p>
               <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
-                <li><strong>Free Trial:</strong> New accounts receive a 14-day free trial. Upon expiration, access to cashier terminals requires an active subscription.</li>
-                <li><strong>VAT / NBR Compliance:</strong> Invoiced subscription amounts may be subject to prevailing Value Added Tax (VAT) as mandated by the National Board of Revenue (NBR) Bangladesh.</li>
-                <li><strong>Refunds:</strong> Subscription fees are non-refundable once billed, but cancellation takes effect immediately at the end of the billing cycle without penalties.</li>
+                <li><strong>Free Trial:</strong> New accounts receive a 14-day free trial. Upon expiration, access to active cashier terminals requires a paid subscription package.</li>
+                <li><strong>NBR &amp; VAT Compliance:</strong> Invoiced subscription amounts may be subject to prevailing Value Added Tax (VAT) as mandated by the National Board of Revenue (NBR) Bangladesh.</li>
+                <li><strong>Refund Policy:</strong> Subscription fees are non-refundable once billed, but cancellation takes effect immediately at the conclusion of the billing cycle without penalties.</li>
               </ul>
             </section>
 
             <section id="data" className="scroll-mt-28 space-y-3">
               <h2 className="text-xl font-bold text-slate-900">5. Data Ownership &amp; Privacy</h2>
               <p>
-                <strong>You retain 100% full ownership</strong> of all business data, customer lists, inventory balances, pricing, and sales transactions entered into your BikriPOS store. BikriPOS will never sell, rent, or commercialize your transactional data to third parties. We enforce strict database isolation, tenant-level security keys, and encrypted backups.
+                <strong>You retain 100% full ownership</strong> of all business data, customer records, inventory balances, pricing, and sales transactions entered into your BikriPOS store. BikriPOS will never sell, rent, or commercialize your transactional data to third parties. We enforce strict database partition isolation, tenant-level security keys, and encrypted backups.
               </p>
             </section>
 
@@ -140,7 +143,7 @@ export default function TermsPage() {
             <section id="governing" className="scroll-mt-28 space-y-3">
               <h2 className="text-xl font-bold text-slate-900">10. Governing Law (Bangladesh Jurisdiction)</h2>
               <p>
-                These Terms shall be governed by and construed in accordance with the laws of the People&apos;s Republic of Bangladesh. Any dispute arising under or in connection with these Terms shall be subject to the exclusive jurisdiction of the competent courts in Dhaka, Bangladesh.
+                These Terms of Service shall be governed by and construed in accordance with the laws of the People&apos;s Republic of Bangladesh. Any dispute arising under or in connection with these Terms shall be subject to the exclusive jurisdiction of the competent courts in Dhaka, Bangladesh.
               </p>
             </section>
 

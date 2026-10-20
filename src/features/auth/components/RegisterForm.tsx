@@ -232,11 +232,11 @@ export function RegisterForm() {
             />
             <span className="text-xs text-gray-600 leading-tight">
               I agree to the{' '}
-              <NextLink href="/terms" className="text-orange-600 font-semibold hover:underline">
+              <NextLink href="/terms-of-service" className="text-orange-600 font-semibold hover:underline">
                 Terms of Service
               </NextLink>{' '}
               and{' '}
-              <NextLink href="/privacy" className="text-orange-600 font-semibold hover:underline">
+              <NextLink href="/privacy-policy" className="text-orange-600 font-semibold hover:underline">
                 Privacy Policy
               </NextLink>
               .

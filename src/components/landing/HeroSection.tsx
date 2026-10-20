@@ -3,14 +3,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { 
-  ArrowRight, 
-  Sparkles, 
-  Zap, 
-  ShieldCheck, 
-  TrendingUp, 
-  Smartphone, 
-  CheckCircle2, 
+import {
+  ArrowRight,
+  Sparkles,
+  Zap,
+  ShieldCheck,
+  TrendingUp,
+  Smartphone,
+  CheckCircle2,
   ShoppingCart,
   QrCode,
   DollarSign,
@@ -34,7 +34,7 @@ export function HeroSection() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto space-y-6">
-          
+
           {/* Badge Pill */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100/80 border border-orange-200/80 shadow-xs text-orange-800 text-xs sm:text-sm font-semibold hover:bg-orange-100 transition-colors animate-fade-in">
             <span className="flex h-2 w-2 rounded-full bg-orange-500 animate-ping" />
@@ -87,14 +87,6 @@ export function HeroSection() {
               <Play className="w-4 h-4 text-orange-500 fill-orange-500" />
               <span>{isBn ? 'টিউটোরিয়াল ও ডেমো দেখুন' : 'Watch Tutorials & Demos'}</span>
             </Link>
-
-            <Link
-              href="/pos"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 text-base font-semibold text-slate-600 hover:text-orange-600 transition-colors"
-            >
-              <span>{isBn ? 'পিওএস টার্মিনাল খুলুন' : 'Launch POS App'}</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
           </div>
 
           {/* Trust Guarantees */}
@@ -123,7 +115,7 @@ export function HeroSection() {
           {/* Main App Window Mockup */}
           <div className="relative rounded-3xl p-2 sm:p-3 bg-gradient-to-b from-slate-200/80 via-slate-100/60 to-white border border-slate-300/80 shadow-2xl shadow-slate-900/15 backdrop-blur-xl">
             <div className="bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 shadow-inner">
-              
+
               {/* Window Header */}
               <div className="bg-slate-950 px-4 py-3 flex items-center justify-between border-b border-slate-800">
                 <div className="flex items-center gap-2">
@@ -147,7 +139,7 @@ export function HeroSection() {
 
               {/* Terminal Screen Preview Mock */}
               <div className="p-4 sm:p-6 bg-slate-900 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 text-slate-100">
-                
+
                 {/* Left side: Product Quick Grid */}
                 <div className="lg:col-span-7 space-y-4">
                   <div className="flex items-center justify-between gap-3">
@@ -174,8 +166,8 @@ export function HeroSection() {
                       { name: 'Avocado Toast', price: '$7.50', stock: '15 pcs', bg: 'from-lime-900/40 to-green-950/40', border: 'border-lime-500/30' },
                       { name: 'Berry Smoothie', price: '$5.80', stock: '32 pcs', bg: 'from-purple-900/40 to-pink-950/40', border: 'border-purple-500/30' },
                     ].map((item, idx) => (
-                      <div 
-                        key={idx} 
+                      <div
+                        key={idx}
                         className={`p-3 rounded-xl bg-gradient-to-br ${item.bg} border ${item.border} hover:border-orange-400 hover:scale-[1.02] transition-all cursor-pointer group`}
                       >
                         <div className="flex justify-between items-start mb-2">

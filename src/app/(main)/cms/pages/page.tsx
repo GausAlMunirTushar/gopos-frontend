@@ -21,7 +21,7 @@ interface CmsPageItem {
 
 const mockCmsPages: CmsPageItem[] = [
   { id: 'PG-01', title: 'Privacy Policy', slug: '/privacy-policy', lastUpdated: '12 Oct 2026', status: 'Published', views: 1420 },
-  { id: 'PG-02', title: 'Terms & Conditions', slug: '/terms', lastUpdated: '10 Oct 2026', status: 'Published', views: 980 },
+  { id: 'PG-02', title: 'Terms of Service', slug: '/terms-of-service', lastUpdated: '10 Oct 2026', status: 'Published', views: 980 },
   { id: 'PG-03', title: 'About Our Store', slug: '/about', lastUpdated: '04 Oct 2026', status: 'Published', views: 3200 },
   { id: 'PG-04', title: 'Refund & Return Policy', slug: '/refund-policy', lastUpdated: '28 Sep 2026', status: 'Draft', views: 0 },
 ];

@@ -92,8 +92,8 @@ export function Footer() {
             &copy; {new Date().getFullYear()} BikriPOS Technologies Inc. All rights reserved.
           </div>
           <div className="flex items-center gap-6">
-            <Link href="/privacy" className="hover:text-slate-700 transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-slate-700 transition-colors">Terms of Service</Link>
+            <Link href="/privacy-policy" className="hover:text-slate-700 transition-colors">Privacy Policy</Link>
+            <Link href="/terms-of-service" className="hover:text-slate-700 transition-colors">Terms of Service</Link>
             <Link href="/contact" className="hover:text-slate-700 transition-colors">Security &amp; Support</Link>
           </div>
         </div>
