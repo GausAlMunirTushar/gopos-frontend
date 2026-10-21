@@ -33,11 +33,6 @@ export const MENU_ITEMS: MenuItem[] = [
     href: '/dashboard',
   },
   {
-    title: 'Super Admin',
-    icon: UserCog,
-    href: '/super-admin',
-  },
-  {
     title: 'Inventory',
     icon: Package,
     items: [
