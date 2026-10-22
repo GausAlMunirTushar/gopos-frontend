@@ -31,12 +31,14 @@ export function Navbar() {
   const navLinks = [
     { label: isBn ? 'হোম' : 'Home', href: '/' },
     { label: isBn ? 'মূল্যতালিকা' : 'Pricing', href: '/pricing' },
+    { label: isBn ? 'ডাউনলোড' : 'Download', href: '/download' },
     { label: isBn ? 'আমাদের সম্পর্কে' : 'About', href: '/about' },
     { 
       label: isBn ? 'রিসোর্স' : 'Resources', 
       href: '/resources',
       hasDropdown: true,
       items: [
+        { title: isBn ? 'ডাউনলোড সেন্টার' : 'Download Apps', desc: isBn ? 'উইন্ডোজ, অ্যান্ড্রয়েড ও ওয়েব' : 'Windows, Android & Web App', href: '/download' },
         { title: isBn ? 'ভিডিও টিউটোরিয়াল' : 'Video Tutorials', desc: isBn ? 'বিলিং ও ক্যাশিয়ার ট্রেইনিং' : 'Cashier & billing training videos', href: '/resources#tutorials' },
         { title: isBn ? 'হার্ডওয়্যার সেটআপ' : 'Hardware Setup', desc: isBn ? '৮০মিমি থার্মাল প্রিন্টার গাইড' : '80mm ESC/POS thermal printers guide', href: '/resources#hardware' },
         { title: isBn ? 'ক্যাটালগ ও গাইড' : 'Starter Guides', desc: isBn ? 'এক্সেল ইমপোর্ট ও ভ্যাট গাইড' : 'Product Excel templates & tax guides', href: '/resources#guides' },

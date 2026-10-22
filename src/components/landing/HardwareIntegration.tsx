@@ -52,24 +52,19 @@ export function HardwareIntegration() {
   ];
 
   return (
-    <section id="hardware" className="py-24 bg-slate-900 text-white relative overflow-hidden">
-      
-      {/* Background radial glow */}
-      <div className="absolute top-1/3 left-10 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-
+    <section id="hardware" className="py-24 bg-white text-slate-900 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-orange-400 text-xs font-semibold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-orange-200 text-orange-600 text-xs font-semibold uppercase tracking-wider">
             <Cpu className="w-3.5 h-3.5" />
             <span>Hardware Agnostic</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
             Works with the Hardware You Already Own
           </h2>
-          <p className="text-slate-400 text-base sm:text-lg">
+          <p className="text-slate-600 text-base sm:text-lg">
             No expensive proprietary locked-in hardware required. Run BikriPOS on any browser, tablet, PC, or Android terminal, and connect your existing peripherals seamlessly.
           </p>
         </div>
@@ -81,28 +76,28 @@ export function HardwareIntegration() {
             return (
               <div
                 key={idx}
-                className="bg-slate-950/70 border border-slate-800 rounded-3xl p-6 sm:p-7 hover:border-orange-500/40 hover:bg-slate-950 transition-all duration-300 group flex flex-col justify-between"
+                className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-7 hover:border-orange-500/60 hover:shadow-lg transition-all duration-300 group flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">
-                    <div className="w-12 h-12 rounded-2xl bg-slate-900 text-orange-400 border border-slate-800 flex items-center justify-center group-hover:scale-110 group-hover:bg-orange-500 group-hover:text-white transition-all">
+                    <div className="w-12 h-12 rounded-2xl bg-orange-50 text-orange-600 border border-orange-100 flex items-center justify-center group-hover:scale-110 group-hover:bg-orange-500 group-hover:text-white transition-all">
                       <Icon className="w-6 h-6" />
                     </div>
-                    <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-slate-900 text-slate-400 border border-slate-800">
+                    <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-slate-50 text-slate-600 border border-slate-200">
                       {hw.badge}
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-orange-300 transition-colors">
+                  <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-orange-600 transition-colors">
                     {hw.title}
                   </h3>
 
-                  <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                  <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
                     {hw.desc}
                   </p>
                 </div>
 
-                <div className="pt-4 mt-4 border-t border-slate-900 flex items-center gap-1.5 text-emerald-400 text-xs font-semibold">
+                <div className="pt-4 mt-4 border-t border-slate-100 flex items-center gap-1.5 text-emerald-600 text-xs font-semibold">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   <span>Plug &amp; Play Verified</span>
                 </div>
@@ -112,19 +107,19 @@ export function HardwareIntegration() {
         </div>
 
         {/* Hardware Guarantee Banner */}
-        <div className="mt-12 bg-slate-950 rounded-2xl p-6 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-12 bg-slate-50 rounded-2xl p-6 border border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3 text-center sm:text-left">
-            <div className="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
               <Zap className="w-5 h-5" />
             </div>
             <div>
-              <div className="text-sm font-bold text-white">Unsure if your existing thermal printer or scanner will work?</div>
-              <div className="text-xs text-slate-400">Our hardware team provides free compatibility assistance and plug-and-play drivers.</div>
+              <div className="text-sm font-bold text-slate-900">Unsure if your existing thermal printer or scanner will work?</div>
+              <div className="text-xs text-slate-500">Our hardware team provides free compatibility assistance and plug-and-play drivers.</div>
             </div>
           </div>
           <a
             href="#faq"
-            className="px-4 py-2 text-xs font-bold text-white bg-slate-800 hover:bg-slate-700 rounded-xl transition-colors whitespace-nowrap"
+            className="px-4 py-2 text-xs font-bold text-slate-700 bg-white hover:bg-slate-100 border border-slate-200 rounded-xl transition-colors whitespace-nowrap shadow-sm"
           >
             Check Hardware Guide
           </a>

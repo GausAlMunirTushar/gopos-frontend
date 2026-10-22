@@ -4,6 +4,7 @@ import {
   HeroSection, 
   StatsBar, 
   HardwareIntegration, 
+  DownloadSection,
   PricingSection, 
   TestimonialsSection, 
   FaqSection, 
@@ -30,6 +31,9 @@ export default function HomePage() {
 
       {/* Hardware & Peripherals Compatibility */}
       <HardwareIntegration />
+
+      {/* Official Download Options (Windows, Android & Web App) */}
+      <DownloadSection showHero={true} showHelpGuide={false} className="bg-slate-50/50 border-y border-slate-100" />
 
       {/* Transparent Pricing Plans & Billing Toggle */}
       <PricingSection />

@@ -22,7 +22,7 @@ import {
   Video,
   ChevronDown
 } from 'lucide-react';
-import { Navbar, Footer } from '@/components/landing';
+import { Navbar, Footer, DownloadSection } from '@/components/landing';
 
 interface TutorialVideo {
   id: string;
@@ -435,6 +435,23 @@ export default function ResourcesPage() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Official App & Installer Downloads Section */}
+      <section id="downloads" className="py-8 bg-slate-50 border-t border-slate-200/70">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-8">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 text-orange-700 text-xs font-bold mb-3">
+            <Download className="w-4 h-4 text-[#FF9F43]" />
+            <span>Multi-Device POS Apps</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            Download BikriPOS Apps
+          </h2>
+          <p className="text-sm text-slate-500 max-w-lg mx-auto mt-1">
+            Install the desktop software for retail shops or manage transactions on the go with Android &amp; Web app.
+          </p>
+        </div>
+        <DownloadSection showHero={false} showHelpGuide={true} />
       </section>
 
       {/* Video Modal Player */}

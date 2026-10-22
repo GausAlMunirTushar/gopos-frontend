@@ -5,6 +5,7 @@ export { InteractivePOSSimulator } from './InteractivePOSSimulator';
 export { FeaturesBentoGrid } from './FeaturesBentoGrid';
 export { IndustrySolutions } from './IndustrySolutions';
 export { HardwareIntegration } from './HardwareIntegration';
+export { DownloadSection } from './DownloadSection';
 export { PricingSection } from './PricingSection';
 export { TestimonialsSection } from './TestimonialsSection';
 export { FaqSection } from './FaqSection';
