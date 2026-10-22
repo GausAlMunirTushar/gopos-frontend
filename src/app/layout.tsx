@@ -16,6 +16,11 @@ const hindSiliguri = Hind_Siliguri({
 export const metadata: Metadata = {
   title: "BikriPOS - Inventory & POS",
   description: "Modern cloud-first SaaS product for POS and Multi-Branch Inventory",
+  icons: {
+    icon: "/logo.svg",
+    shortcut: "/logo.svg",
+    apple: "/logo.svg",
+  },
 };
 
 export default async function RootLayout({

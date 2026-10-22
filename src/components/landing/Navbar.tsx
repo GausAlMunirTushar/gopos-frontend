@@ -2,13 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useLocale } from 'next-intl';
 import { 
   Menu, 
   X, 
   ArrowRight, 
-  Store, 
   ChevronRight,
   Sparkles
 } from 'lucide-react';
@@ -54,9 +54,14 @@ export function Navbar() {
         <div className="flex items-center justify-between">
           {/* Left: Brand Logo (BikriPOS Orange/Amber Primary) */}
           <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-white group-hover:scale-105 transition-transform">
-              <Store className="w-5 h-5 stroke-[2.5]" />
-            </div>
+            <Image
+              src="/logo.svg"
+              alt="BikriPOS Logo"
+              width={40}
+              height={40}
+              className="w-10 h-10 rounded-xl group-hover:scale-105 transition-transform shadow-xs object-contain"
+              priority
+            />
             <div className="flex flex-col">
               <span className="text-2xl font-black tracking-tight text-slate-900 leading-none">
                 Bikri<span className="text-orange-500">POS</span>

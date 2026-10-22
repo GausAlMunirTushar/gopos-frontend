@@ -1,7 +1,38 @@
 import React from 'react';
 import Link from 'next/link';
-import { Store, ArrowUpRight, PhoneCall } from 'lucide-react';
-import { LanguageSwitcher } from '@/components/shared/LanguageSwitcher';
+import Image from 'next/image';
+import { FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
+import type { IconType } from 'react-icons';
+
+interface SocialLink {
+  name: string;
+  href: string;
+  icon: IconType;
+}
+
+const SOCIAL_LINKS: SocialLink[] = [
+  {
+    name: 'Facebook',
+    href: 'https://facebook.com/bikripos',
+    icon: FaFacebookF,
+  },
+  {
+    name: 'X (Twitter)',
+    href: 'https://x.com/bikripos',
+    icon: FaXTwitter,
+  },
+  {
+    name: 'Instagram',
+    href: 'https://instagram.com/bikripos',
+    icon: FaInstagram,
+  },
+  {
+    name: 'YouTube',
+    href: 'https://youtube.com/@bikripos',
+    icon: FaYoutube,
+  },
+];
 
 export function Footer() {
   return (
@@ -14,9 +45,13 @@ export function Footer() {
           {/* Col 1: Brand Info (2 Cols on desktop) */}
           <div className="col-span-2 space-y-4">
             <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center">
-                <Store className="w-5 h-5 text-white stroke-[2.5]" />
-              </div>
+              <Image
+                src="/logo.svg"
+                alt="BikriPOS Logo"
+                width={36}
+                height={36}
+                className="w-9 h-9 rounded-xl shadow-xs object-contain"
+              />
               <div className="flex flex-col">
                 <span className="text-xl font-black tracking-tight text-slate-900 leading-none">
                   Bikri<span className="text-orange-500">POS</span>
@@ -31,17 +66,32 @@ export function Footer() {
               The modern point of sale and cloud inventory management system built to empower retail stores, supermarkets, restaurants, and multi-location chains worldwide.
             </p>
 
-            <div className="pt-1 flex items-center gap-2 text-[11px] text-emerald-600 font-medium">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>All Systems Operational &bull; 99.99% Uptime</span>
-            </div>
-
+            {/* Social Media Links from react-icons */}
             <div className="pt-2">
-              <LanguageSwitcher variant="footer" />
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-2.5">
+                Connect With Us
+              </div>
+              <div className="flex items-center gap-2">
+                {SOCIAL_LINKS.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={item.name}
+                      className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-orange-600 hover:border-orange-200 hover:bg-orange-50/50 hover:scale-105 transition-all shadow-xs"
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                    </a>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
-          {/* Col 2: Navigation & Company */}
+          {/* Col 2: Navigation */}
           <div className="space-y-3">
             <div className="text-xs font-bold uppercase tracking-wider text-slate-900">
               Navigation
@@ -51,12 +101,12 @@ export function Footer() {
               <li><Link href="/pricing" className="hover:text-orange-600 transition-colors">Pricing Plans</Link></li>
               <li><Link href="/about" className="hover:text-orange-600 transition-colors">About BikriPOS</Link></li>
               <li><Link href="/resources" className="hover:text-orange-600 transition-colors">Resources &amp; Tutorials</Link></li>
+              <li><Link href="/download" className="hover:text-orange-600 transition-colors">Download Apps</Link></li>
               <li><Link href="/contact" className="hover:text-orange-600 transition-colors">Contact Sales</Link></li>
-              <li><Link href="/pos" className="text-orange-600 hover:text-orange-700 transition-colors flex items-center gap-1 font-semibold">Live POS Terminal <ArrowUpRight className="w-3 h-3" /></Link></li>
             </ul>
           </div>
 
-          {/* Col 3: Learning & Resources */}
+          {/* Col 3: Resources & Learn */}
           <div className="space-y-3">
             <div className="text-xs font-bold uppercase tracking-wider text-slate-900">
               Resources &amp; Learn
@@ -70,17 +120,17 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Col 4: Account & Support */}
+          {/* Col 4: Solutions */}
           <div className="space-y-3">
             <div className="text-xs font-bold uppercase tracking-wider text-slate-900">
-              Account &amp; Support
+              Solutions
             </div>
             <ul className="space-y-2">
-              <li><Link href="/login" className="hover:text-orange-600 font-semibold transition-colors">Login to Store</Link></li>
-              <li><Link href="/register" className="hover:text-orange-600 transition-colors">Start 14-Day Free Trial</Link></li>
-              <li><Link href="/pricing" className="hover:text-orange-600 transition-colors">Subscription Pricing</Link></li>
-              <li><Link href="/contact" className="hover:text-orange-600 transition-colors flex items-center gap-1">Contact &amp; 24/7 Support</Link></li>
-              <li><Link href="/dashboard" className="hover:text-orange-600 transition-colors">Merchant Portal</Link></li>
+              <li><Link href="/pricing" className="hover:text-orange-600 transition-colors">Supermarkets &amp; Groceries</Link></li>
+              <li><Link href="/pricing" className="hover:text-orange-600 transition-colors">Restaurants &amp; Cafes</Link></li>
+              <li><Link href="/pricing" className="hover:text-orange-600 transition-colors">Fashion &amp; Apparel</Link></li>
+              <li><Link href="/pricing" className="hover:text-orange-600 transition-colors">Pharmacy &amp; Healthcare</Link></li>
+              <li><Link href="/contact" className="hover:text-orange-600 transition-colors">Multi-Store Chains</Link></li>
             </ul>
           </div>
 
@@ -102,4 +152,3 @@ export function Footer() {
     </footer>
   );
 }
-

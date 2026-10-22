@@ -1,6 +1,7 @@
 import React from 'react';
 import NextLink from 'next/link';
-import { Store, Sparkles, CheckCircle2 } from 'lucide-react';
+import Image from 'next/image';
+import { Sparkles, CheckCircle2 } from 'lucide-react';
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -10,9 +11,14 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         {/* Brand Logo Header */}
         <div className="flex items-center justify-between">
           <NextLink href="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-orange-500 flex items-center justify-center text-white">
-              <Store className="w-5 h-5 text-white" />
-            </div>
+            <Image
+              src="/logo.svg"
+              alt="BikriPOS Logo"
+              width={36}
+              height={36}
+              className="w-9 h-9 rounded-xl shadow-xs object-contain"
+              priority
+            />
             <div className="flex items-center">
               <span className="text-2xl font-black text-gray-900 tracking-tight">
                 Bikri<span className="text-orange-500">POS</span>

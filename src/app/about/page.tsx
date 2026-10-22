@@ -18,7 +18,7 @@ import {
   Layers,
   Headphones
 } from 'lucide-react';
-import { Navbar, Footer } from '@/components/landing';
+import { Navbar, Footer, CtaBanner } from '@/components/landing';
 
 export const metadata = {
   title: 'About BikriPOS - Next-Gen Retail & Inventory ERP',
@@ -287,30 +287,7 @@ export default function AboutPage() {
       </section>
 
       {/* Bottom CTA Banner */}
-      <section className="py-16 bg-slate-50 border-t border-slate-200 text-slate-900">
-        <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
-            Ready to upgrade your store with BikriPOS?
-          </h2>
-          <p className="text-slate-600 text-sm sm:text-base max-w-xl mx-auto">
-            Get started in 10 minutes with our 14-day free trial, or book a live on-site demo with our Dhaka retail consultants.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <Link
-              href="/register"
-              className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold text-sm hover:from-orange-600 hover:to-amber-600 transition-all"
-            >
-              Start Free 14-Day Trial
-            </Link>
-            <Link
-              href="/contact"
-              className="px-7 py-3.5 rounded-2xl bg-white hover:bg-slate-100 text-slate-800 font-semibold text-sm border border-slate-200 transition-all"
-            >
-              Talk to Sales &amp; Support
-            </Link>
-          </div>
-        </div>
-      </section>
+      <CtaBanner />
 
       <Footer />
     </div>

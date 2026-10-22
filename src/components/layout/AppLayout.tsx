@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import NextLink from 'next/link';
+import Image from 'next/image';
 import { AppHeader } from './AppHeader';
 import { usePathname } from 'next/navigation';
-import { ShoppingBag, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { MENU_ITEMS } from '@/data/menu-list';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
@@ -60,16 +61,19 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         {/* Logo Area */}
         <div className="h-18 flex items-center px-5 border-b border-gray-100 shrink-0">
           <NextLink href="/dashboard" className="flex items-center gap-3">
-            <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-orange-50 text-[#FF9F43] shadow-xs">
-              <ShoppingBag className="w-5 h-5 text-[#FF9F43]" strokeWidth={2.5} />
-              <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-[#092C4C] rounded-full border-2 border-white"></div>
-            </div>
+            <Image
+              src="/logo.svg"
+              alt="BikriPOS Logo"
+              width={36}
+              height={36}
+              className="w-9 h-9 rounded-xl object-contain shadow-xs shrink-0"
+            />
             {sidebarOpen && (
               <div className="flex flex-col">
                 <h1 className="text-xl font-black text-[#092C4C] tracking-tight leading-none">
-                  go<span className="text-[#FF9F43]">pos</span>
+                  Bikri<span className="text-[#FF9F43]">POS</span>
                 </h1>
-                <span className="text-[10px] font-medium text-gray-400 tracking-wider uppercase mt-0.5">Inventory & POS</span>
+                <span className="text-[10px] font-medium text-gray-400 tracking-wider uppercase mt-0.5">Inventory &amp; POS</span>
               </div>
             )}
           </NextLink>
